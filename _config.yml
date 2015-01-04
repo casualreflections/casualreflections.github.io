@@ -4,7 +4,7 @@ email:       bhu1rawal@gmail.com
 author:      Bhuvan Rawal
 description: "Code. Coffee. Repeat."
 baseurl:     ""
-url:         ""
+url:         "http://bhuvanrawal.github.io"
 
 # Google analytics
 google_analytics:
@@ -14,16 +14,12 @@ animated:           true
 show_related_posts: false
 show_post_footers:  false
 
-# Disqus post comments
-# (leave blank to disable Disqus)
-disqus_shortname:
-
 # Social icons
 show_social_icons: true
 github_username: bhuvanrawal
 stackoverflow_id: bhuvanrawal
 twitter_username: bhuvanrawal
-google_plus_id: bhu1rawal
+google_plus_id: +bhu1rawal
 linkedin_username: Bhuvan Rawal
 bitcoin_url:
 paypal_url:
