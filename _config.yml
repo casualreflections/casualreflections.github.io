@@ -1,16 +1,16 @@
 # Site settings
-title:       Pixyll
-email:       your_email@example.com
-author:      John Otander
-description: "A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff."
+title:       Bhuvan Rawal
+email:       bhu1rawal@gmail.com
+author:      Bhuvan Rawal
+description: "Code. Coffee. Repeat."
 baseurl:     ""
-url:         "http://pixyll.com"
+url:         "http://bhuvanrawal.me"
 
 # Google analytics
 google_analytics:
 
 # Optional features
-animated:           false
+animated:           true
 show_related_posts: false
 show_post_footers:  false
 
@@ -19,21 +19,21 @@ show_post_footers:  false
 disqus_shortname:
 
 # Social icons
-show_social_icons: false
-github_username:
-stackoverflow_id:
-twitter_username:
-google_plus_id:
-linkedin_username:
+show_social_icons: true
+github_username: bhuvanrawal
+stackoverflow_id: bhuvanrawal
+twitter_username: bhuvanrawal
+google_plus_id: bhu1rawal
+linkedin_username: Bhuvan Rawal
 bitcoin_url:
 paypal_url:
 flattr_button:
 
 # Build settings
-markdown:     redcarpet
+markdown:     kramdown
 redcarpet:
-  extensions: ['smart', 'tables', 'with_toc_data']
+extensions: ['smart', 'tables', 'with_toc_data']
 permalink:    pretty
-paginate:     3
+paginate:     5
 sass:
   compressed: true
