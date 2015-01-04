@@ -30,10 +30,8 @@ paypal_url:
 flattr_button:
 
 # Build settings
-markdown:     kramdown
-redcarpet:
-extensions: ['smart', 'tables', 'with_toc_data']
-permalink:    pretty
-paginate:     5
+markdown: kramdown
+permalink: /:year/:month/:title/
+paginate: 5
 sass:
-  compressed: true
+compressed: true
