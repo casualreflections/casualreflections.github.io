@@ -4,7 +4,7 @@ email:       bhu1rawal@gmail.com
 author:      Bhuvan Rawal
 description: "Code. Coffee. Repeat."
 baseurl:     ""
-url:         "http://bhuvanrawal.me"
+url:         "http://bhuvanrawal.github.io"
 
 # Google analytics
 google_analytics:
