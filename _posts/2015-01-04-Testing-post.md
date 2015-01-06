@@ -5,6 +5,7 @@ date:       2015-01-04 23:21:29
 summary:    Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain.s
 categories: jekyll pixyll
 ---
+
 ## This tutorial will help you set up your own webpage using github pages and Pixyll-jekyll
 
 ## Prerequisites
@@ -18,10 +19,10 @@ categories: jekyll pixyll
 * Create a new repository with the name <yourgithubusername.github.io> make sure you mark it public.
 * Click on "Create repository"
 * In the next page click on Import code
-* In the existing repository URL give [https://github.com/johnotander/pixyll.git]https://github.com/johnotander/pixyll.git
+* In the existing repository URL give [link] https://github.com/johnotander/pixyll.git
 * Now your webpage repository is set up.
 * Create a new directory in your local system, get inside that directory and follow the next step.
-* Pull the repository into your own local system. The steps can be followed from the following link: [Fork a github Repository]https://help.github.com/articles/fork-a-repo/
+* Pull the repository into your own local system. The steps can be followed from the following link: [link] https://help.github.com/articles/fork-a-repo/
 
 ## Making modifications to _config.yml & CNAME
 
@@ -48,6 +49,6 @@ categories: jekyll pixyll
  * If there are any errors in your configuration github will email you for making changes.
 * The website will go live in within 30 mins.
 * Play around with the site and create new layouts new pages.
-* Make sure you give appropriate credits to the original developer of pixyll. [John Otander]https://github.com/johnotander
+* Make sure you give appropriate credits to the original developer of pixyll. [link]https://github.com/johnotander
 * In case of any difficulty, contact me @ bhuvan (at) bhuvanrawal (dot) me
  

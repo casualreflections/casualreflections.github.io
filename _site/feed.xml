@@ -24,10 +24,10 @@
   &lt;li&gt;Create a new repository with the name &lt;yourgithubusername.github.io&gt; make sure you mark it public.&lt;/yourgithubusername.github.io&gt;&lt;/li&gt;
   &lt;li&gt;Click on “Create repository”&lt;/li&gt;
   &lt;li&gt;In the next page click on Import code&lt;/li&gt;
-  &lt;li&gt;In the existing repository URL give [https://github.com/johnotander/pixyll.git]https://github.com/johnotander/pixyll.git&lt;/li&gt;
+  &lt;li&gt;In the existing repository URL give [link] https://github.com/johnotander/pixyll.git&lt;/li&gt;
   &lt;li&gt;Now your webpage repository is set up.&lt;/li&gt;
   &lt;li&gt;Create a new directory in your local system, get inside that directory and follow the next step.&lt;/li&gt;
-  &lt;li&gt;Pull the repository into your own local system. The steps can be followed from the following link: [Fork a github Repository]https://help.github.com/articles/fork-a-repo/&lt;/li&gt;
+  &lt;li&gt;Pull the repository into your own local system. The steps can be followed from the following link: [link] https://help.github.com/articles/fork-a-repo/&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;making-modifications-to-configyml--cname&quot;&gt;Making modifications to _config.yml &amp;amp; CNAME&lt;/h2&gt;
@@ -56,7 +56,7 @@
   &lt;li&gt;If there are any errors in your configuration github will email you for making changes.&lt;/li&gt;
   &lt;li&gt;The website will go live in within 30 mins.&lt;/li&gt;
   &lt;li&gt;Play around with the site and create new layouts new pages.&lt;/li&gt;
-  &lt;li&gt;Make sure you give appropriate credits to the original developer of pixyll. [John Otander]https://github.com/johnotander&lt;/li&gt;
+  &lt;li&gt;Make sure you give appropriate credits to the original developer of pixyll. [link]https://github.com/johnotander&lt;/li&gt;
   &lt;li&gt;In case of any difficulty, contact me @ bhuvan (at) bhuvanrawal (dot) me&lt;/li&gt;
 &lt;/ul&gt;
 
