@@ -7,12 +7,12 @@ baseurl:     ""
 url:         "http://bhuvanrawal.me"
 
 # Google analytics
-google_analytics: UA-53548208-1
+google_analytics: UA-58286706-1
 
 # Optional features
 animated:           true
-show_related_posts: false
-show_post_footers:  false
+show_related_posts: true
+show_post_footers:  true
 
 # Social icons
 show_social_icons: true
@@ -24,6 +24,7 @@ linkedin_username: Bhuvan Rawal
 bitcoin_url:
 paypal_url:
 flattr_button:
+fb_profile_id: https://www.facebook.com/bhu1rawal 
 
 # Build settings
 markdown: kramdown
