@@ -1,3 +1,14 @@
+---
+layout:     post
+title:      Creating your own WebPage using gh-pages, Pixyll-Jekyll
+date:       2015-01-04 23:21:29
+summary:    This is an empty post to illustrate the pagination component with Pixyll.
+categories: jekyll pixyll
+---
+## This tutorial will help you set up your own webpage using github pages and Pixyll-jekyll
+
+## Prerequisites
+
 * A github account.
 * A domain name by your name, if you want it that way. (Else by default it will be created as <yourGithubname>.github.io)
 * A cloudFlare account(in case if you want to get it hosted on your own domain).
