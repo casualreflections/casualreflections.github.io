@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bhuvan Rawal</title>
+    <description>Code. Coffee. Repeat.</description>
+    <link>http://bhuvanrawal.me/</link>
+    <atom:link href="http://bhuvanrawal.me/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>Testing My Website</title>
+        <description>&lt;p&gt;Testing a sample post&lt;/p&gt;
+</description>
+        <pubDate>Mon, 05 Jan 2015 04:14:05 +0530</pubDate>
+        <link>http://bhuvanrawal.me/2015/01/Testing-post/</link>
+        <guid isPermaLink="true">http://bhuvanrawal.me/2015/01/Testing-post/</guid>
+      </item>
+    
+  </channel>
+</rss>
