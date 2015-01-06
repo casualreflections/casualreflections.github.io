@@ -1,8 +1,8 @@
 ---
 layout:     post
-title:      Creating your own WebPage using gh-pages, Pixyll-Jekyll
+title:      Creating your own WebPage using gh-pages
 date:       2015-01-04 23:21:29
-summary:    This is an empty post to illustrate the pagination component with Pixyll.
+summary:    Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain.s
 categories: jekyll pixyll
 ---
 ## This tutorial will help you set up your own webpage using github pages and Pixyll-jekyll
