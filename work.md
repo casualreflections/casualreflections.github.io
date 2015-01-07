@@ -4,7 +4,7 @@ title: What I love to do
 permalink: /work/
 ---
 
-Im a Programmer, writing, debugging, testing the SOA software suite for Fiorano Software currently. We are a middleware company based in California, US. 
+Im a Programmer. I write, debug, test the SOA software suite of Fiorano Software currently. We are a middleware company based in California, US. 
 
 I work for Adapters Team which has one of the finest programmers I have seen in my life, it develops many components such as Database Integration, Webservices, XML parsing/manipulation, Encryption, JMS adapters, amongst a host of others. 
 
