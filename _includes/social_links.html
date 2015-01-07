@@ -19,6 +19,9 @@
     {% if site.linkedin_username %}
       <a class="fa fa-linkedin" href="https://www.linkedin.com/in/{{ site.linkedin_username }}"></a>
     {% endif %}
+    {% if site.facebook_profileUrl %}
+      <a class="fa fa-facebook" href="{{site.facebook_profileUrl}}"></a>
+    {% endif %}
   </div>
   <div class="right">
     {% if site.bitcoin_url %}
@@ -30,6 +33,7 @@
     {% if site.flattr_button %}
       {{ site.flattr_button }}
     {% endif %}
+    
   </div>
 </div>
 <div class="clearfix"></div>
