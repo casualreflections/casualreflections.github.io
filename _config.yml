@@ -12,7 +12,7 @@ google_analytics: UA-58286706-1
 # Optional features
 animated:           true
 show_related_posts: true
-show_post_footers:  false
+show_post_footers:  true
 
 # Social icons
 show_social_icons: true
@@ -24,7 +24,7 @@ linkedin_username: 120133982
 bitcoin_url:
 paypal_url:
 flattr_button:
-facebook_profileUrl: https://www.facebook.com/bhu1rawal 
+facebook_profileUrl: https://www.facebook.com/profile.php?id=bhu1rawal 
 
 # Build settings
 markdown: kramdown
