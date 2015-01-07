@@ -12,15 +12,15 @@ google_analytics: UA-58286706-1
 # Optional features
 animated:           true
 show_related_posts: true
-show_post_footers:  true
+show_post_footers:  false
 
 # Social icons
 show_social_icons: true
 github_username: bhuvanrawal
-stackoverflow_id: bhuvanrawal
+stackoverflow_id: bhuvan-rawal
 twitter_username: bhuvanrawal
-google_plus_id: +bhu1rawal
-linkedin_username: Bhuvan Rawal
+google_plus_id: /explore/bhu1rawal
+linkedin_username: bhuvanrawal
 bitcoin_url:
 paypal_url:
 flattr_button:
