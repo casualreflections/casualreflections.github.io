@@ -34,3 +34,7 @@ sass:
 compressed: true
 
 disqus_shortname : bhuvanrawal
+
+slideshow:
+    width: 150
+    height: 100
