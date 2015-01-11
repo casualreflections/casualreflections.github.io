@@ -379,7 +379,8 @@ strong, .bold {
   padding: 0 1rem; }
 
 .form {
-  font-size: 1rem; }
+  font-size: 1rem;
+  width: 850px; }
 
 .input {
   appearance: none;
@@ -812,7 +813,8 @@ table {
 form {
   font-family: 'Lato', 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: 300;
-  font-size: 1rem; }
+  font-size: 1rem;
+  max-width: 850px; }
 
 textarea.input {
   height: 8em; }
