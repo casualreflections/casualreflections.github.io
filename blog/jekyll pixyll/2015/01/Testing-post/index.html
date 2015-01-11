@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Creating your own WebPage using gh-pages &#8211; Bhuvan Rawal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain.">
+    <meta name="author" content="Bhuvan Rawal">
+    <meta name="keywords" content="blog, jekyll pixyll">
+    <link rel="canonical" href="http://bhuvanrawal.me/blog/jekyll%20pixyll/2015/01/Testing-post/">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Creating your own WebPage using gh-pages">
+    <meta property="og:description" content="Code. Coffee. Repeat.">
+    <meta property="og:url" content="http://bhuvanrawal.me/blog/jekyll%20pixyll/2015/01/Testing-post/">
+    <meta property="og:site_name" content="Bhuvan Rawal">
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+</head>
+
+ <!-- Typekit -->
+   <script type="text/javascript" src="/js/uwb2itp.js"></script>
+   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+   <link href="/css/colorbox.css" rel="stylesheet" media="screen" type="text/css">
+   <!--link href="/css/bootstrap.css" rel="stylesheet" media="screen" type="text/css"-->
+
+	<link rel="stylesheet" type="text/css" href="/css/menu2.css">
+   <link href="/css/main1.css" rel="stylesheet" media="screen" type="text/css">
+   <script src="/js/jquery.min.js"> </script>
+   <script src="/js/jquery.colorbox-min.js"> </script>
+   <script src="/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/js/jQuery.js"></script>
+	<script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="/js/jquery-ui-1.8.1.custom.min.js"></script>
+	<script type="text/javascript" src="/js/menu.js"></script>
+<body class="animated fade-in-down">
+
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+	  <div class="site-title">	
+      	<a href="http://bhuvanrawal.me">Bhuvan Rawal</a>
+      </div>
+        
+      
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="left">
+    
+      <a class="fa fa-github" href="https://github.com/bhuvanrawal"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/3646120"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+      <a class="fa fa-twitter" href="https://twitter.com/bhuvanrawal"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/115368800868963120427/posts"></a>
+    
+    
+      <a class="fa fa-envelope" href="mailto:bhuvan@bhuvanrawal.me"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/profile/view?id=120133982"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/bhu1rawal"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+<div class="menu">
+	<ul class="nav">
+			<div id = "navLeft"></div>
+			<div id = "navRight"></div>
+			<li class = "mainmenu"><a href="/">Home</a></li>
+			<li class = "submenu">	<a href="/about/">About</a></li>
+			<li class = "submenu"><a href="/work/">Work</a></li>
+			<li class = "submenu"><a href="/computers/">Computers</a>
+			<ul>
+				<li class = "submenu2"><a href="/java/">Java</a></li>
+				<li class = "submenu2"><a href="/os/">Operating Systems</a></li>
+				<li class = "submenu2"><a href="/databases/">Databases</a></li>
+				<li class = "submenu2"><a href="/cpp/">C++</a></li>
+				<li class = "submenu2"><a href="/mathematics/">Mathematics</a></li>
+				<li class = "submenu2"><a href="//"></a></li>
+				<li class = "submenu2"><a href="/dsa/">DSA</a>
+				<ul>
+					<li><a href="/linkedlist/">Linked List</a></li>
+					<li><a href="/arrays/">Array</a></li>
+					<li><a href="/dp/">DP</a></li>
+					<li><a href="/trees/">Trees</a></li>
+					<li><a href="/sorting/">Sorting</a></li>
+					<li><a href="/searching/">Searching</a></li>
+					<li><a href="/backtracking/">Backtracking</a></li>
+					<li><a href="/matrix/">Matrix</a></li>
+					<li><a href="/bitMagic/">Bit Magic</a></li>
+					<li><a href="/graphs/">Graphs</a></li>
+				</ul></li>			
+			</ul></li>
+			<li class = "submenu"><a href="/archive/">Archive</a></li>
+			<li class = "submenu"><a href="/photo/">Photos</a></li>
+			<li class = "submenu"><a href="/contact/">Contact Me</a></li>	
+			</ul>
+	</ul>
+</div>
+
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+        
+
+<!-- Typekit -->
+<script type="text/javascript" src="/js/uwb2itp.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<link href="/css/post.css" rel="stylesheet" media="screen" type="text/css">
+<link href="/css/colorbox.css" rel="stylesheet" media="screen" type="text/css">
+<link href="/css/bootstrap.css" rel="stylesheet" media="screen" type="text/css">
+<script src="/js/jquery.min.js"> </script>
+<script src="/js/jquery.colorbox.js"> </script>
+<script src="/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+jQuery(document).ready(function($){
+ $("#gallery a").colorbox({maxWidth:"100%",maxHeight:"100%",opacity:0.8});
+});</script>
+
+<div class="post-header mb2">
+  <h1>Creating your own WebPage using gh-pages</h1>
+  <span class="post-meta">Jan 5, 2015</span><br>
+  
+  <span class="post-meta small">2 minute read</span>
+</div>
+
+<article class="post-content">
+  <h2 id="this-tutorial-will-help-you-set-up-your-own-webpage-using-github-pages-and-pixyll-jekyll">This tutorial will help you set up your own webpage using github pages and Pixyll-jekyll</h2>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li>A github account.</li>
+  <li>A domain name by your name, if you want it that way. (Else by default it will be created as <yourgithubname>.github.io)</yourgithubname></li>
+  <li>A cloudFlare account(in case if you want to get it hosted on your own domain).</li>
+</ul>
+
+<h2 id="creating-your-own-page-using-github-account">Creating your own page using github account</h2>
+
+<ul>
+  <li>Create a new repository with the name <yourgithubusername.github.io> make sure you mark it public.</yourgithubusername.github.io></li>
+  <li>Click on “Create repository”</li>
+  <li>In the next page click on Import code</li>
+  <li>In the existing repository URL give [link] https://github.com/johnotander/pixyll.git</li>
+  <li>Now your webpage repository is set up.</li>
+  <li>Create a new directory in your local system, get inside that directory and follow the next step.</li>
+  <li>Pull the repository into your own local system. The steps can be followed from the following link: [link] https://help.github.com/articles/fork-a-repo/</li>
+</ul>
+
+<h2 id="making-modifications-to-configyml--cname">Making modifications to _config.yml &amp; CNAME</h2>
+
+<ul>
+  <li>Open _config.yml and make changes as follows.</li>
+  <li>Give the title of your page, email, author and description.</li>
+  <li>In the URL give http://<yourgithubname>.github.io</yourgithubname></li>
+  <li>Give animated as true</li>
+  <li>In social icons add your github name, stackoverflow id, twittername, etc. Google plus name should start with +. If your gmail id is test@gmail.com, give it as +test. Do not add @ in linkedin URL.</li>
+  <li>Give the following inputs in Build Settings 
+     &lt;# Build settings
+     markdown: kramdown
+     permalink: /:year/:month/:title/
+     paginate: 5
+     sass:
+     compressed: true&gt;</li>
+  <li>Save and exit the file</li>
+  <li>Open the file CNAME and input your website address as <yourname>.github.io, remember it should not be appended with http/https. For example in my CNAME file I have put bhuvanrawal.github.io</yourname></li>
+  <li>Make changes to the files in _posts directory, create your own markdown files and save it there, make sure you copy the syntax of the header.</li>
+  <li>Install ruby on your system, also install ruby-devel/ruby-dev (depending on your system)</li>
+  <li>Install gem</li>
+  <li>execute: gem install jekyll</li>
+  <li>after gem is installed execute jekyll build. Make sure you’re in the directory of your newly checked out repository.</li>
+  <li>Commit the changes and push them to your repository.</li>
+  <li>If there are any errors in your configuration github will email you for making changes.</li>
+  <li>The website will go live in within 30 mins.</li>
+  <li>Play around with the site and create new layouts new pages.</li>
+  <li>Make sure you give appropriate credits to the original developer of pixyll. [link]https://github.com/johnotander</li>
+  <li>In case of any difficulty, contact me @ bhuvan (at) bhuvanrawal (dot) me</li>
+</ul>
+
+
+</article>
+
+<div id="gallery">
+<ul>
+
+</ul>
+</div>
+
+
+
+  <div class="py2 post-footer">
+  <img src="/img/me.jpeg" alt="Bhuvan Rawal" class="avatar" />
+  <p>
+    Pixyll built by John Oatander. Modified by Bhuvan for personal use. Apart from coding he likes to play tunes on guitar and climb high.
+  </p>
+  <p>Follow him on <a href="https://www.facebook.com/profile.php?id=bhu1rawal">Facebook</a>.
+  </p>
+</div>
+
+
+
+
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname  = 'bhuvanrawal';
+    var disqus_identifier = '/blog/jekyll%20pixyll/2015/01/Testing-post';
+
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+  <h3 class="related-post-title">Related Posts</h3>
+  
+    <div class="post ml2">
+      <a href="/photos/jekyll%20pixyll/2015/01/Stok-Kangri-Trek/" class="post-link">
+        <h4 class="post-title">Stok Kangri Expedition</h4>
+        <p class="post-summary">Stok Kangri Expedition 2013</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/photos/jekyll%20pixyll/2015/01/Roopkund-Trek/" class="post-link">
+        <h4 class="post-title">Roopkund Trek</h4>
+        <p class="post-summary">Roopkund Trek</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/computers/dsa/sorting/jekyll%20pixyll/2015/01/Testing-post/" class="post-link">
+        <h4 class="post-title">Creating your own WebPage using gh-pages</h4>
+        <p class="post-summary">Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain.</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/computers/dsa/matrix/jekyll%20pixyll/2015/01/Testing-post/" class="post-link">
+        <h4 class="post-title">Creating your own WebPage using gh-pages</h4>
+        <p class="post-summary">Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain.</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/computers/dsa/searching/jekyll%20pixyll/2015/01/Testing-post/" class="post-link">
+        <h4 class="post-title">Creating your own WebPage using gh-pages</h4>
+        <p class="post-summary">Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain.</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/computers/dsa/linkedlist/jekyll%20pixyll/2015/01/Testing-post/" class="post-link">
+        <h4 class="post-title">Creating your own WebPage using gh-pages</h4>
+        <p class="post-summary">Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain.</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/computers/dsa/graphs/jekyll%20pixyll/2015/01/Testing-post/" class="post-link">
+        <h4 class="post-title">Creating your own WebPage using gh-pages</h4>
+        <p class="post-summary">Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain.</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/computers/dsa/bitmagic/2015/01/Testing-post/" class="post-link">
+        <h4 class="post-title">testingBitMagic</h4>
+        <p class="post-summary">Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain.</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/computers/dsa/trees/jekyll%20pixyll/2015/01/Testing-post/" class="post-link">
+        <h4 class="post-title">Creating your own WebPage using gh-pages</h4>
+        <p class="post-summary">Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain.</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/computers/dsa/bitmagic/2015/01/Testing-Bit-Magic/" class="post-link">
+        <h4 class="post-title">testingBitMagic</h4>
+        <p class="post-summary">Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain.</p>
+      </a>
+    </div>
+  
+
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+  <div class="p2 wrap">
+    <div class="measure mt1 center">
+      <small>
+       Pixyll theme was created by John Oatander. It was modified by Bhuvan for this website.
+      </small>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-58286706-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+
+
+</body>
+</html>
