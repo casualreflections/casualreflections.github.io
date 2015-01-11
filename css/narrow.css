@@ -1,0 +1,16 @@
+nav li {
+
+	width:60px;
+    cursor:pointer;
+	height:18px;
+    position:relative;
+	float: left;
+	list-style:none;
+	z-index:30;
+	padding-top:15px;
+	border-left: 1px solid #000000;
+	border-right: 1px solid #3D3E3D;
+	text-align:center;	
+	font-size: 70%;
+
+}
