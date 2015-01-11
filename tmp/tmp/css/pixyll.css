@@ -202,19 +202,19 @@ strong, .bold {
 
 @media screen and (min-width: 48em) and (max-width: 64em) {
   .m-responsive {
-    margin: 3rem; }
+    margin: 5rem; }
 
   .mt-responsive {
-    margin-top: 3rem; }
+    margin-top: 5rem; }
 
   .mr-responsive {
-    margin-right: 3rem; }
+    margin-right: 5rem; }
 
   .mb-responsive {
-    margin-bottom: 3rem; }
+    margin-bottom: 5rem; }
 
   .ml-responsive {
-    margin-left: 3rem; } }
+    margin-left: 5rem; } }
 @media screen and (min-width: 64em) {
   .m-responsive {
     margin: 4rem; }

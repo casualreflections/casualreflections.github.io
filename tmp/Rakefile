@@ -24,7 +24,7 @@ task :publish => [:generate] do
     cp_r "_site/.", "tmp"
 
     pwd = Dir.pwd
-    Dir.chdir tmp
+    Dir.chdir "tmp"
 
     system "git add ."
     message = "Site updated at #{Time.now.utc}"
