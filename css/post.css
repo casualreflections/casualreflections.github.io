@@ -12,6 +12,12 @@
   MIT License http://opensource.org/licenses/MIT
 
 */
+.nav li{
+  line-height:1;
+}
+.post-content ul li{
+  line-height: 1.8;
+}
 .justify {
     text-align: justify;
 }
@@ -436,7 +442,7 @@ h6,
   p,
   li {
     font-size: 1.25rem;
-    line-height: 1.8;
+    line-height: 1;
   }
 
   .small {

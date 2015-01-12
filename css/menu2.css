@@ -8,11 +8,9 @@
 .measure{
 	max-width:60rem;
 }
-@media screen{
-	li {
-    line-height: 1;
-  }
 
+li {
+    line-height: 1;
 }
 h1,h2,h3,h4,p{
 	color: #fff;
@@ -96,6 +94,7 @@ ul{
 	border-left: 1px solid #000000;
 	border-right: 1px solid #3D3E3D;
 	text-align:center;
+    line-height: 1rem;
 	
 }
 /*settings for upper hover effect*/
