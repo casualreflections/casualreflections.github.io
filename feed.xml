@@ -7,6 +7,47 @@
     <atom:link href="http://bhuvanrawal.me/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Longest Palindromic Subsequence</title>
+        <description>
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * Given a sequence, find the length of the longest palindromic subsequence in it.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * For example, if the given sequence is “BBABCBCAB”, then the output should be 7&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * as “BABCBAB” is the longest palindromic subseuqnce in it. “BBBBB” and “BBCBB”&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * are also palindromic subsequences of the given sequence, but not the longest ones.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; *&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * The naive solution for this problem is to generate all subsequences of the given&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * sequence and find the longest palindromic subsequence. This solution is exponential&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * in term of time complexity. Let us see how this problem possesses both important&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * properties of a Dynamic Programming (DP) Problem and can efficiently solved&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * using Dynamic Programming.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; */&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;longestPalindromicSubsequenceNaive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;longestPalindromicSubsequenceNaive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;longestPalindromicSubsequenceNaive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;longestPalindromicSubsequenceNaive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;longestPalindromicSubsequenceNaive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;),&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;longestPalindromicSubsequenceNaive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we look for a smarter solution using Memoisation, let us understand what exactly is happening during recursion.&lt;/p&gt;
+
+&lt;p&gt;We have a string of length n, we compare the first and last characters of the string, if they are equal then we recurse
+passing start+1 and end -1 recursively and at this point.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 13 Jan 2015 04:51:29 +0530</pubDate>
+        <link>http://bhuvanrawal.me/computers/dsa/dp/2015/01/Longest-Palindromic-Subsequence/</link>
+        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/dp/2015/01/Longest-Palindromic-Subsequence/</guid>
+      </item>
+    
+      <item>
         <title>Stok Kangri Expedition</title>
         <description>
 </description>
@@ -29,8 +70,17 @@
         <description>&lt;p&gt;Testing jekyll&lt;/p&gt;
 </description>
         <pubDate>Mon, 05 Jan 2015 04:51:29 +0530</pubDate>
-        <link>http://bhuvanrawal.me/computers/dsa/trees/jekyll%20pixyll/2015/01/Testing-post/</link>
-        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/trees/jekyll%20pixyll/2015/01/Testing-post/</guid>
+        <link>http://bhuvanrawal.me/computers/dsa/linkedlist/jekyll%20pixyll/2015/01/Testing-post/</link>
+        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/linkedlist/jekyll%20pixyll/2015/01/Testing-post/</guid>
+      </item>
+    
+      <item>
+        <title>Creating your own WebPage using gh-pages</title>
+        <description>&lt;p&gt;Testing jekyll&lt;/p&gt;
+</description>
+        <pubDate>Mon, 05 Jan 2015 04:51:29 +0530</pubDate>
+        <link>http://bhuvanrawal.me/computers/dsa/sorting/jekyll%20pixyll/2015/01/Testing-post/</link>
+        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/sorting/jekyll%20pixyll/2015/01/Testing-post/</guid>
       </item>
     
       <item>
@@ -98,17 +148,8 @@
         <description>&lt;p&gt;Testing jekyll&lt;/p&gt;
 </description>
         <pubDate>Mon, 05 Jan 2015 04:51:29 +0530</pubDate>
-        <link>http://bhuvanrawal.me/computers/dsa/sorting/jekyll%20pixyll/2015/01/Testing-post/</link>
-        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/sorting/jekyll%20pixyll/2015/01/Testing-post/</guid>
-      </item>
-    
-      <item>
-        <title>testingBitMagic</title>
-        <description>&lt;p&gt;Testing jekyll&lt;/p&gt;
-</description>
-        <pubDate>Mon, 05 Jan 2015 04:51:29 +0530</pubDate>
-        <link>http://bhuvanrawal.me/computers/dsa/bitmagic/2015/01/Testing-post/</link>
-        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/bitmagic/2015/01/Testing-post/</guid>
+        <link>http://bhuvanrawal.me/computers/dsa/matrix/2015/01/Testing-post/</link>
+        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/matrix/2015/01/Testing-post/</guid>
       </item>
     
       <item>
@@ -116,8 +157,8 @@
         <description>&lt;p&gt;Testing jekyll&lt;/p&gt;
 </description>
         <pubDate>Mon, 05 Jan 2015 04:51:29 +0530</pubDate>
-        <link>http://bhuvanrawal.me/computers/dsa/matrix/jekyll%20pixyll/2015/01/Testing-post/</link>
-        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/matrix/jekyll%20pixyll/2015/01/Testing-post/</guid>
+        <link>http://bhuvanrawal.me/computers/dsa/trees/jekyll%20pixyll/2015/01/Testing-post/</link>
+        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/trees/jekyll%20pixyll/2015/01/Testing-post/</guid>
       </item>
     
       <item>
@@ -125,8 +166,8 @@
         <description>&lt;p&gt;Testing jekyll&lt;/p&gt;
 </description>
         <pubDate>Mon, 05 Jan 2015 04:51:29 +0530</pubDate>
-        <link>http://bhuvanrawal.me/computers/dsa/linkedlist/jekyll%20pixyll/2015/01/Testing-post/</link>
-        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/linkedlist/jekyll%20pixyll/2015/01/Testing-post/</guid>
+        <link>http://bhuvanrawal.me/computers/dsa/graphs/2015/01/Testing-post/</link>
+        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/graphs/2015/01/Testing-post/</guid>
       </item>
     
       <item>
@@ -136,15 +177,6 @@
         <pubDate>Mon, 05 Jan 2015 04:51:29 +0530</pubDate>
         <link>http://bhuvanrawal.me/computers/dsa/searching/jekyll%20pixyll/2015/01/Testing-post/</link>
         <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/searching/jekyll%20pixyll/2015/01/Testing-post/</guid>
-      </item>
-    
-      <item>
-        <title>Creating your own WebPage using gh-pages</title>
-        <description>&lt;p&gt;Testing jekyll&lt;/p&gt;
-</description>
-        <pubDate>Mon, 05 Jan 2015 04:51:29 +0530</pubDate>
-        <link>http://bhuvanrawal.me/computers/dsa/graphs/jekyll%20pixyll/2015/01/Testing-post/</link>
-        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/graphs/jekyll%20pixyll/2015/01/Testing-post/</guid>
       </item>
     
   </channel>
