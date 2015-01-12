@@ -41,14 +41,16 @@ html, body {
 .menu{
 	line-height:1;
 	font-weight:normal;
-	margin-left: -100px
+    /*margin-left: -100px;*/
+    max-width: 60rem;
+    margin: 0px auto;
 }
 /*main menu settings*/
 .nav {
    height:50px;
-   background-image:url(backgroundMiddle.png); 
+   /*background-image:url(backgroundMiddle.png);*/
    padding:0px 0px 0px 0px;
-   margin-left:27%;
+/*   margin-left:27%;*/
    margin-top:10px;
    border-bottom: 1px solid #363937;
   text-align:center;
@@ -94,7 +96,6 @@ ul{
 	border-left: 1px solid #000000;
 	border-right: 1px solid #3D3E3D;
 	text-align:center;
-    line-height:1;
 	
 }
 /*settings for upper hover effect*/
