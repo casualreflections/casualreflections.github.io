@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bhuvan Rawal</title>
+    <title>Creating your own WebPage using gh-pages &#8211; Bhuvan Rawal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Code. Coffee. Repeat.">
+    <meta name="description" content="Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain.">
     <meta name="author" content="Bhuvan Rawal">
-    
-    <link rel="canonical" href="http://bhuvanrawal.me/page2/">
+    <meta name="keywords" content="blog, main_blog">
+    <link rel="canonical" href="http://bhuvanrawal.me/blog/main_blog/2015/01/Testing-post/">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/pixyll.css" type="text/css">
@@ -24,9 +24,9 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="en_US">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Bhuvan Rawal">
+    <meta property="og:title" content="Creating your own WebPage using gh-pages">
     <meta property="og:description" content="Code. Coffee. Repeat.">
-    <meta property="og:url" content="http://bhuvanrawal.me/page2/index.html">
+    <meta property="og:url" content="http://bhuvanrawal.me/blog/main_blog/2015/01/Testing-post/">
     <meta property="og:site_name" content="Bhuvan Rawal">
 
     <!-- Icons -->
@@ -154,42 +154,121 @@
 
     <div class="post p2 p-responsive wrap" role="main">
       <div class="measure">
-        <div class="home">
-<div class="posts">
+        
 
-<div class="post">
-<a href="/blog/main_blog/2015/01/Install-Windows-External-HardDisk/" class="post-link">
-<p class="post-meta">Jan 15, 2015</p>
-<h3 class="h2 post-title">Boot windows from external USB hard drive for UEFI motherboards</h3>
-<p class="post-summary">Booting windows from an external hard disk drive of your laptop if you dont want to install it in your primary laptop hard disk.</p>
-</a>
-</div>
+<!-- Typekit -->
+<script type="text/javascript" src="/js/uwb2itp.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<link href="/css/post.css" rel="stylesheet" media="screen" type="text/css">
+<link href="/css/colorbox.css" rel="stylesheet" media="screen" type="text/css">
+<link href="/css/bootstrap.css" rel="stylesheet" media="screen" type="text/css">
+<script src="/js/jquery.min.js"> </script>
+<script src="/js/jquery.colorbox.js"> </script>
+<script src="/js/bootstrap.min.js"></script>
 
-<div class="post">
-<a href="/blog/main_blog/2015/01/Testing-post/" class="post-link">
-<p class="post-meta">Jan 5, 2015</p>
-<h3 class="h2 post-title">Creating your own WebPage using gh-pages</h3>
-<p class="post-summary">Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain.</p>
-</a>
-</div>
+<script type="text/javascript">
+jQuery(document).ready(function($){
+ $("#gallery a").colorbox({maxWidth:"100%",maxHeight:"100%",opacity:0.8});
+});</script>
 
-</div>
-<div class="pagination clearfix mb1 mt4">
-  <div class="left">
-    
-      
-        <a class="pagination-item" href="/">Newer</a>
-      
-    
-  </div>
-  <div class="right">
-    
-      <a class="pagination-item" href="/page3/">Older</a>
-    
-  </div>
+<div class="post-header mb2">
+  <h1>Creating your own WebPage using gh-pages</h1>
+  <span class="post-meta">Jan 5, 2015</span><br>
+  
+  <span class="post-meta small">2 minute read</span>
 </div>
 
+<article class="post-content">
+  <h2 id="this-tutorial-will-help-you-set-up-your-own-webpage-using-github-pages-and-pixyll-jekyll">This tutorial will help you set up your own webpage using github pages and Pixyll-jekyll</h2>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li>A github account.</li>
+  <li>A domain name by your name, if you want it that way. (Else by default it will be created as <yourgithubname>.github.io)</yourgithubname></li>
+  <li>A cloudFlare account(in case if you want to get it hosted on your own domain).</li>
+</ul>
+
+<h2 id="creating-your-own-page-using-github-account">Creating your own page using github account</h2>
+
+<ul>
+  <li>Create a new repository with the name <yourgithubusername.github.io> make sure you mark it public.</yourgithubusername.github.io></li>
+  <li>Click on “Create repository”</li>
+  <li>In the next page click on Import code</li>
+  <li>In the existing repository URL give [link] https://github.com/johnotander/pixyll.git</li>
+  <li>Now your webpage repository is set up.</li>
+  <li>Create a new directory in your local system, get inside that directory and follow the next step.</li>
+  <li>Pull the repository into your own local system. The steps can be followed from the following link: [link] (https://help.github.com/articles/fork-a-repo/)</li>
+</ul>
+
+<h2 id="making-modifications-to-configyml--cname">Making modifications to _config.yml &amp; CNAME</h2>
+
+<ul>
+  <li>Open _config.yml and make changes as follows.</li>
+  <li>Give the title of your page, email, author and description.</li>
+  <li>In the URL give [http://<yourgithubname>.github.io](http://<yourgithubname>.github.io)</yourgithubname></yourgithubname></li>
+  <li>Give animated as true</li>
+  <li>In social icons add your github name, stackoverflow id, twittername, etc. Google plus name should start with +. If your gmail id is test@gmail.com, give it as +test. Do not add @ in linkedin URL.</li>
+  <li>Give the following inputs in Build Settings 
+     &lt;# Build settings
+     markdown: kramdown
+     permalink: /:year/:month/:title/
+     paginate: 5
+     sass:
+     compressed: true&gt;</li>
+  <li>Save and exit the file</li>
+  <li>Open the file CNAME and input your website address as <yourname>.github.io, remember it should not be appended with http/https. For example in my CNAME file I have put bhuvanrawal.github.io</yourname></li>
+  <li>Make changes to the files in _posts directory, create your own markdown files and save it there, make sure you copy the syntax of the header.</li>
+  <li>Install ruby on your system, also install ruby-devel/ruby-dev (depending on your system)</li>
+  <li>Install gem</li>
+  <li>execute: gem install jekyll</li>
+  <li>after gem is installed execute jekyll build. Make sure you’re in the directory of your newly checked out repository.</li>
+  <li>Commit the changes and push them to your repository.</li>
+  <li>If there are any errors in your configuration github will email you for making changes.</li>
+  <li>The website will go live in within 30 mins.</li>
+  <li>Play around with the site and create new layouts new pages.</li>
+  <li>Make sure you give appropriate credits to the original developer of pixyll. <a href="https://github.com/johnotander">link</a></li>
+  <li>In case of any difficulty, contact me @ bhuvan (at) bhuvanrawal (dot) me</li>
+</ul>
+
+
+</article>
+
+<div id="gallery">
+<ul>
+
+</ul>
 </div>
+
+
+
+  <div class="py2 post-footer">
+  <img src="/img/me.jpeg" alt="Bhuvan Rawal" class="avatar" />
+  <p>
+    Pixyll built by John Oatander. Modified by Bhuvan for personal use. Apart from coding he likes to play tunes on guitar and climb high.
+  </p>
+  <p>Follow him on <a href="https://www.facebook.com/profile.php?id=bhu1rawal">Facebook</a>.
+  </p>
+</div>
+
+
+
+
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname  = 'bhuvanrawal';
+    var disqus_identifier = '/blog/main_blog/2015/01/Testing-post';
+
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+<!---->
 
       </div>
     </div>

@@ -7,3 +7,5 @@ gem 'nokogiri'
 gem 'jekyll-less'
 gem 'growl'
 gem 'therubyracer'
+gem 'json'
+

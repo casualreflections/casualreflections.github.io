@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bhuvan Rawal</title>
+    <title>Boot windows from external USB hard drive for UEFI motherboards &#8211; Bhuvan Rawal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Code. Coffee. Repeat.">
+    <meta name="description" content="Booting windows from an external hard disk drive of your laptop if you dont want to install it in your primary laptop hard disk.">
     <meta name="author" content="Bhuvan Rawal">
-    
-    <link rel="canonical" href="http://bhuvanrawal.me/page2/">
+    <meta name="keywords" content="blog, main_blog">
+    <link rel="canonical" href="http://bhuvanrawal.me/blog/main_blog/2015/01/Install-Windows-External-HardDisk/">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/pixyll.css" type="text/css">
@@ -24,9 +24,9 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="en_US">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Bhuvan Rawal">
+    <meta property="og:title" content="Boot windows from external USB hard drive for UEFI motherboards">
     <meta property="og:description" content="Code. Coffee. Repeat.">
-    <meta property="og:url" content="http://bhuvanrawal.me/page2/index.html">
+    <meta property="og:url" content="http://bhuvanrawal.me/blog/main_blog/2015/01/Install-Windows-External-HardDisk/">
     <meta property="og:site_name" content="Bhuvan Rawal">
 
     <!-- Icons -->
@@ -154,42 +154,95 @@
 
     <div class="post p2 p-responsive wrap" role="main">
       <div class="measure">
-        <div class="home">
-<div class="posts">
+        
 
-<div class="post">
-<a href="/blog/main_blog/2015/01/Install-Windows-External-HardDisk/" class="post-link">
-<p class="post-meta">Jan 15, 2015</p>
-<h3 class="h2 post-title">Boot windows from external USB hard drive for UEFI motherboards</h3>
-<p class="post-summary">Booting windows from an external hard disk drive of your laptop if you dont want to install it in your primary laptop hard disk.</p>
-</a>
-</div>
+<!-- Typekit -->
+<script type="text/javascript" src="/js/uwb2itp.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<link href="/css/post.css" rel="stylesheet" media="screen" type="text/css">
+<link href="/css/colorbox.css" rel="stylesheet" media="screen" type="text/css">
+<link href="/css/bootstrap.css" rel="stylesheet" media="screen" type="text/css">
+<script src="/js/jquery.min.js"> </script>
+<script src="/js/jquery.colorbox.js"> </script>
+<script src="/js/bootstrap.min.js"></script>
 
-<div class="post">
-<a href="/blog/main_blog/2015/01/Testing-post/" class="post-link">
-<p class="post-meta">Jan 5, 2015</p>
-<h3 class="h2 post-title">Creating your own WebPage using gh-pages</h3>
-<p class="post-summary">Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain.</p>
-</a>
-</div>
+<script type="text/javascript">
+jQuery(document).ready(function($){
+ $("#gallery a").colorbox({maxWidth:"100%",maxHeight:"100%",opacity:0.8});
+});</script>
 
-</div>
-<div class="pagination clearfix mb1 mt4">
-  <div class="left">
-    
-      
-        <a class="pagination-item" href="/">Newer</a>
-      
-    
-  </div>
-  <div class="right">
-    
-      <a class="pagination-item" href="/page3/">Older</a>
-    
-  </div>
+<div class="post-header mb2">
+  <h1>Boot windows from external USB hard drive for UEFI motherboards</h1>
+  <span class="post-meta">Jan 15, 2015</span><br>
+  
+  <span class="post-meta small">1 minute read</span>
 </div>
 
+<article class="post-content">
+  <h2 id="this-post-will-help-you-install-windows-on-an-external-usb-hard-disk-and-boot-from-it">This post will help you install windows on an external USB hard disk and boot from it</h2>
+
+<p>Recent motherboards come with UEFI bios. Other methods which i found on the internet did not work when tried to install windows on my own computer which has Fedora in its primary hard disk. Hence this tutorial!</p>
+
+<h2 id="requirements">Requirements</h2>
+
+<ul>
+  <li>A windows PC</li>
+  <li>Windows iso version earlier than xp, Windows 10 is supported.</li>
+  <li>A spare hard drive</li>
+</ul>
+
+<h2 id="making-your-external-hard-drive-bootable-with-windows">Making your external hard drive bootable with windows:</h2>
+
+<ul>
+  <li>Create an extra partition on your hard drive with 500MB space and filesystem FAT-32</li>
+  <li>Go to <a href="http://download.cnet.com/WinToUSB/3000-2094_4-76061723.html?part=dl-&amp;subj=dl&amp;tag=button">link</a> and download the WinToUSB software.</li>
+  <li>Run the software, install it on your computer, connect the external hard drive where you want to install windows.</li>
+  <li>Select the iso image of windows in the first page.</li>
+  <li>In the second page select the newly created 500 MB fat32 partition as the system partition and the other partition as boot partition.</li>
+  <li>Click on next. Windows will be installed on your secondary hard drive.</li>
+  <li>When the process is finished connect the hard disk into a computer where you want to install windows, in the boot menu select external hard drive.</li>
+  <li>Windows installation will start.</li>
+</ul>
+
+<h3 id="note-do-not-plug-in-the-hard-drive-into-any-other-computer-than-the-intended-one-as-during-the-first-boot-as-it-will-start-installing-drivers-for-that-system">Note: Do not plug in the hard drive into any other computer than the intended one as during the first boot as it will start installing drivers for that system.</h3>
+
+</article>
+
+<div id="gallery">
+<ul>
+
+</ul>
 </div>
+
+
+
+  <div class="py2 post-footer">
+  <img src="/img/me.jpeg" alt="Bhuvan Rawal" class="avatar" />
+  <p>
+    Pixyll built by John Oatander. Modified by Bhuvan for personal use. Apart from coding he likes to play tunes on guitar and climb high.
+  </p>
+  <p>Follow him on <a href="https://www.facebook.com/profile.php?id=bhu1rawal">Facebook</a>.
+  </p>
+</div>
+
+
+
+
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname  = 'bhuvanrawal';
+    var disqus_identifier = '/blog/main_blog/2015/01/Install-Windows-External-HardDisk';
+
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+<!---->
 
       </div>
     </div>

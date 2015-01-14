@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://bhuvanrawal.me/blog/main_blog/2015/01/Install-Windows-External-HardDisk/</loc>
+    <lastmod>2015-01-15T04:51:29+05:30</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>http://bhuvanrawal.me/computers/dsa/dp/2015/01/Longest-Palindromic-Subsequence/</loc>
     <lastmod>2015-01-13T04:51:29+05:30</lastmod>
     <priority>0.8</priority>
@@ -16,32 +21,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://bhuvanrawal.me/computers/dsa/linkedlist/jekyll%20pixyll/2015/01/Testing-post/</loc>
-    <lastmod>2015-01-05T04:51:29+05:30</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://bhuvanrawal.me/computers/dsa/sorting/jekyll%20pixyll/2015/01/Testing-post/</loc>
-    <lastmod>2015-01-05T04:51:29+05:30</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://bhuvanrawal.me/blog/jekyll%20pixyll/2015/01/Testing-post/</loc>
-    <lastmod>2015-01-05T04:51:29+05:30</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://bhuvanrawal.me/computers/dsa/matrix/2015/01/Testing-post/</loc>
-    <lastmod>2015-01-05T04:51:29+05:30</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://bhuvanrawal.me/computers/dsa/trees/jekyll%20pixyll/2015/01/Testing-post/</loc>
-    <lastmod>2015-01-05T04:51:29+05:30</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://bhuvanrawal.me/computers/dsa/graphs/2015/01/Testing-post/</loc>
+    <loc>http://bhuvanrawal.me/blog/main_blog/2015/01/Testing-post/</loc>
     <lastmod>2015-01-05T04:51:29+05:30</lastmod>
     <priority>0.8</priority>
   </url>
@@ -51,7 +31,32 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>http://bhuvanrawal.me/computers/dsa/linkedlist/jekyll%20pixyll/2015/01/Testing-post/</loc>
+    <lastmod>2015-01-05T04:51:29+05:30</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>http://bhuvanrawal.me/computers/dsa/bitmagic/2015/01/Testing-post/</loc>
+    <lastmod>2015-01-05T04:51:29+05:30</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://bhuvanrawal.me/computers/dsa/graphs/2015/01/Testing-post/</loc>
+    <lastmod>2015-01-05T04:51:29+05:30</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://bhuvanrawal.me/computers/dsa/matrix/2015/01/Testing-post/</loc>
+    <lastmod>2015-01-05T04:51:29+05:30</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://bhuvanrawal.me/computers/dsa/sorting/jekyll%20pixyll/2015/01/Testing-post/</loc>
+    <lastmod>2015-01-05T04:51:29+05:30</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://bhuvanrawal.me/computers/dsa/trees/jekyll%20pixyll/2015/01/Testing-post/</loc>
     <lastmod>2015-01-05T04:51:29+05:30</lastmod>
     <priority>0.8</priority>
   </url>
@@ -72,103 +77,103 @@
   </url>
   <url>
     <loc>http://bhuvanrawal.me/404.html</loc>
-    <lastmod>2015-01-12T11:43:44+05:30</lastmod>
+    <lastmod>2015-01-14T10:35:44+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://bhuvanrawal.me/about/</loc>
-    <lastmod>2015-01-12T11:43:44+05:30</lastmod>
+    <lastmod>2015-01-14T10:35:44+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://bhuvanrawal.me/archive/</loc>
-    <lastmod>2015-01-12T11:43:44+05:30</lastmod>
+    <lastmod>2015-01-14T10:35:44+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://bhuvanrawal.me/arrays/</loc>
-    <lastmod>2015-01-12T11:43:44+05:30</lastmod>
+    <lastmod>2015-01-14T10:35:44+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://bhuvanrawal.me/computers/</loc>
-    <lastmod>2015-01-12T11:43:44+05:30</lastmod>
+    <lastmod>2015-01-14T10:35:44+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://bhuvanrawal.me/contact/</loc>
-    <lastmod>2015-01-12T11:43:44+05:30</lastmod>
+    <lastmod>2015-01-14T10:35:44+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://bhuvanrawal.me/cpp/</loc>
-    <lastmod>2015-01-12T11:43:44+05:30</lastmod>
+    <lastmod>2015-01-14T10:35:44+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://bhuvanrawal.me/databases/</loc>
-    <lastmod>2015-01-12T11:43:44+05:30</lastmod>
+    <lastmod>2015-01-14T10:35:44+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://bhuvanrawal.me/dp/</loc>
-    <lastmod>2015-01-12T11:43:44+05:30</lastmod>
+    <lastmod>2015-01-14T10:35:44+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://bhuvanrawal.me/dsa/</loc>
-    <lastmod>2015-01-12T11:43:44+05:30</lastmod>
+    <lastmod>2015-01-14T10:35:44+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://bhuvanrawal.me/</loc>
-    <lastmod>2015-01-12T11:43:44+05:30</lastmod>
+    <lastmod>2015-01-14T10:35:44+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http://bhuvanrawal.me/linkedlist/</loc>
-    <lastmod>2015-01-12T11:43:44+05:30</lastmod>
+    <lastmod>2015-01-14T10:35:44+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://bhuvanrawal.me/mathematics/</loc>
-    <lastmod>2015-01-12T11:43:44+05:30</lastmod>
+    <lastmod>2015-01-14T10:35:44+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://bhuvanrawal.me/matrix/</loc>
-    <lastmod>2015-01-12T11:43:44+05:30</lastmod>
+    <lastmod>2015-01-14T10:35:44+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://bhuvanrawal.me/os/</loc>
-    <lastmod>2015-01-12T11:43:44+05:30</lastmod>
+    <lastmod>2015-01-14T10:35:44+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://bhuvanrawal.me/photo/</loc>
-    <lastmod>2015-01-12T11:43:44+05:30</lastmod>
+    <lastmod>2015-01-14T10:35:44+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://bhuvanrawal.me/work/</loc>
-    <lastmod>2015-01-12T11:43:44+05:30</lastmod>
+    <lastmod>2015-01-14T10:35:44+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

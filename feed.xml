@@ -7,6 +7,40 @@
     <atom:link href="http://bhuvanrawal.me/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Boot windows from external USB hard drive for UEFI motherboards</title>
+        <description>&lt;h2 id=&quot;this-post-will-help-you-install-windows-on-an-external-usb-hard-disk-and-boot-from-it&quot;&gt;This post will help you install windows on an external USB hard disk and boot from it&lt;/h2&gt;
+
+&lt;p&gt;Recent motherboards come with UEFI bios. Other methods which i found on the internet did not work when tried to install windows on my own computer which has Fedora in its primary hard disk. Hence this tutorial!&lt;/p&gt;
+
+&lt;h2 id=&quot;requirements&quot;&gt;Requirements&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A windows PC&lt;/li&gt;
+  &lt;li&gt;Windows iso version earlier than xp, Windows 10 is supported.&lt;/li&gt;
+  &lt;li&gt;A spare hard drive&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;making-your-external-hard-drive-bootable-with-windows&quot;&gt;Making your external hard drive bootable with windows:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Create an extra partition on your hard drive with 500MB space and filesystem FAT-32&lt;/li&gt;
+  &lt;li&gt;Go to &lt;a href=&quot;http://download.cnet.com/WinToUSB/3000-2094_4-76061723.html?part=dl-&amp;amp;subj=dl&amp;amp;tag=button&quot;&gt;link&lt;/a&gt; and download the WinToUSB software.&lt;/li&gt;
+  &lt;li&gt;Run the software, install it on your computer, connect the external hard drive where you want to install windows.&lt;/li&gt;
+  &lt;li&gt;Select the iso image of windows in the first page.&lt;/li&gt;
+  &lt;li&gt;In the second page select the newly created 500 MB fat32 partition as the system partition and the other partition as boot partition.&lt;/li&gt;
+  &lt;li&gt;Click on next. Windows will be installed on your secondary hard drive.&lt;/li&gt;
+  &lt;li&gt;When the process is finished connect the hard disk into a computer where you want to install windows, in the boot menu select external hard drive.&lt;/li&gt;
+  &lt;li&gt;Windows installation will start.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;note-do-not-plug-in-the-hard-drive-into-any-other-computer-than-the-intended-one-as-during-the-first-boot-as-it-will-start-installing-drivers-for-that-system&quot;&gt;Note: Do not plug in the hard drive into any other computer than the intended one as during the first boot as it will start installing drivers for that system.&lt;/h3&gt;
+</description>
+        <pubDate>Thu, 15 Jan 2015 04:51:29 +0530</pubDate>
+        <link>http://bhuvanrawal.me/blog/main_blog/2015/01/Install-Windows-External-HardDisk/</link>
+        <guid isPermaLink="true">http://bhuvanrawal.me/blog/main_blog/2015/01/Install-Windows-External-HardDisk/</guid>
+      </item>
+    
+      <item>
         <title>Longest Palindromic Subsequence</title>
         <description>
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
@@ -67,24 +101,6 @@ passing start+1 and end -1 recursively and at this point.&lt;/p&gt;
     
       <item>
         <title>Creating your own WebPage using gh-pages</title>
-        <description>&lt;p&gt;Testing jekyll&lt;/p&gt;
-</description>
-        <pubDate>Mon, 05 Jan 2015 04:51:29 +0530</pubDate>
-        <link>http://bhuvanrawal.me/computers/dsa/linkedlist/jekyll%20pixyll/2015/01/Testing-post/</link>
-        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/linkedlist/jekyll%20pixyll/2015/01/Testing-post/</guid>
-      </item>
-    
-      <item>
-        <title>Creating your own WebPage using gh-pages</title>
-        <description>&lt;p&gt;Testing jekyll&lt;/p&gt;
-</description>
-        <pubDate>Mon, 05 Jan 2015 04:51:29 +0530</pubDate>
-        <link>http://bhuvanrawal.me/computers/dsa/sorting/jekyll%20pixyll/2015/01/Testing-post/</link>
-        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/sorting/jekyll%20pixyll/2015/01/Testing-post/</guid>
-      </item>
-    
-      <item>
-        <title>Creating your own WebPage using gh-pages</title>
         <description>&lt;h2 id=&quot;this-tutorial-will-help-you-set-up-your-own-webpage-using-github-pages-and-pixyll-jekyll&quot;&gt;This tutorial will help you set up your own webpage using github pages and Pixyll-jekyll&lt;/h2&gt;
 
 &lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
@@ -104,7 +120,7 @@ passing start+1 and end -1 recursively and at this point.&lt;/p&gt;
   &lt;li&gt;In the existing repository URL give [link] https://github.com/johnotander/pixyll.git&lt;/li&gt;
   &lt;li&gt;Now your webpage repository is set up.&lt;/li&gt;
   &lt;li&gt;Create a new directory in your local system, get inside that directory and follow the next step.&lt;/li&gt;
-  &lt;li&gt;Pull the repository into your own local system. The steps can be followed from the following link: [link] https://help.github.com/articles/fork-a-repo/&lt;/li&gt;
+  &lt;li&gt;Pull the repository into your own local system. The steps can be followed from the following link: [link] (https://help.github.com/articles/fork-a-repo/)&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;making-modifications-to-configyml--cname&quot;&gt;Making modifications to _config.yml &amp;amp; CNAME&lt;/h2&gt;
@@ -112,7 +128,7 @@ passing start+1 and end -1 recursively and at this point.&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Open _config.yml and make changes as follows.&lt;/li&gt;
   &lt;li&gt;Give the title of your page, email, author and description.&lt;/li&gt;
-  &lt;li&gt;In the URL give http://&lt;yourgithubname&gt;.github.io&lt;/yourgithubname&gt;&lt;/li&gt;
+  &lt;li&gt;In the URL give [http://&lt;yourgithubname&gt;.github.io](http://&lt;yourgithubname&gt;.github.io)&lt;/yourgithubname&gt;&lt;/yourgithubname&gt;&lt;/li&gt;
   &lt;li&gt;Give animated as true&lt;/li&gt;
   &lt;li&gt;In social icons add your github name, stackoverflow id, twittername, etc. Google plus name should start with +. If your gmail id is test@gmail.com, give it as +test. Do not add @ in linkedin URL.&lt;/li&gt;
   &lt;li&gt;Give the following inputs in Build Settings 
@@ -133,14 +149,14 @@ passing start+1 and end -1 recursively and at this point.&lt;/p&gt;
   &lt;li&gt;If there are any errors in your configuration github will email you for making changes.&lt;/li&gt;
   &lt;li&gt;The website will go live in within 30 mins.&lt;/li&gt;
   &lt;li&gt;Play around with the site and create new layouts new pages.&lt;/li&gt;
-  &lt;li&gt;Make sure you give appropriate credits to the original developer of pixyll. [link]https://github.com/johnotander&lt;/li&gt;
+  &lt;li&gt;Make sure you give appropriate credits to the original developer of pixyll. &lt;a href=&quot;https://github.com/johnotander&quot;&gt;link&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;In case of any difficulty, contact me @ bhuvan (at) bhuvanrawal (dot) me&lt;/li&gt;
 &lt;/ul&gt;
 
 </description>
         <pubDate>Mon, 05 Jan 2015 04:51:29 +0530</pubDate>
-        <link>http://bhuvanrawal.me/blog/jekyll%20pixyll/2015/01/Testing-post/</link>
-        <guid isPermaLink="true">http://bhuvanrawal.me/blog/jekyll%20pixyll/2015/01/Testing-post/</guid>
+        <link>http://bhuvanrawal.me/blog/main_blog/2015/01/Testing-post/</link>
+        <guid isPermaLink="true">http://bhuvanrawal.me/blog/main_blog/2015/01/Testing-post/</guid>
       </item>
     
       <item>
@@ -148,8 +164,8 @@ passing start+1 and end -1 recursively and at this point.&lt;/p&gt;
         <description>&lt;p&gt;Testing jekyll&lt;/p&gt;
 </description>
         <pubDate>Mon, 05 Jan 2015 04:51:29 +0530</pubDate>
-        <link>http://bhuvanrawal.me/computers/dsa/matrix/2015/01/Testing-post/</link>
-        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/matrix/2015/01/Testing-post/</guid>
+        <link>http://bhuvanrawal.me/computers/dsa/searching/jekyll%20pixyll/2015/01/Testing-post/</link>
+        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/searching/jekyll%20pixyll/2015/01/Testing-post/</guid>
       </item>
     
       <item>
@@ -157,8 +173,17 @@ passing start+1 and end -1 recursively and at this point.&lt;/p&gt;
         <description>&lt;p&gt;Testing jekyll&lt;/p&gt;
 </description>
         <pubDate>Mon, 05 Jan 2015 04:51:29 +0530</pubDate>
-        <link>http://bhuvanrawal.me/computers/dsa/trees/jekyll%20pixyll/2015/01/Testing-post/</link>
-        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/trees/jekyll%20pixyll/2015/01/Testing-post/</guid>
+        <link>http://bhuvanrawal.me/computers/dsa/linkedlist/jekyll%20pixyll/2015/01/Testing-post/</link>
+        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/linkedlist/jekyll%20pixyll/2015/01/Testing-post/</guid>
+      </item>
+    
+      <item>
+        <title>testingBitMagic</title>
+        <description>&lt;p&gt;Testing jekyll&lt;/p&gt;
+</description>
+        <pubDate>Mon, 05 Jan 2015 04:51:29 +0530</pubDate>
+        <link>http://bhuvanrawal.me/computers/dsa/bitmagic/2015/01/Testing-post/</link>
+        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/bitmagic/2015/01/Testing-post/</guid>
       </item>
     
       <item>
@@ -175,8 +200,8 @@ passing start+1 and end -1 recursively and at this point.&lt;/p&gt;
         <description>&lt;p&gt;Testing jekyll&lt;/p&gt;
 </description>
         <pubDate>Mon, 05 Jan 2015 04:51:29 +0530</pubDate>
-        <link>http://bhuvanrawal.me/computers/dsa/searching/jekyll%20pixyll/2015/01/Testing-post/</link>
-        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/searching/jekyll%20pixyll/2015/01/Testing-post/</guid>
+        <link>http://bhuvanrawal.me/computers/dsa/matrix/2015/01/Testing-post/</link>
+        <guid isPermaLink="true">http://bhuvanrawal.me/computers/dsa/matrix/2015/01/Testing-post/</guid>
       </item>
     
   </channel>
