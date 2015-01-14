@@ -11,14 +11,20 @@
         <description>&lt;p&gt;The idea behind its solution is quite simple and straight.&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;If left subtree exists, process the left subtree&lt;/li&gt;
-  &lt;li&gt;Recursively convert the left subtree to DLL.&lt;/li&gt;
-  &lt;li&gt;Then find inorder predecessor of root in left subtree (inorder predecessor is rightmost node in left subtree).&lt;/li&gt;
-  &lt;li&gt;Make inorder predecessor as previous of root and root as next of inorder predecessor.&lt;/li&gt;
-  &lt;li&gt;If right subtree exists, process the right subtree (Below 3 steps are similar to left subtree).&lt;/li&gt;
-  &lt;li&gt;Recursively convert the right subtree to DLL.&lt;/li&gt;
-  &lt;li&gt;Then find inorder successor of root in right subtree (inorder successor is leftmost node in right subtree).&lt;/li&gt;
-  &lt;li&gt;Make inorder successor as next of root and root as previous of inorder successor.&lt;/li&gt;
+  &lt;li&gt;If left subtree exists, process the left subtree
+    &lt;ul&gt;
+      &lt;li&gt;Recursively convert the left subtree to DLL.&lt;/li&gt;
+      &lt;li&gt;Then find inorder predecessor of root in left subtree (inorder predecessor is rightmost node in left subtree).&lt;/li&gt;
+      &lt;li&gt;Make inorder predecessor as previous of root and root as next of inorder predecessor.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;If right subtree exists, process the right subtree (Below 3 steps are similar to left subtree).
+    &lt;ul&gt;
+      &lt;li&gt;Recursively convert the right subtree to DLL.&lt;/li&gt;
+      &lt;li&gt;Then find inorder successor of root in right subtree (inorder successor is leftmost node in right subtree).&lt;/li&gt;
+      &lt;li&gt;Make inorder successor as next of root and root as previous of inorder successor.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
   &lt;li&gt;Find the leftmost node and return it (the leftmost node is always head of converted DLL).&lt;/li&gt;
 &lt;/ul&gt;
 

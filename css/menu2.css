@@ -161,7 +161,7 @@ ul{
 }
 
 /* settings for submenu links on rollover*/
-.nav ul, li li{
+.nav ul, .nav li li{
   width: 0px;		 
 }
 /*settings for submenu links*/
@@ -302,6 +302,9 @@ background:url(triangle_sub.png) 0% 35% no-repeat;
         color:#fff;
         font-size:6px;
     }
+}
+.post-content p{
+    line-height:1.5;
 }
 /*
 .site-header nav a {

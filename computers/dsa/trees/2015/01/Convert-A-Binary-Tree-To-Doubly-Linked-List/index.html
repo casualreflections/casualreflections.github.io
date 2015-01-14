@@ -182,14 +182,20 @@ jQuery(document).ready(function($){
   <p>The idea behind its solution is quite simple and straight.</p>
 
 <ul>
-  <li>If left subtree exists, process the left subtree</li>
-  <li>Recursively convert the left subtree to DLL.</li>
-  <li>Then find inorder predecessor of root in left subtree (inorder predecessor is rightmost node in left subtree).</li>
-  <li>Make inorder predecessor as previous of root and root as next of inorder predecessor.</li>
-  <li>If right subtree exists, process the right subtree (Below 3 steps are similar to left subtree).</li>
-  <li>Recursively convert the right subtree to DLL.</li>
-  <li>Then find inorder successor of root in right subtree (inorder successor is leftmost node in right subtree).</li>
-  <li>Make inorder successor as next of root and root as previous of inorder successor.</li>
+  <li>If left subtree exists, process the left subtree
+    <ul>
+      <li>Recursively convert the left subtree to DLL.</li>
+      <li>Then find inorder predecessor of root in left subtree (inorder predecessor is rightmost node in left subtree).</li>
+      <li>Make inorder predecessor as previous of root and root as next of inorder predecessor.</li>
+    </ul>
+  </li>
+  <li>If right subtree exists, process the right subtree (Below 3 steps are similar to left subtree).
+    <ul>
+      <li>Recursively convert the right subtree to DLL.</li>
+      <li>Then find inorder successor of root in right subtree (inorder successor is leftmost node in right subtree).</li>
+      <li>Make inorder successor as next of root and root as previous of inorder successor.</li>
+    </ul>
+  </li>
   <li>Find the leftmost node and return it (the leftmost node is always head of converted DLL).</li>
 </ul>
 
