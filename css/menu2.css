@@ -225,7 +225,15 @@ background:url(triangle_sub.png) 0% 35% no-repeat;
   font-weight: 300;
 }
 @media only screen and (max-width: 500px) {
-    .nav li {
+    nav {
+        height: auto
+    }
+    nav ul {
+        width: 100%;
+        display: block;
+        height: auto;
+    }
+    nav li {
         width: 60px;
         cursor: pointer;
         height: 36px;
@@ -238,9 +246,9 @@ background:url(triangle_sub.png) 0% 35% no-repeat;
         border-right: 0px solid #3D3E3D;
         text-align: center;
         line-height: .5rem;
-
+        font-size: small;
     }
-    .nav li .hover{
+    nav li .hover{
         background:url(backgroundMiddleOver.png);
         width:60px;
         cursor:pointer;
