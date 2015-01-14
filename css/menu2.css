@@ -115,7 +115,7 @@ ul{
    z-index:3;
    cursor:pointer;
    font-size:14px;
-   display:inline;
+   display:block;
    color:#fff;
    text-transform: uppercase;    
    padding-top:10px;
@@ -223,6 +223,28 @@ background:url(triangle_sub.png) 0% 35% no-repeat;
 .site-header a {
   color: #fff;
   font-weight: 300;
+}
+@media only screen and (min-width: 481px) and (max-width: 900px){
+    #menu li div.column.mayHide {
+        display: none;
+    }
+}
+@media only screen and (min-width: 481px) {
+    .nav li {
+        width: 60px;
+        cursor: pointer;
+        height: 36px;
+        position: relative;
+        float: left;
+        list-style: none;
+        z-index: 30;
+        padding-top: 15px;
+        border-left: 0px solid #000000;
+        border-right: 0px solid #3D3E3D;
+        text-align: center;
+        line-height: 1rem;
+
+    }
 }
 /*
 .site-header nav a {
