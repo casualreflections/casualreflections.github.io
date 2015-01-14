@@ -94,7 +94,7 @@ ul{
 	border-left: 1px solid #000000;
 	border-right: 1px solid #3D3E3D;
 	text-align:center;
-    line-height: 1rem;
+    line-height: .5rem;
 	
 }
 /*settings for upper hover effect*/
@@ -224,12 +224,7 @@ background:url(triangle_sub.png) 0% 35% no-repeat;
   color: #fff;
   font-weight: 300;
 }
-@media only screen and (min-width: 481px) and (max-width: 900px){
-    #menu li div.column.mayHide {
-        display: none;
-    }
-}
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 500px) {
     .nav li {
         width: 60px;
         cursor: pointer;
@@ -242,7 +237,17 @@ background:url(triangle_sub.png) 0% 35% no-repeat;
         border-left: 0px solid #000000;
         border-right: 0px solid #3D3E3D;
         text-align: center;
-        line-height: 1rem;
+        line-height: .5rem;
+
+    }
+    .nav li .hover{
+        background:url(backgroundMiddleOver.png);
+        width:60px;
+        cursor:pointer;
+        height:0px;
+        display:none;
+        z-index:1;
+        margin-top:-33px;
 
     }
 }
