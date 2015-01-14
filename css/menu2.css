@@ -224,18 +224,22 @@ background:url(triangle_sub.png) 0% 35% no-repeat;
   color: #fff;
   font-weight: 300;
 }
-@media only screen and (max-width: 60rem) {
-    nav {
+@media only screen and  (min-width:320px) and (max-width: 2000px) {
+    .px-responsive{
+        padding-left: 0;
+        padding-right:0;
+    }
+    .nav {
         height: auto
         font-size: 7px;
     }
-    nav ul {
+    .nav ul {
         width: 100%;
         display: block;
         height: auto;
         font-size: 7px;
     }
-    nav li {
+    .nav li {
         width: 60px;
         cursor: pointer;
         height: 18px;
@@ -250,7 +254,7 @@ background:url(triangle_sub.png) 0% 35% no-repeat;
         line-height: .5rem;
         font-size: 7px;
     }
-    nav li .hover{
+    .nav li .hover{
         background:url(backgroundMiddleOver.png);
         width:60px;
         cursor:pointer;
@@ -259,6 +263,9 @@ background:url(triangle_sub.png) 0% 35% no-repeat;
         z-index:1;
         margin-top:-33px;
 
+    }
+    .nav li a{
+        font-size: 10px;
     }
 }
 /*
