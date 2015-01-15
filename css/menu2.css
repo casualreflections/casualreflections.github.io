@@ -50,7 +50,7 @@ html, body {
    padding:0px 0px 0px 0px;
 /*   margin-left:27%;*/
    margin-top:10px;
-   border-bottom: 1px solid #363937;
+   /*   border-bottom: 1px solid #363937;*/
   text-align:center;
   margin-bottom:normal;
 }
@@ -91,8 +91,8 @@ ul{
 	list-style:none;
 	z-index:30;
 	padding-top:15px;
-	border-left: 1px solid #000000;
-	border-right: 1px solid #3D3E3D;
+/*	border-left: 1px solid #000000;
+	border-right: 1px solid #3D3E3D;*/
 	text-align:center;
     line-height: .5rem;
 	
@@ -125,7 +125,7 @@ ul{
 .nav li li {
    border-left: none;
    border-right:none;
-   border-bottom:thin dotted #454545;
+   /*border-bottom:thin dotted #454545;*/
    cursor:pointer;
    text-align:left;
    min-height:23px;
