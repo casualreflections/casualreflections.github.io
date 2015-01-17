@@ -119,7 +119,8 @@ ul{
    color:#fff;
    text-transform: uppercase;    
    padding-top:10px;
-   cursor: pointer;	
+   cursor: pointer;
+   font-weight: bold;
 }
 /*settings for submenus*/ 
 .nav li li {

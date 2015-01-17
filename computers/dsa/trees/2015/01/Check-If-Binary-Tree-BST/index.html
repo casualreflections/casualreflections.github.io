@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Finding the Diameter of a Binary Tree &#8211; Bhuvan Rawal</title>
+    <title>Get all leaves of a binary tree &#8211; Bhuvan Rawal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Given a binary tree, find the length of the longest node to node path in a binary tree">
+    <meta name="description" content="Printing all children of a Binary Tree">
     <meta name="author" content="Bhuvan Rawal">
     <meta name="keywords" content="computers, dsa, trees">
-    <link rel="canonical" href="http://bhuvanrawal.me/computers/dsa/trees/2015/01/Finding-Diameter-Binary-Tree/">
+    <link rel="canonical" href="http://bhuvanrawal.me/computers/dsa/trees/2015/01/Check-If-Binary-Tree-BST/">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/pixyll.css" type="text/css">
@@ -24,9 +24,9 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="en_US">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Finding the Diameter of a Binary Tree">
+    <meta property="og:title" content="Get all leaves of a binary tree">
     <meta property="og:description" content="Code. Coffee. Repeat.">
-    <meta property="og:url" content="http://bhuvanrawal.me/computers/dsa/trees/2015/01/Finding-Diameter-Binary-Tree/">
+    <meta property="og:url" content="http://bhuvanrawal.me/computers/dsa/trees/2015/01/Check-If-Binary-Tree-BST/">
     <meta property="og:site_name" content="Bhuvan Rawal">
 
     <!-- Icons -->
@@ -156,6 +156,8 @@
       <div class="measure">
         
 
+
+
 <!-- Typekit -->
 <script type="text/javascript" src="/js/uwb2itp.js"></script>
 <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
@@ -172,37 +174,48 @@ jQuery(document).ready(function($){
 });</script>
 
 <div class="post-header mb2">
-  <h1>Finding the Diameter of a Binary Tree</h1>
-  <span class="post-meta">Jan 16, 2015</span><br>
+  <h1>Get all leaves of a binary tree</h1>
+  <span class="post-meta">Jan 19, 2015</span><br>
   
   <span class="post-meta small">1 minute read</span>
 </div>
 
 <article class="post-content">
-  <p>The diameter of a tree (sometimes called the width) is the number of nodes on the longest path between two leaves in the tree. The diagram below shows two trees each with diameter nine, the leaves that form the ends of a longest path are shaded (note that there is more than one path in each tree of length nine, but no path longer than nine nodes).</p>
+  <h2 id="algorithm">Algorithm:</h2>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
-<span class="cm"> * http://www.geeksforgeeks.org/diameter-of-a-binary-tree/</span>
-<span class="cm"> * @param root Root of the tree for which diameter has to be found out</span>
-<span class="cm"> * @return</span>
-<span class="cm"> */</span>
-<span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">getDiameter</span><span class="o">(</span><span class="n">Tree</span> <span class="n">root</span><span class="o">){</span>
-    <span class="kt">int</span> <span class="n">leftHeight</span> <span class="o">=</span> <span class="n">findHeight</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">left</span><span class="o">);</span>
-    <span class="kt">int</span> <span class="n">rightHeight</span> <span class="o">=</span> <span class="n">findHeight</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
-    <span class="kt">int</span> <span class="n">leftDia</span> <span class="o">=</span> <span class="n">getDiameter</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">left</span><span class="o">);</span>
-    <span class="kt">int</span> <span class="n">rightDia</span> <span class="o">=</span> <span class="n">getDiameter</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
-    <span class="k">return</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">leftHeight</span><span class="o">+</span><span class="n">rightHeight</span><span class="o">,</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">leftDia</span><span class="o">,</span> <span class="n">rightDia</span><span class="o">));</span>
-<span class="o">}</span>
-<span class="cm">/**</span>
-<span class="cm"> * Finding the Height of a node in a binary tree</span>
-<span class="cm"> * @param root</span>
-<span class="cm"> * @return</span>
-<span class="cm"> */</span>
-<span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">findHeight</span><span class="o">(</span><span class="n">Tree</span> <span class="n">root</span><span class="o">){</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">root</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
-        <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
-    <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">findHeight</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">left</span><span class="o">),</span><span class="n">findHeight</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">right</span><span class="o">));</span>
-<span class="o">}</span></code></pre></div>
+<p>/**
+ * Dummy Method for checkIfBST(Tree, int, int)
+ * @param root
+ * @return
+ */
+public static boolean checkIfBST(Tree<integer> root){
+    return checkIfBST(root, Integer.MIN_VALUE,Integer.MAX_VALUE);
+}</integer></p>
+
+<p>/**
+ * Checks if a given Tree is a Binary search tree
+ * @param root
+ * @param min
+ * @param max
+ * @return
+ */
+public static boolean checkIfBST(Tree<integer> root, int min, int max){
+    if (root == null)
+        return true;
+    if (root.left != null &amp;&amp; root.left.value &gt; root.value)
+        return false;
+    if (root.right != null &amp;&amp; root.right.value &lt; root.value)
+        return false;
+    if(root.left != null &amp;&amp; root.left.value &gt; max){
+        return false;
+    } else if(root.left != null)
+        max = Math.min(root.left.value, max);
+    if(root.right != null &amp;&amp; root.right.value &lt; min){
+        return false;
+    } else if (root.right != null)
+        min = Math.max(root.right.value, min);
+    return checkIfBST(root.left,Integer.MIN_VALUE,max) &amp; checkIfBST(root.right,min,Integer.MAX_VALUE);
+}</integer></p>
 
 </article>
 
@@ -229,7 +242,7 @@ jQuery(document).ready(function($){
   <div id="disqus_thread"></div>
   <script type="text/javascript">
     var disqus_shortname  = 'bhuvanrawal';
-    var disqus_identifier = '/computers/dsa/trees/2015/01/Finding-Diameter-Binary-Tree';
+    var disqus_identifier = '/computers/dsa/trees/2015/01/Check-If-Binary-Tree-BST';
 
     (function() {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
