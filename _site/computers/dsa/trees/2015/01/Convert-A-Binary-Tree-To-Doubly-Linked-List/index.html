@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Convert a Binary Tree to Doubly Linked list &#8211; Bhuvan Rawal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Given a Binary Tree, convert it into a Doubly Linked List">
+    <meta name="author" content="Bhuvan Rawal">
+    <meta name="keywords" content="computers, dsa, trees">
+    <link rel="canonical" href="http://bhuvanrawal.me/computers/dsa/trees/2015/01/Convert-A-Binary-Tree-To-Doubly-Linked-List/">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Convert a Binary Tree to Doubly Linked list">
+    <meta property="og:description" content="Code. Coffee. Repeat.">
+    <meta property="og:url" content="http://bhuvanrawal.me/computers/dsa/trees/2015/01/Convert-A-Binary-Tree-To-Doubly-Linked-List/">
+    <meta property="og:site_name" content="Bhuvan Rawal">
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+    <script type="text/javascript" src="/js/uwb2itp.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+    <link href="/css/colorbox.css" rel="stylesheet" media="screen" type="text/css">
+    <!--link href="/css/bootstrap.css" rel="stylesheet" media="screen" type="text/css"-->
+
+    <link rel="stylesheet" type="text/css" href="/css/menu2.css">
+    <link href="/css/main1.css" rel="stylesheet" media="screen" type="text/css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.colorbox-min.js"></script>
+    <script type="text/javascript" src="/js/jQuery.js"></script>
+    <script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui-1.8.1.custom.min.js"></script>
+    <script type="text/javascript" src="/js/menu.js"></script>
+
+</head>
+
+
+<body class="animated fade-in-down">
+
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+	  <div class="site-title">
+      	<a href="http://bhuvanrawal.me">Bhuvan Rawal</a>
+      </div>
+        
+      
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="left">
+    
+      <a class="fa fa-github" href="https://github.com/bhuvanrawal"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/3646120"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+      <a class="fa fa-twitter" href="https://twitter.com/bhuvanrawal"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/115368800868963120427/posts"></a>
+    
+    
+      <a class="fa fa-envelope" href="mailto:bhuvan@bhuvanrawal.me"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/profile/view?id=120133982"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/bhu1rawal"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+<div class="menu">
+	<ul class="nav">
+			<div id = "navLeft"></div>
+			<div id = "navRight"></div>
+			<li class = "mainmenu"><a href="/">Home</a></li>
+			<li class = "submenu">	<a href="/about/">About</a></li>
+			<li class = "submenu"><a href="/work/">Work</a></li>
+			<li class = "submenu"><a href="/computers/">Computers</a>
+			<ul>
+				<li class = "submenu2"><a href="/java/">Java</a></li>
+				<li class = "submenu2"><a href="/os/">Operating Systems</a></li>
+				<li class = "submenu2"><a href="/databases/">Databases</a></li>
+				<li class = "submenu2"><a href="/cpp/">C++</a></li>
+				<li class = "submenu2"><a href="/mathematics/">Mathematics</a></li>
+				<li class = "submenu2"><a href="//"></a></li>
+				<li class = "submenu2"><a href="/dsa/">DSA</a>
+				<ul>
+					<li><a href="/linkedlist/">Linked List</a></li>
+					<li><a href="/arrays/">Array</a></li>
+					<li><a href="/dp/">DP</a></li>
+					<li><a href="/trees/">Trees</a></li>
+					<li><a href="/sorting/">Sorting</a></li>
+					<li><a href="/searching/">Searching</a></li>
+					<li><a href="/backtracking/">Backtracking</a></li>
+					<li><a href="/matrix/">Matrix</a></li>
+					<li><a href="/bitMagic/">Bit Magic</a></li>
+					<li><a href="/graphs/">Graphs</a></li>
+				</ul></li>			
+			</ul></li>
+			<li class = "submenu"><a href="/archive/">Archive</a></li>
+			<li class = "submenu"><a href="/photo/">Photos</a></li>
+			<li class = "submenu"><a href="/contact/">Contact Me</a></li>	
+			</ul>
+	</ul>
+</div>
+
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+        
+
+<!-- Typekit -->
+<script type="text/javascript" src="/js/uwb2itp.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<link href="/css/post.css" rel="stylesheet" media="screen" type="text/css">
+<link href="/css/colorbox.css" rel="stylesheet" media="screen" type="text/css">
+<link href="/css/bootstrap.css" rel="stylesheet" media="screen" type="text/css">
+<script src="/js/jquery.min.js"> </script>
+<script src="/js/jquery.colorbox.js"> </script>
+<script src="/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+jQuery(document).ready(function($){
+ $("#gallery a").colorbox({maxWidth:"100%",maxHeight:"100%",opacity:0.8});
+});</script>
+
+<div class="post-header mb2">
+  <h1>Convert a Binary Tree to Doubly Linked list</h1>
+  <span class="post-meta">Jan 16, 2015</span><br>
+  
+  <span class="post-meta small">2 minute read</span>
+</div>
+
+<article class="post-content">
+  <p>The idea behind its solution is quite simple and straight.</p>
+
+<ul>
+  <li>If left subtree exists, process the left subtree
+    <ul>
+      <li>Recursively convert the left subtree to DLL.</li>
+      <li>Then find inorder predecessor of root in left subtree (inorder predecessor is rightmost node in left subtree).</li>
+      <li>Make inorder predecessor as previous of root and root as next of inorder predecessor.</li>
+    </ul>
+  </li>
+  <li>If right subtree exists, process the right subtree (Below 3 steps are similar to left subtree).
+    <ul>
+      <li>Recursively convert the right subtree to DLL.</li>
+      <li>Then find inorder successor of root in right subtree (inorder successor is leftmost node in right subtree).</li>
+      <li>Make inorder successor as next of root and root as previous of inorder successor.</li>
+    </ul>
+  </li>
+  <li>Find the leftmost node and return it (the leftmost node is always head of converted DLL).</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
+<span class="cm"> * http://www.geeksforgeeks.org/in-place-convert-a-given-binary-tree-to-doubly-linked-list/</span>
+<span class="cm"> * Given a Binary Tree (Bt), convert it to a Doubly Linked List(DLL).</span>
+<span class="cm"> * The left and right pointers in nodes are to be used as previous and next pointers respectively</span>
+<span class="cm"> * in converted DLL. The order of nodes in DLL must be same as Inorder of the given Binary Tree.</span>
+<span class="cm"> * The first node of Inorder traversal (left most node in BT) must be head node of the DLL.</span>
+<span class="cm"> * @param root</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="n">Tree</span> <span class="nf">convertTreeToDoublyLL</span><span class="o">(</span><span class="n">Tree</span> <span class="n">root</span><span class="o">){</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">left</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+        <span class="n">convertTreeToDoublyLL</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">left</span><span class="o">);</span>
+        <span class="c1">// find the inorder predecessor and insert root to its end</span>
+        <span class="n">Tree</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">temp</span><span class="o">.</span><span class="na">right</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">root</span><span class="o">.</span><span class="na">left</span><span class="o">=</span><span class="n">temp</span><span class="o">;</span>
+        <span class="n">temp</span><span class="o">.</span><span class="na">right</span><span class="o">=</span><span class="n">root</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">right</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">convertTreeToDoublyLL</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
+        <span class="c1">// find the inorder successor and insert root to its beginning</span>
+        <span class="n">Tree</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">temp</span><span class="o">.</span><span class="na">left</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">root</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
+        <span class="n">temp</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">root</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">root</span><span class="o">;</span>
+<span class="o">}</span></code></pre></div>
+
+<p>Another approach could be to do an inorder traversal and successively connect the pointers of nodes.
+But this approach would not work if we want to get a sorted linked list from a BST.</p>
+
+</article>
+
+<div id="gallery">
+<ul>
+
+</ul>
+</div>
+
+
+
+  <div class="py2 post-footer">
+  <img src="/img/me.jpeg" alt="Bhuvan Rawal" class="avatar" />
+  <p>
+    Pixyll built by John Oatander. Modified by Bhuvan for personal use. Apart from coding he likes to play tunes on guitar and climb high.
+  </p>
+  <p>Follow him on <a href="https://www.facebook.com/profile.php?id=bhu1rawal">Facebook</a>.
+  </p>
+</div>
+
+
+
+
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname  = 'bhuvanrawal';
+    var disqus_identifier = '/computers/dsa/trees/2015/01/Convert-A-Binary-Tree-To-Doubly-Linked-List';
+
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+<!---->
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+  <div class="p2 wrap">
+    <div class="measure mt1 center">
+      <small>
+       Pixyll theme was created by John Oatander. It was modified by Bhuvan for this website.
+      </small>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-58286706-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+
+
+</body>
+</html>
