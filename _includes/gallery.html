@@ -1,0 +1,7 @@
+<div id="gallery">
+<ul>
+{% for image in page.gallery %}
+<li><a href="/img/posts{{page.id}}/{{image}}.jpg" rel="gallery"><img src="/img/posts{{page.id}}/{{image}}-thumb.jpg"/></a></li>
+{% endfor %}
+</ul>
+</div>
