@@ -1,40 +1,39 @@
 # Site settings
-title:       Bhuvan Rawal
-email:       bhuvan@bhuvanrawal.me
-author:      Bhuvan Rawal
-description: "Code. Coffee. Repeat."
+title:       Pixyll
+email:       your_email@example.com
+author:      John Otander
+description: "A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff."
 baseurl:     ""
-url:         "http://bhuvanrawal.me"
+url:         "http://pixyll.com"
 
 # Google analytics
-google_analytics: UA-58286706-1
+google_analytics: UA-53548208-1
 
 # Optional features
-animated:           true
-show_related_posts: true
-show_post_footers:  true
+animated:           false
+show_related_posts: false
+show_post_footers:  false
+
+# Disqus post comments
+# (leave blank to disable Disqus)
+disqus_shortname:
 
 # Social icons
-show_social_icons: true
-github_username: bhuvanrawal
-stackoverflow_id: 3646120
-twitter_username: bhuvanrawal
-google_plus_id: 115368800868963120427
-linkedin_username: 120133982
+show_social_icons: false
+github_username:
+stackoverflow_id:
+twitter_username:
+google_plus_id:
+linkedin_username:
 bitcoin_url:
 paypal_url:
 flattr_button:
-facebook_profileUrl: https://www.facebook.com/bhu1rawal 
 
 # Build settings
-markdown: kramdown
-permalink: /:year/:month/:title/
-paginate: 5
+markdown:     redcarpet
+redcarpet:
+  extensions: ['smart', 'tables', 'with_toc_data']
+permalink:    pretty
+paginate:     3
 sass:
-compressed: true
-
-disqus_shortname : bhuvanrawal
-
-slideshow:
-    width: 150
-    height: 100
+  compressed: true

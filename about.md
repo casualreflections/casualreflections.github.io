@@ -1,8 +1,19 @@
 ---
 layout: page
-title: About Bhuvan
+title: About Pixyll
 permalink: /about/
 ---
 
-Im an alumunus of BITS-Pilani Goa campus, class of 2013. I am a keen traveller and have visited length and breadth of India. I also like to trek on holidays, I believe that best places in the world are inaccesible by roads. Although my current job keeps me busy most of the time, in my free time I can be found fiddling tunes on my guitar.
+This Jekyll theme was crafted with <3 by [John Otander](http://johnotander.com)
+([@4lpine](https://twitter.com/4lpine)).
 
+Checkout the [Github repository](https://github.com/johnotander/pixyll) to download it,
+request a feature, report a bug, or contribute. It's free, and open source
+([MIT](http://opensource.org/licenses/MIT)).
+
+Thanks to the following:
+
+* [BASSCSS](http://basscss.com)
+* [Jekyll](http://jekyllrb.com)
+* [Refills](http://refills.bourbon.io/)
+* [Solarized](http://ethanschoonover.com/solarized)

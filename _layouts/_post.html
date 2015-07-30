@@ -1,0 +1,71 @@
+---
+layout: default
+---
+{% assign minutes = content | number_of_words | divided_by: 180 %}
+{% if minutes == 0 %}
+{% assign minutes = 1 %}
+{% endif %}
+ <!-- Typekit -->
+   <script type="text/javascript" src="//use.typekit.net/uwb2itp.js"></script>
+   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+   <link href="/css/colorbox.css" rel="stylesheet" media="screen" type="text/css">
+   <!--<link href="/css/bootstrap.css" rel="stylesheet" media="screen" type="text/css">-->
+   <link href="/css/main.css" rel="stylesheet" media="screen" type="text/css">
+
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"> </script>
+   <script src="/js/jquery.colorbox-min.js"> </script>
+   <script src="/js/bootstrap.min.js"></script>
+   <script type="text/javascript">
+    jQuery(document).ready(function($){
+      $("#gallery a").colorbox({maxWidth:"100%",maxHeight:"100%",opacity:0.8});
+    });
+    </script>
+<link href="/jesl/jesl.min.css" rel="stylesheet" media="screen" type="text/css">
+    <script src="/jesl/jquery.min.js"> </script>
+    <script src="/jesl/jesl.min.js"> </script>
+<div class="post-header mb2">
+  <h1>{{ page.title }}</h1>
+  <span class="post-meta">{{ page.date | date: "%b %-d, %Y" }}</span><br>
+  {% if page.update_date %}
+    <span class="post-meta">Updated: {{ page.update_date | date: "%b %-d, %Y" }}</span><br>
+  {% endif %}
+  <span class="post-meta small">{{ minutes }} minute read</span>
+</div>
+{{ content | slideshow}}
+
+{{content | slideshow }}
+<article class="post-content">
+  {{ content | slideshows}}
+</article>
+{% include gallery.html %}
+{% if site.show_post_footers %}
+  {% include post_footer.html %}
+{% endif %}
+
+{% if site.disqus_shortname %}
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname  = '{{ site.disqus_shortname }}';
+    var disqus_identifier = '{{ page.id }}';
+
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+{% endif %}
+
+{% if site.show_related_posts %}
+  <h3 class="related-post-title">Related Posts</h3>
+  {% for post in site.related_posts %}
+    <div class="post ml2">
+      <a href="{{ post.url | prepend: site.baseurl }}" class="post-link">
+        <h4 class="post-title">{{ post.title }}</h4>
+        <p class="post-summary">{{ post.summary }}</p>
+      </a>
+    </div>
+  {% endfor %}
+{% endif %}
