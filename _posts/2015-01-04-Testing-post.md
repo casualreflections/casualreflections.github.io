@@ -3,8 +3,15 @@ layout:     post
 title:      Creating your own WebPage using gh-pages
 date:       2015-01-04 23:21:29
 summary:    Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain.
-categories: jekyll pixyll
+description:    Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain.
+categories: [webdesign, first blog]
+tags:	[jekyll, pixyll, liquid, markdown, blog]
+share:	true
+comments:	true
+post_format: [ ]
+
 ---
+
 
 ## This tutorial will help you set up your own webpage using github pages and Pixyll-jekyll
 
@@ -22,13 +29,13 @@ categories: jekyll pixyll
 * In the existing repository URL give [link] https://github.com/johnotander/pixyll.git
 * Now your webpage repository is set up.
 * Create a new directory in your local system, get inside that directory and follow the next step.
-* Pull the repository into your own local system. The steps can be followed from the following link: [link] https://help.github.com/articles/fork-a-repo/
+* Pull the repository into your own local system. The steps can be followed from the following link: [link] (https://help.github.com/articles/fork-a-repo/)
 
 ## Making modifications to _config.yml & CNAME
 
 * Open _config.yml and make changes as follows.
  * Give the title of your page, email, author and description.
- * In the URL give http://<yourgithubname>.github.io
+ * In the URL give [http://<yourgithubname>.github.io](http://<yourgithubname>.github.io)
  *  Give animated as true
  * In social icons add your github name, stackoverflow id, twittername, etc. Google plus name should start with +. If your gmail id is test@gmail.com, give it as +test. Do not add @ in linkedin URL.
  * Give the following inputs in Build Settings 
@@ -49,6 +56,6 @@ categories: jekyll pixyll
  * If there are any errors in your configuration github will email you for making changes.
 * The website will go live in within 30 mins.
 * Play around with the site and create new layouts new pages.
-* Make sure you give appropriate credits to the original developer of pixyll. [link]https://github.com/johnotander
+* Make sure you give appropriate credits to the original developer of pixyll. [link](https://github.com/johnotander)
 * In case of any difficulty, contact me @ bhuvan (at) bhuvanrawal (dot) me
  
