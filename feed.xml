@@ -2,26 +2,116 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <title type="text">Bhuvan Rawal</title>
   <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
-  <link rel="self" type="application/atom+xml" href="http://bhuvanrawal.me/feed.xml" />
-  <link rel="alternate" type="text/html" href="http://bhuvanrawal.me" />
-  <updated>2015-08-02T23:21:50+05:30</updated>
-  <id>http://bhuvanrawal.me/</id>
+  <link rel="self" type="application/atom+xml" href="/feed.xml" />
+  <link rel="alternate" type="text/html" href="" />
+  <updated>2015-08-03T20:21:27+05:30</updated>
+  <id>/</id>
   <author>
     <name>Bhuvan Rawal</name>
-    <uri>http://bhuvanrawal.me/</uri>
+    <uri>/</uri>
     <email>bhuvan@bhuvanrawal.me</email>
   </author>
   
 
   <entry>
+    <title type="html"><![CDATA[Spring Framework - Why?]]></title>
+    <link>/blog/computers/java/technology/spring-framework-why</link>
+    <id>/blog/computers/java/technology/spring-framework-why</id>
+    <published>2015-08-01T02:52:58+05:30</published>
+    <updated>2015-08-01T02:52:58+05:30</updated>
+    <author>
+      <name>Bhuvan Rawal</name>
+      <uri></uri>
+      <email>bhuvan@bhuvanrawal.me</email>
+    </author>
+    <content type="html">&lt;p&gt;Why Spring ?&lt;/p&gt;
+
+&lt;p&gt;Spring is used to efficiently and effortlessly wire all the components of a large application.
+This basically provides a framework for decoupling the application using dependency injection design pattern .&lt;/p&gt;
+
+&lt;p&gt;Consider a scenario where you only have to worry about making your object work as it is supposed to and leave the dependencies it requires to actually be provided by some one else. This some one is exactly what spring is !&lt;/p&gt;
+
+&lt;p&gt;Example:
+Suppose you need to render a view with a list of listeners:&lt;/p&gt;
+
+&lt;p&gt;1.You’d write an interface to be implemented:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Listener&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Users&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;showUsers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;2.You’d write an api to fetch the users from DB :&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Users&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ListFromDb&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Listener&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Users&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;showUsers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;//write the DB access code here.&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;3.Render the view:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ViewClass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Listener&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newListener&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;newListener&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ListFromDb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Users&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;listener&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;showUsers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Suppose, you are changing the business logic and now you want to fetch the list of users from a common seperated file instead of fetching it from the db. Now,lets look at the changes we need to make.&lt;/p&gt;
+
+&lt;p&gt;We’ll have an api which’ll break down the comma seperated file to return a list. Let’s say this api is implemented in ListFromFile class.
+To render this list in the view, we’ll have to create an instance of the class ListFromFile instead of ListFromDb.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Users&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;viewObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Listener&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newListener&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;newListener&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ListFromFile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Users&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newListener&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;showUsers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This is a very simple scenario with a minor change. Consider a large tightly coupled project where you’ll have to change every implementation of logic for a minor change in business.
+Very tedious indeed.&lt;/p&gt;
+
+&lt;p&gt;If only there was a way in which the injection of implementations of Listeners was taken care of and addrdfrrll we’d have to do is render the implementation to the view right ?
+Well, there is .&lt;/p&gt;
+
+&lt;p&gt;In spring,this is how it works.
+Create a setter method for the Listener class in an xml file and specify the dependencies of viewObject in it. Simple.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;bean&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;newListner&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;ListFromDb&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;bean&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;viewObject&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;property&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;newListner&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;ref=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;userListner&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/bean&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, when you write this :&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Users&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;listener&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;showUsers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;listener&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;automatically&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;created&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;without&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;instantiating&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;using&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;newListener&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ListFromDb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If you want to change the logic to fetch it from the comma seperated file, all you have to do is make changes in the xml to create a setter method for the changed class.&lt;/p&gt;
+
+&lt;p&gt;This injection of objects in spring is what makes it flexible to manage large applications .
+This is termed generically as Dependency Injection.&lt;/p&gt;
+
+      &lt;p&gt;&lt;a href=&quot;/blog/computers/java/technology/spring-framework-why&quot;&gt;Spring Framework - Why?&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on August 01, 2015.&lt;/p&gt;</content>
+  </entry>
+  
+
+  <entry>
     <title type="html"><![CDATA[Version Control with Git-Introduction]]></title>
-    <link>http://bhuvanrawal.me/blog/computers/linux/version-control-with-git-part1</link>
-    <id>http://bhuvanrawal.me/blog/computers/linux/version-control-with-git-part1</id>
+    <link>/blog/computers/linux/version-control-with-git-part1</link>
+    <id>/blog/computers/linux/version-control-with-git-part1</id>
     <published>2015-07-26T02:52:58+05:30</published>
     <updated>2015-07-26T02:52:58+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;p&gt;This post will help you learn basics of Git version control system without delving deep into its finer details. Learn all the basic tricks that can be useful for day today operations.&lt;/p&gt;
@@ -264,19 +354,19 @@ index 13968d1..5f6227c 100644
 
 &lt;p&gt;&lt;code&gt;$ git log --stat&lt;/code&gt;&lt;/p&gt;
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/blog/computers/linux/version-control-with-git-part1&quot;&gt;Version Control with Git-Introduction&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on July 26, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/blog/computers/linux/version-control-with-git-part1&quot;&gt;Version Control with Git-Introduction&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on July 26, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Rat In a Maze Problem]]></title>
-    <link>http://bhuvanrawal.me/dsa/computers/backtracking/Rat-In-A-Maze</link>
-    <id>http://bhuvanrawal.me/dsa/computers/backtracking/Rat-In-A-Maze</id>
+    <link>/dsa/computers/backtracking/Rat-In-A-Maze</link>
+    <id>/dsa/computers/backtracking/Rat-In-A-Maze</id>
     <published>2015-02-07T01:30:29+05:30</published>
     <updated>2015-02-07T01:30:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;p&gt;A Maze is given as N*N binary matrix of blocks where source block is the upper left most block i.e., maze[0][0] and destination block is lower rightmost block i.e., maze[N-1][N-1]. A rat starts from source and has to reach destination. The rat can move only in two directions: forward and down.
@@ -304,19 +394,19 @@ In the maze matrix, 0 means the block is dead end and 1 means the block can be u
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/dsa/computers/backtracking/Rat-In-A-Maze&quot;&gt;Rat In a Maze Problem&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on February 07, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/dsa/computers/backtracking/Rat-In-A-Maze&quot;&gt;Rat In a Maze Problem&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on February 07, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Permutations of a given string]]></title>
-    <link>http://bhuvanrawal.me/dsa/computers/backtracking/Print-All-Permutations</link>
-    <id>http://bhuvanrawal.me/dsa/computers/backtracking/Print-All-Permutations</id>
+    <link>/dsa/computers/backtracking/Print-All-Permutations</link>
+    <id>/dsa/computers/backtracking/Print-All-Permutations</id>
     <published>2015-02-06T23:05:29+05:30</published>
     <updated>2015-02-06T23:05:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;p&gt;A permutation, also called an “arrangement number” or “order,” is a rearrangement of the elements of an ordered list S into a one-to-one correspondence with S itself. A string of length n has n! permutation.&lt;/p&gt;
@@ -350,19 +440,19 @@ In the maze matrix, 0 means the block is dead end and 1 means the block can be u
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/dsa/computers/backtracking/Print-All-Permutations&quot;&gt;Permutations of a given string&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on February 06, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/dsa/computers/backtracking/Print-All-Permutations&quot;&gt;Permutations of a given string&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on February 06, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Convert an arbitrary binary tree into children sum tree]]></title>
-    <link>http://bhuvanrawal.me/computers/dsa/trees/Convert-Binary-Tree-Sum-Tree</link>
-    <id>http://bhuvanrawal.me/computers/dsa/trees/Convert-Binary-Tree-Sum-Tree</id>
+    <link>/computers/dsa/trees/Convert-Binary-Tree-Sum-Tree</link>
+    <id>/computers/dsa/trees/Convert-Binary-Tree-Sum-Tree</id>
     <published>2015-01-24T12:51:29+05:30</published>
     <updated>2015-01-24T12:51:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;p&gt;Convert and arbitrary binary tree into children sum tree.&lt;/p&gt;
@@ -423,19 +513,19 @@ For case 2 , if the left node exists then add the difference to that node and ke
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/computers/dsa/trees/Convert-Binary-Tree-Sum-Tree&quot;&gt;Convert an arbitrary binary tree into children sum tree&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 24, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Convert-Binary-Tree-Sum-Tree&quot;&gt;Convert an arbitrary binary tree into children sum tree&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 24, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Print Nodes with no siblings]]></title>
-    <link>http://bhuvanrawal.me/computers/dsa/trees/Print-Nodes-With-No-Siblings</link>
-    <id>http://bhuvanrawal.me/computers/dsa/trees/Print-Nodes-With-No-Siblings</id>
+    <link>/computers/dsa/trees/Print-Nodes-With-No-Siblings</link>
+    <id>/computers/dsa/trees/Print-Nodes-With-No-Siblings</id>
     <published>2015-01-22T12:51:29+05:30</published>
     <updated>2015-01-22T12:51:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;p&gt;Given a Binary Tree, print all nodes that don’t have a sibling (a sibling is a node that has same parent. In a Binary Tree, there can be at most one sibling). Root should not be printed as root cannot have a sibling. excerpt_seperator&lt;/p&gt;
@@ -457,19 +547,19 @@ For case 2 , if the left node exists then add the difference to that node and ke
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/computers/dsa/trees/Print-Nodes-With-No-Siblings&quot;&gt;Print Nodes with no siblings&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 22, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Print-Nodes-With-No-Siblings&quot;&gt;Print Nodes with no siblings&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 22, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Distance between two Keys]]></title>
-    <link>http://bhuvanrawal.me/computers/dsa/trees/Distance-Between-Two-Keys</link>
-    <id>http://bhuvanrawal.me/computers/dsa/trees/Distance-Between-Two-Keys</id>
+    <link>/computers/dsa/trees/Distance-Between-Two-Keys</link>
+    <id>/computers/dsa/trees/Distance-Between-Two-Keys</id>
     <published>2015-01-22T12:51:29+05:30</published>
     <updated>2015-01-22T12:51:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;h2 id=&quot;find-distance-between-two-given-keys-of-a-binary-tree&quot;&gt;Find distance between two given keys of a Binary Tree&lt;/h2&gt;
@@ -547,19 +637,19 @@ For case 2 , if the left node exists then add the difference to that node and ke
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/computers/dsa/trees/Distance-Between-Two-Keys&quot;&gt;Distance between two Keys&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 22, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Distance-Between-Two-Keys&quot;&gt;Distance between two Keys&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 22, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Print all nodes in a binary tree that are at a distance k from a leaf node]]></title>
-    <link>http://bhuvanrawal.me/computers/dsa/trees/Print-All-Nodes-Tree-Distance-k</link>
-    <id>http://bhuvanrawal.me/computers/dsa/trees/Print-All-Nodes-Tree-Distance-k</id>
+    <link>/computers/dsa/trees/Print-All-Nodes-Tree-Distance-k</link>
+    <id>/computers/dsa/trees/Print-All-Nodes-Tree-Distance-k</id>
     <published>2015-01-22T03:51:29+05:30</published>
     <updated>2015-01-22T03:51:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;p&gt;Given a Binary Tree and a positive integer k, print all nodes that are distance k from a leaf node.&lt;/p&gt;
@@ -622,19 +712,19 @@ For case 2 , if the left node exists then add the difference to that node and ke
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/computers/dsa/trees/Print-All-Nodes-Tree-Distance-k&quot;&gt;Print all nodes in a binary tree that are at a distance k from a leaf node&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 22, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Print-All-Nodes-Tree-Distance-k&quot;&gt;Print all nodes in a binary tree that are at a distance k from a leaf node&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 22, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Print Tree Vertically]]></title>
-    <link>http://bhuvanrawal.me/computers/dsa/trees/Print-Tree-Vertically</link>
-    <id>http://bhuvanrawal.me/computers/dsa/trees/Print-Tree-Vertically</id>
+    <link>/computers/dsa/trees/Print-Tree-Vertically</link>
+    <id>/computers/dsa/trees/Print-Tree-Vertically</id>
     <published>2015-01-21T00:51:29+05:30</published>
     <updated>2015-01-21T00:51:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;p&gt;Given a binary tree, print it vertically. The following example illustrates vertical order traversal.&lt;/p&gt;
@@ -708,19 +798,19 @@ For case 2 , if the left node exists then add the difference to that node and ke
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/computers/dsa/trees/Print-Tree-Vertically&quot;&gt;Print Tree Vertically&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 21, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Print-Tree-Vertically&quot;&gt;Print Tree Vertically&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 21, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Print Ancestor Nodes]]></title>
-    <link>http://bhuvanrawal.me/computers/dsa/trees/Print-Ancestor-Nodes</link>
-    <id>http://bhuvanrawal.me/computers/dsa/trees/Print-Ancestor-Nodes</id>
+    <link>/computers/dsa/trees/Print-Ancestor-Nodes</link>
+    <id>/computers/dsa/trees/Print-Ancestor-Nodes</id>
     <published>2015-01-20T12:51:29+05:30</published>
     <updated>2015-01-20T12:51:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;p&gt;If tree is:&lt;/p&gt;
@@ -754,19 +844,19 @@ For case 2 , if the left node exists then add the difference to that node and ke
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/computers/dsa/trees/Print-Ancestor-Nodes&quot;&gt;Print Ancestor Nodes&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 20, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Print-Ancestor-Nodes&quot;&gt;Print Ancestor Nodes&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 20, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Get all leaves of a binary tree]]></title>
-    <link>http://bhuvanrawal.me/computers/dsa/trees/Get-All-Leaves-Tree</link>
-    <id>http://bhuvanrawal.me/computers/dsa/trees/Get-All-Leaves-Tree</id>
+    <link>/computers/dsa/trees/Get-All-Leaves-Tree</link>
+    <id>/computers/dsa/trees/Get-All-Leaves-Tree</id>
     <published>2015-01-19T04:17:29+05:30</published>
     <updated>2015-01-19T04:17:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;p&gt;Algorithm:&lt;/p&gt;
@@ -793,70 +883,70 @@ For case 2 , if the left node exists then add the difference to that node and ke
         &lt;span class=&quot;n&quot;&gt;getAllLeaves&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;leaves&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/computers/dsa/trees/Get-All-Leaves-Tree&quot;&gt;Get all leaves of a binary tree&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 19, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Get-All-Leaves-Tree&quot;&gt;Get all leaves of a binary tree&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 19, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Check if a binary tree is binary search tree]]></title>
-    <link>http://bhuvanrawal.me/computers/dsa/trees/Check-If-Binary-Tree-BST</link>
-    <id>http://bhuvanrawal.me/computers/dsa/trees/Check-If-Binary-Tree-BST</id>
+    <link>/computers/dsa/trees/Check-If-Binary-Tree-BST</link>
+    <id>/computers/dsa/trees/Check-If-Binary-Tree-BST</id>
     <published>2015-01-19T04:17:29+05:30</published>
     <updated>2015-01-19T04:17:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;h2 id=&quot;algorithm&quot;&gt;Algorithm:&lt;/h2&gt;
 
-&lt;p&gt;/**
- * Dummy Method for checkIfBST(Tree, int, int)
- * @param root
- * @return
- */
-public static boolean checkIfBST(Tree&lt;integer&gt; root){
-    return checkIfBST(root, Integer.MIN_VALUE,Integer.MAX_VALUE);
-}&lt;/integer&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * Dummy Method for checkIfBST(Tree, int, int)&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * @param root&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * @return&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; */&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;checkIfBST&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tree&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;checkIfBST&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MIN_VALUE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX_VALUE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-&lt;p&gt;/**
- * Checks if a given Tree is a Binary search tree
- * @param root
- * @param min
- * @param max
- * @return
- */
-public static boolean checkIfBST(Tree&lt;integer&gt; root, int min, int max){
-    if (root == null)
-        return true;
-    if (root.left != null &amp;amp;&amp;amp; root.left.value &amp;gt; root.value)
-        return false;
-    if (root.right != null &amp;amp;&amp;amp; root.right.value &amp;lt; root.value)
-        return false;
-    if(root.left != null &amp;amp;&amp;amp; root.left.value &amp;gt; max){
-        return false;
-    } else if(root.left != null)
-        max = Math.min(root.left.value, max);
-    if(root.right != null &amp;amp;&amp;amp; root.right.value &amp;lt; min){
-        return false;
-    } else if (root.right != null)
-        min = Math.max(root.right.value, min);
-    return checkIfBST(root.left,Integer.MIN_VALUE,max) &amp;amp; checkIfBST(root.right,min,Integer.MAX_VALUE);
-}&lt;/integer&gt;&lt;/p&gt;
+&lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * Checks if a given Tree is a Binary search tree&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * @param root&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * @param min&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * @param max&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * @return&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; */&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;checkIfBST&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tree&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;checkIfBST&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MIN_VALUE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;checkIfBST&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX_VALUE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/computers/dsa/trees/Check-If-Binary-Tree-BST&quot;&gt;Check if a binary tree is binary search tree&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 19, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Check-If-Binary-Tree-BST&quot;&gt;Check if a binary tree is binary search tree&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 19, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Finding the Diameter of a Binary Tree]]></title>
-    <link>http://bhuvanrawal.me/computers/dsa/trees/Finding-Diameter-Binary-Tree</link>
-    <id>http://bhuvanrawal.me/computers/dsa/trees/Finding-Diameter-Binary-Tree</id>
+    <link>/computers/dsa/trees/Finding-Diameter-Binary-Tree</link>
+    <id>/computers/dsa/trees/Finding-Diameter-Binary-Tree</id>
     <published>2015-01-16T12:51:29+05:30</published>
     <updated>2015-01-16T12:51:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;p&gt;The diameter of a tree (sometimes called the width) is the number of nodes on the longest path between two leaves in the tree. The diagram below shows two trees each with diameter nine, the leaves that form the ends of a longest path are shaded (note that there is more than one path in each tree of length nine, but no path longer than nine nodes).&lt;/p&gt;
@@ -884,19 +974,19 @@ public static boolean checkIfBST(Tree&lt;integer&gt; root, int min, int max){
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findHeight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findHeight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/computers/dsa/trees/Finding-Diameter-Binary-Tree&quot;&gt;Finding the Diameter of a Binary Tree&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Finding-Diameter-Binary-Tree&quot;&gt;Finding the Diameter of a Binary Tree&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Is the binary tree foldable?]]></title>
-    <link>http://bhuvanrawal.me/computers/dsa/trees/Is-Binary-Tree-Foldable</link>
-    <id>http://bhuvanrawal.me/computers/dsa/trees/Is-Binary-Tree-Foldable</id>
+    <link>/computers/dsa/trees/Is-Binary-Tree-Foldable</link>
+    <id>/computers/dsa/trees/Is-Binary-Tree-Foldable</id>
     <published>2015-01-16T11:51:29+05:30</published>
     <updated>2015-01-16T11:51:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;p&gt;How to find if the input binary tree can be folded, i.e. if the left tree is a mirror image of right tree.&lt;/p&gt;
@@ -946,19 +1036,19 @@ public static boolean checkIfBST(Tree&lt;integer&gt; root, int min, int max){
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/computers/dsa/trees/Is-Binary-Tree-Foldable&quot;&gt;Is the binary tree foldable?&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Is-Binary-Tree-Foldable&quot;&gt;Is the binary tree foldable?&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Max Width of a Binary Tree]]></title>
-    <link>http://bhuvanrawal.me/computers/dsa/trees/Max-Width-Binary-Tree</link>
-    <id>http://bhuvanrawal.me/computers/dsa/trees/Max-Width-Binary-Tree</id>
+    <link>/computers/dsa/trees/Max-Width-Binary-Tree</link>
+    <id>/computers/dsa/trees/Max-Width-Binary-Tree</id>
     <published>2015-01-16T10:51:29+05:30</published>
     <updated>2015-01-16T10:51:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;p&gt;For solving this problem we use level order traversal, putting the next level nodes in a new queue.&lt;/p&gt;
@@ -999,19 +1089,19 @@ public static boolean checkIfBST(Tree&lt;integer&gt; root, int min, int max){
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maxWidth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/computers/dsa/trees/Max-Width-Binary-Tree&quot;&gt;Max Width of a Binary Tree&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Max-Width-Binary-Tree&quot;&gt;Max Width of a Binary Tree&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Convert a Binary Tree to Doubly Linked list]]></title>
-    <link>http://bhuvanrawal.me/computers/dsa/trees/Convert-A-Binary-Tree-To-Doubly-Linked-List</link>
-    <id>http://bhuvanrawal.me/computers/dsa/trees/Convert-A-Binary-Tree-To-Doubly-Linked-List</id>
+    <link>/computers/dsa/trees/Convert-A-Binary-Tree-To-Doubly-Linked-List</link>
+    <id>/computers/dsa/trees/Convert-A-Binary-Tree-To-Doubly-Linked-List</id>
     <published>2015-01-16T09:51:29+05:30</published>
     <updated>2015-01-16T09:51:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;p&gt;Given a Binary Tree, convert it into a Doubly Linked List.&lt;/p&gt;
@@ -1071,19 +1161,19 @@ public static boolean checkIfBST(Tree&lt;integer&gt; root, int min, int max){
 &lt;p&gt;Another approach could be to do an inorder traversal and successively connect the pointers of nodes.
 But this approach would not work if we want to get a sorted linked list from a BST.&lt;/p&gt;
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/computers/dsa/trees/Convert-A-Binary-Tree-To-Doubly-Linked-List&quot;&gt;Convert a Binary Tree to Doubly Linked list&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Convert-A-Binary-Tree-To-Doubly-Linked-List&quot;&gt;Convert a Binary Tree to Doubly Linked list&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Lowest Common Ancestor of a Binary Tree]]></title>
-    <link>http://bhuvanrawal.me/computers/dsa/trees/Lowest-Common-Ancestor</link>
-    <id>http://bhuvanrawal.me/computers/dsa/trees/Lowest-Common-Ancestor</id>
+    <link>/computers/dsa/trees/Lowest-Common-Ancestor</link>
+    <id>/computers/dsa/trees/Lowest-Common-Ancestor</id>
     <published>2015-01-16T08:51:29+05:30</published>
     <updated>2015-01-16T08:51:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;p&gt;Here we look at finding lowest common ancestor of a binary tree. Finding LCA of a BST is an easy application, comparatively for Binary Tree its a tough nut to crack.
@@ -1126,84 +1216,84 @@ else recurse to the branch which is not null.&lt;/li&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/computers/dsa/trees/Lowest-Common-Ancestor&quot;&gt;Lowest Common Ancestor of a Binary Tree&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Lowest-Common-Ancestor&quot;&gt;Lowest Common Ancestor of a Binary Tree&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Phalut Trek]]></title>
-    <link>http://bhuvanrawal.me/photos/trekking/Phalut-Trek</link>
-    <id>http://bhuvanrawal.me/photos/trekking/Phalut-Trek</id>
+    <link>/photos/trekking/Phalut-Trek</link>
+    <id>/photos/trekking/Phalut-Trek</id>
     <published>2015-01-16T07:09:29+05:30</published>
     <updated>2015-01-16T07:09:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;figure class=&quot;third&quot;&gt;
 
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602920065032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602920065032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602920760032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602920760032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602920785032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602920785032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602921075032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602921075032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602921080032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602921080032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602949855032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602949855032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602950040032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602950040032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602950170032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602950170032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602956320032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602956320032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602956560032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153602956560032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603131420032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603131420032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603131560032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603131560032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603131655032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603131655032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603131680032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603131680032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603201270032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603201270032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603201285032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603201285032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603201325032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603201325032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603201370032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603201370032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603201425032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603201425032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603201500032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603201500032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603201560032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603201560032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603731595032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603731595032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603731610032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603731610032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603731630032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603731630032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603731675032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603731675032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603731725032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603731725032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603731850032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603731850032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603793025032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603793025032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603793030032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603793030032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603793050032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603793050032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603793315032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153603793315032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604239505032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604239505032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604599055032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604599055032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604599120032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604599120032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604599125032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604599125032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604599310032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604599310032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604599560032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604599560032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604599730032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604599730032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604599825032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604599825032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604600025032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604600025032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604600155032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604600155032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604600395032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604600395032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604600740032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604600740032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604600780032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604600780032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604600880032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604600880032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604600895032.jpg&quot;&gt;&lt;img src=&quot;http://bhuvanrawal.me/images/posts/phalut-trek/10153604600895032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153602920065032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602920065032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153602920760032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602920760032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153602920785032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602920785032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153602921075032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602921075032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153602921080032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602921080032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153602949855032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602949855032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153602950040032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602950040032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153602950170032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602950170032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153602956320032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602956320032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153602956560032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602956560032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603131420032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603131420032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603131560032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603131560032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603131655032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603131655032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603131680032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603131680032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603201270032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603201270032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603201285032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603201285032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603201325032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603201325032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603201370032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603201370032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603201425032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603201425032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603201500032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603201500032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603201560032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603201560032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603731595032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603731595032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603731610032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603731610032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603731630032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603731630032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603731675032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603731675032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603731725032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603731725032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603731850032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603731850032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603793025032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603793025032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603793030032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603793030032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603793050032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603793050032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153603793315032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603793315032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153604239505032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604239505032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153604599055032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604599055032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153604599120032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604599120032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153604599125032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604599125032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153604599310032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604599310032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153604599560032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604599560032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153604599730032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604599730032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153604599825032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604599825032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153604600025032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604600025032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153604600155032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604600155032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153604600395032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604600395032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153604600740032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604600740032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153604600780032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604600780032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153604600880032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604600880032.jpg&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/posts/phalut-trek/10153604600895032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604600895032.jpg&quot; /&gt;&lt;/a&gt;
 &lt;/figure&gt;
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/photos/trekking/Phalut-Trek&quot;&gt;Phalut Trek&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/photos/trekking/Phalut-Trek&quot;&gt;Phalut Trek&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Boot windows from external USB hard drive for UEFI motherboards]]></title>
-    <link>http://bhuvanrawal.me/computers/technology/hack/Install-Windows-External-HardDisk</link>
-    <id>http://bhuvanrawal.me/computers/technology/hack/Install-Windows-External-HardDisk</id>
+    <link>/computers/technology/hack/Install-Windows-External-HardDisk</link>
+    <id>/computers/technology/hack/Install-Windows-External-HardDisk</id>
     <published>2015-01-15T04:51:29+05:30</published>
     <updated>2015-01-15T04:51:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;h2 id=&quot;this-post-will-help-you-install-windows-on-an-external-usb-hard-disk-and-boot-from-it&quot;&gt;This post will help you install windows on an external USB hard disk and boot from it&lt;/h2&gt;
@@ -1233,19 +1323,19 @@ else recurse to the branch which is not null.&lt;/li&gt;
 
 &lt;h3 id=&quot;note-do-not-plug-in-the-hard-drive-into-any-other-computer-than-the-intended-one-as-during-the-first-boot-as-it-will-start-installing-drivers-for-that-system&quot;&gt;Note: Do not plug in the hard drive into any other computer than the intended one as during the first boot as it will start installing drivers for that system.&lt;/h3&gt;
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/computers/technology/hack/Install-Windows-External-HardDisk&quot;&gt;Boot windows from external USB hard drive for UEFI motherboards&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 15, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/computers/technology/hack/Install-Windows-External-HardDisk&quot;&gt;Boot windows from external USB hard drive for UEFI motherboards&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 15, 2015.&lt;/p&gt;</content>
   </entry>
   
 
   <entry>
     <title type="html"><![CDATA[Longest Palindromic Subsequence]]></title>
-    <link>http://bhuvanrawal.me/dsa/computers/dp/Longest-Palindromic-Subsequence</link>
-    <id>http://bhuvanrawal.me/dsa/computers/dp/Longest-Palindromic-Subsequence</id>
+    <link>/dsa/computers/dp/Longest-Palindromic-Subsequence</link>
+    <id>/dsa/computers/dp/Longest-Palindromic-Subsequence</id>
     <published>2015-01-13T04:51:29+05:30</published>
     <updated>2015-01-13T04:51:29+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
+      <uri></uri>
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;ul&gt;
@@ -1283,26 +1373,7 @@ else recurse to the branch which is not null.&lt;/li&gt;
 &lt;p&gt;We have a string of length n, we compare the first and last characters of the string, if they are equal then we recurse
 passing start+1 and end -1 recursively and at this point.&lt;/p&gt;
 
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/dsa/computers/dp/Longest-Palindromic-Subsequence&quot;&gt;Longest Palindromic Subsequence&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 13, 2015.&lt;/p&gt;</content>
-  </entry>
-  
-
-  <entry>
-    <title type="html"><![CDATA[Difference Between include in C/C++ and import in java]]></title>
-    <link>http://bhuvanrawal.me/computers/java/Difference-Between-import-include</link>
-    <id>http://bhuvanrawal.me/computers/java/Difference-Between-import-include</id>
-    <published>2015-01-11T04:51:29+05:30</published>
-    <updated>2015-01-11T04:51:29+05:30</updated>
-    <author>
-      <name>Bhuvan Rawal</name>
-      <uri>http://bhuvanrawal.me</uri>
-      <email>bhuvan@bhuvanrawal.me</email>
-    </author>
-    <content type="html">&lt;p&gt;#include directive makes the compiler go to the C/C++ standard library and copy the code from the header files into the program. As a result the program size increases, thus wasting memory and processor’s time.&lt;/p&gt;
-
-&lt;p&gt;import statement makes the JVM go to the Java standard library, execute the code there and substitute the result into the program. Here no code is copied and hence no wastage of memory or processor’s time. So, import is efficient mechanism than #include.&lt;/p&gt;
-
-      &lt;p&gt;&lt;a href=&quot;http://bhuvanrawal.me/computers/java/Difference-Between-import-include&quot;&gt;Difference Between include in C/C++ and import in java&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;http://bhuvanrawal.me&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 11, 2015.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/dsa/computers/dp/Longest-Palindromic-Subsequence&quot;&gt;Longest Palindromic Subsequence&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 13, 2015.&lt;/p&gt;</content>
   </entry>
   
 </feed>

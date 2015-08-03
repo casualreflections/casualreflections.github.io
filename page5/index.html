@@ -17,23 +17,23 @@ Description: Awesome dude, awesome life
 -->
 <head>
 <meta charset="utf-8">
-<title>Lowest Common Ancestor of a Binary Tree &#8211; Bhuvan Rawal</title>
-<meta name="description" content="Finding the lowest common ancestor of  any two nodes in a Binary Tree">
-<meta name="keywords" content="">
+<title>Latest Posts &#8211; Bhuvan Rawal</title>
+<meta name="description" content="The personal blog of Bhuvan Rawal, technology enthusiast at New Delhi, India">
+<meta name="keywords" content="Bhuvan, Rawal, Technology, Science, Cosmos">
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="/images/omikron.png">
-<meta name="twitter:title" content="Lowest Common Ancestor of a Binary Tree">
-<meta name="twitter:description" content="Finding the lowest common ancestor of  any two nodes in a Binary Tree">
+<meta name="twitter:title" content="Latest Posts">
+<meta name="twitter:description" content="The personal blog of Bhuvan Rawal, technology enthusiast at New Delhi, India">
 <meta name="twitter:creator" content="@beingbhuvan">
 
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Lowest Common Ancestor of a Binary Tree">
-<meta property="og:description" content="Finding the lowest common ancestor of  any two nodes in a Binary Tree">
-<meta property="og:url" content="/computers/dsa/trees/Lowest-Common-Ancestor">
+<meta property="og:title" content="Latest Posts">
+<meta property="og:description" content="The personal blog of Bhuvan Rawal, technology enthusiast at New Delhi, India">
+<meta property="og:url" content="/page5/index.html">
 <meta property="og:site_name" content="Bhuvan Rawal">
 <meta property="og:image" content="/images/default_bg1.jpg">
 
@@ -41,7 +41,7 @@ Description: Awesome dude, awesome life
 
 
 
-<link rel="canonical" href="/computers/dsa/trees/Lowest-Common-Ancestor">
+<link rel="canonical" href="/page5/">
 <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Bhuvan Rawal Feed">
 <link rel="author" href="https://plus.google.com/u/0/115368800868963120427?rel=author">
 <!-- http://t.co/dKP3o1e -->
@@ -79,7 +79,7 @@ Description: Awesome dude, awesome life
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
 
 </head>
-<body class="post-template" itemscope itemtype="http://schema.org/WebPage">  
+<body class="home-template" itemscope itemtype="http://schema.org/WebPage">
 <div id="fade"></div>
 <a id="slide" class="animated fade"></a>
 <aside id="sidebar">
@@ -123,7 +123,7 @@ Description: Awesome dude, awesome life
 
     <div class="inner">
         <div class="container">
-            <a class="brand" href="/" role="banner" itemprop="url">
+            <a class="brand light" href="" role="banner" itemprop="url">
 
                 <img itemprop="logo" src="/images/omikron.png" alt="Bhuvan Rawal Logo" />
 
@@ -132,6 +132,9 @@ Description: Awesome dude, awesome life
             </h1>
                 
             </a>
+            <h2 class="blog-description light bordered bordered-top" itemprop="description">
+                Musings of a pragmatic soul
+            </h2>
         </div>
     </div>
     
@@ -155,111 +158,79 @@ Description: Awesome dude, awesome life
     </div>
     
 </header>
-<div id="main" class="content" role="main" itemprop="mainContentOfPage" itemscope itemtype="http://schema.org/Blog">
+
+
+
+<div id="main" class="content" role="main" itemprop="mainContentOfPage">
     <div class="container">
         <div class="row">
-            <article class="post col-md-8 col-md-offset-2 hentry" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+            <div class="page-body" itemprop="description">
+            
 
-            
-            
-            
-            
-            
-                    <header class="post-header entry-header">
-                    
-                        
-                        <h1 class="post-title text-center hyper lighter bordered-bottom entry-title" itemprop="headline">Lowest Common Ancestor of a Binary Tree</h1>
-                        
-                        <div class="cursive" style="color: #000; font-style:italic;">Finding the lowest common ancestor of  any two nodes in a Binary Tree</div>
-                        <div class="post-info text-center small">
-                            <span class="entry-date date published updated"><time datetime="2015-01-16T08:51:29+05:30" class="post-time" itemprop="datePublished">16 Jan 2015</time><span>
-                            in <span class="post-tags"><a href="/categories/index.html#computersdsatrees" data-toggle="tooltip" title="Other posts from the Computers category" rel="tag">Computers</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#computersdsatrees" data-toggle="tooltip" title="Other posts from the Dsa category" rel="tag">Dsa</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#computersdsatrees" data-toggle="tooltip" title="Other posts from the Trees category" rel="tag">Trees</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;1 minute read</span>
-                        </div>
-                    </header>
-                    <div class="post-body bordered-bottom" itemprop="description">
-                        
-                        <p>Here we look at finding lowest common ancestor of a binary tree. Finding LCA of a BST is an easy application, comparatively for Binary Tree its a tough nut to crack.
-The algo goes as follows:</p>
 
-<ol>
-  <li>Check if one of the numbers lie in the left sub tree.</li>
-  <li>Check if one of the numbers lie in the right sub tree.</li>
-  <li>If both 1,2 are true then return the current node.
-else recurse to the branch which is not null.</li>
-</ol>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
-<span class="cm"> * http://www.geeksforgeeks.org/lowest-common-ancestor-binary-tree-set-1/</span>
-<span class="cm"> * Given a binary tree (not a binary search tree) and two values say n1 and n2,</span>
-<span class="cm"> * write a program to find the least common ancestor.</span>
-<span class="cm"> * Following is definition of LCA from Wikipedia:</span>
-<span class="cm"> * Let T be a rooted tree. The lowest common ancestor between two nodes n1 and n2 is</span>
-<span class="cm"> * defined as the lowest node in T that has both n1 and n2 as descendants</span>
-<span class="cm"> * (where we allow a node to be a descendant of itself).</span>
-<span class="cm"> * @param root</span>
-<span class="cm"> * @param n1</span>
-<span class="cm"> * @param n2</span>
-<span class="cm"> * @return</span>
-<span class="cm"> */</span>
-<span class="kd">public</span> <span class="kd">static</span> <span class="n">Tree</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">lowestCommonAncestor</span><span class="o">(</span><span class="n">Tree</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">root</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n2</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">root</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
-        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">value</span> <span class="o">==</span> <span class="n">n1</span> <span class="o">||</span> <span class="n">root</span><span class="o">.</span><span class="na">value</span> <span class="o">==</span> <span class="n">n2</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">root</span><span class="o">;</span>
-    <span class="o">}</span>
-    <span class="k">else</span> <span class="o">{</span>
-        <span class="n">Tree</span> <span class="n">left</span> <span class="o">=</span> <span class="n">lowestCommonAncestor</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">left</span><span class="o">,</span>  <span class="n">n1</span><span class="o">,</span>  <span class="n">n2</span><span class="o">);</span>
-        <span class="n">Tree</span> <span class="n">right</span> <span class="o">=</span> <span class="n">lowestCommonAncestor</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">right</span><span class="o">,</span>  <span class="n">n1</span><span class="o">,</span>  <span class="n">n2</span><span class="o">);</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">left</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">right</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="n">root</span><span class="o">;</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="o">(</span><span class="n">left</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">?</span> <span class="nl">left:</span><span class="n">right</span><span class="o">);</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
 
-                        <br>
-                    
-                    
-                    </div>
-        </div>
-                    <footer class="post-footer entry-meta">
-                        <div class="post-share text-center">
-    <p class="light small">
-        Share this post
-    </p>
-    <ul class="social-mini">
-        <li>
-            <a href="https://twitter.com/intent/tweet?text=&quot;Lowest Common Ancestor of a Binary Tree&quot;%20/computers/dsa/trees/Lowest-Common-Ancestor%20via%20&#64;beingbhuvan"
-            onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" data-toggle="tooltip" title="Share on Twitter" itemprop="Twitter">
-                <i class="icon-twitter"></i>
-            </a>
-        </li>
-        <li>
-            <a  href="https://www.facebook.com/sharer/sharer.php?u=/computers/dsa/trees/Lowest-Common-Ancestor"
-            onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" data-toggle="tooltip" title="Share on Facebook" itemprop="Facebook">
-                <i class="icon-facebook"></i>
-            </a>
-        </li>
-        <li>
-            <a href="https://plus.google.com/share?url=/computers/dsa/trees/Lowest-Common-Ancestor"
-           onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" data-toggle="tooltip" title="Share on Google plus" itemprop="GooglePlus">
-                <i class="icon-google-plus"></i>
-            </a>
-        </li>
-    </ul>
+
+
+
+
+
+
+
+<div class="row">
+	<article class="post post col-md-8 col-md-offset-2">
+		<header class="post-header">
+			
+			
+				<h2 class="post-title text-center super lighter bordered-bottom">
+					<a href="/webdesign/first%20blog/Testing-post">Creating your own WebPage using gh-pages</a>
+					
+				</h2>
+				<div class="post-info text-center small">
+					<time datetime="2015-01-05T04:51:29+05:30" class="post-time">05 Jan 2015</time>
+					in <span class="post-tags"><a href="/categories/index.html#webdesignfirst blog" data-toggle="tooltip" title="Other posts from the Webdesign category" rel="tag">Webdesign</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#webdesignfirst blog" data-toggle="tooltip" title="Other posts from the First blog category" rel="tag">First blog</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;<span class="time">1.955</span> minutes read</span>
+				</div>
+		</header>
+		<div class="post-body bordered-bottom">
+			
+			
+			<p class="lead" style="text-align:center">Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain.</p>
+
+			
+			<div class="text-center">
+				
+				<a href="/webdesign/first%20blog/Testing-post" data-toggle="tooltip" title="Create your own free webpage using Pixyll-Jekyll, host it on github pages or your own domain." class="more-link btn btn-danger btn-large">
+					<i class="icon-link"></i> read more...
+				</a>
+				
+			</div>
+		</div>
+	</article>
 </div>
-                        <div class="post-author text-center">                       
-	        <img src="/images/bhuvanrawal.jpg" alt="Bhuvan Rawal's photo" itemprop="image" class="post-avatar img-circle img-responsive"/>    
-	    <h4 class="bordered-bottom vcard author" itemprop="author" itemscope itemtype="http://schema.org/Person">By <span itemprop="name" class="fn"><a href="/about" title="About Bhuvan Rawal" itemprop="url">Bhuvan Rawal</a></span></h4>
-	    <p>Bhuvan Rawal is a Computer Science engineer based in New Delhi, India. His interests are anything that&#8217;s related to Technology and Science, from math to programming languages to music to physics to engineering to philosophy.</p>
-</div> 
-                        
-                    </footer>
-            </article>
+
+
+
+<div class="row text-center text-caps">
+	<div class="col-md-8 col-md-offset-2">
+		<nav class="pagination" role="navigation">
+			
+			
+			<a class="newer-posts" href="/page4">&larr; Newer Posts</a>
+			
+			
+			<span class="page-number">Page 5 of 5</span>
+			
+		</nav>
+	</div>
+</div>
+
+
+
+            </div>    
+        </div>
     </div>
 </div>
-
+    
 <footer id="footer"  class="blog-background overlay text-center align-middle animated from-top" style="background-image: url(/images/default_bg1.jpg)" >
 
 
@@ -362,7 +333,6 @@ else recurse to the branch which is not null.</li>
 
 </footer>
 
-    
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
 <script src="/assets/js/scripts.min.js"></script>
@@ -452,6 +422,6 @@ $("a#click-pages").click(function(){
 </script>
 
 
- 
+  
 </body>
 </html>
