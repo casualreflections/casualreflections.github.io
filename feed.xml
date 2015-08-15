@@ -4,13 +4,34 @@
   <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
   <link rel="self" type="application/atom+xml" href="/feed.xml" />
   <link rel="alternate" type="text/html" href="" />
-  <updated>2015-08-03T20:21:27+05:30</updated>
+  <updated>2015-08-15T21:05:50+05:30</updated>
   <id>/</id>
   <author>
     <name>Bhuvan Rawal</name>
     <uri>/</uri>
     <email>bhuvan@bhuvanrawal.me</email>
   </author>
+  
+
+  <entry>
+    <title type="html"><![CDATA[Galliyan Cover]]></title>
+    <link>/music/guitar/vocals/Galliyan-Cover</link>
+    <id>/music/guitar/vocals/Galliyan-Cover</id>
+    <published>2015-08-15T07:09:29+05:30</published>
+    <updated>2015-08-15T07:09:29+05:30</updated>
+    <author>
+      <name>Bhuvan Rawal</name>
+      <uri></uri>
+      <email>bhuvan@bhuvanrawal.me</email>
+    </author>
+    <content type="html">&lt;p&gt;I recently picked guitar after a gap of about one year. Here is one of the songs that I wanted to cover for a long time: Galliyan by Ankit Tiwari.&lt;/p&gt;
+
+&lt;iframe width=&quot;100%&quot; height=&quot;450&quot; scrolling=&quot;no&quot; frameborder=&quot;no&quot; src=&quot;https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/219368076&amp;amp;auto_play=false&amp;amp;hide_related=false&amp;amp;show_comments=true&amp;amp;show_user=true&amp;amp;show_reposts=false&amp;amp;visual=true&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;Subscribe to the the feed to be the first one the originals when they are out.&lt;/p&gt;
+
+      &lt;p&gt;&lt;a href=&quot;/music/guitar/vocals/Galliyan-Cover&quot;&gt;Galliyan Cover&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on August 15, 2015.&lt;/p&gt;</content>
+  </entry>
   
 
   <entry>
@@ -320,7 +341,7 @@ index 13968d1..5f6227c 100644
 
 &lt;p&gt;Alternatively, commit message can be typed inline with -m flag:&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;$ git commit -m &quot;SNAPDEALTECH-55080: removing unused jsp's&quot;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;$ git commit -m &quot;SNAPDEALTECH-55080: removing unused jsp&#39;s&quot;&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;The output of commit will be SHA-1 checksum of the commit, how many files were changed, branch in which it was commited and statistics about the lines.&lt;/p&gt;
 
@@ -1324,56 +1345,6 @@ else recurse to the branch which is not null.&lt;/li&gt;
 &lt;h3 id=&quot;note-do-not-plug-in-the-hard-drive-into-any-other-computer-than-the-intended-one-as-during-the-first-boot-as-it-will-start-installing-drivers-for-that-system&quot;&gt;Note: Do not plug in the hard drive into any other computer than the intended one as during the first boot as it will start installing drivers for that system.&lt;/h3&gt;
 
       &lt;p&gt;&lt;a href=&quot;/computers/technology/hack/Install-Windows-External-HardDisk&quot;&gt;Boot windows from external USB hard drive for UEFI motherboards&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 15, 2015.&lt;/p&gt;</content>
-  </entry>
-  
-
-  <entry>
-    <title type="html"><![CDATA[Longest Palindromic Subsequence]]></title>
-    <link>/dsa/computers/dp/Longest-Palindromic-Subsequence</link>
-    <id>/dsa/computers/dp/Longest-Palindromic-Subsequence</id>
-    <published>2015-01-13T04:51:29+05:30</published>
-    <updated>2015-01-13T04:51:29+05:30</updated>
-    <author>
-      <name>Bhuvan Rawal</name>
-      <uri></uri>
-      <email>bhuvan@bhuvanrawal.me</email>
-    </author>
-    <content type="html">&lt;ul&gt;
-  &lt;li&gt;Given a sequence, find the length of the longest palindromic subsequence in it.&lt;/li&gt;
-  &lt;li&gt;For example, if the given sequence is “BBABCBCAB”, then the output should be 7&lt;/li&gt;
-  &lt;li&gt;as “BABCBAB” is the longest palindromic subseuqnce in it. “BBBBB” and “BBCBB”&lt;/li&gt;
-  &lt;li&gt;are also palindromic subsequences of the given sequence, but not the longest ones.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * The naive solution for this problem is to generate all subsequences of the given&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * sequence and find the longest palindromic subsequence. This solution is exponential&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * in term of time complexity. Let us see how this problem possesses both important&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * properties of a Dynamic Programming (DP) Problem and can efficiently solved&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * using Dynamic Programming.&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; */&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;longestPalindromicSubsequenceNaive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;longestPalindromicSubsequenceNaive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;longestPalindromicSubsequenceNaive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;longestPalindromicSubsequenceNaive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;longestPalindromicSubsequenceNaive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;),&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;longestPalindromicSubsequenceNaive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now we look for a smarter solution using Memoisation, let us understand what exactly is happening during recursion.&lt;/p&gt;
-
-&lt;p&gt;We have a string of length n, we compare the first and last characters of the string, if they are equal then we recurse
-passing start+1 and end -1 recursively and at this point.&lt;/p&gt;
-
-      &lt;p&gt;&lt;a href=&quot;/dsa/computers/dp/Longest-Palindromic-Subsequence&quot;&gt;Longest Palindromic Subsequence&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 13, 2015.&lt;/p&gt;</content>
   </entry>
   
 </feed>

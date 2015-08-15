@@ -1,6 +1,14 @@
 [
 	
 		{
+		  "title"      : "Galliyan Cover",
+		  "category"   : "",
+		  "url"        : "/music/guitar/vocals/Galliyan-Cover",
+		  "date"       : "2015-08-15 07:09:29 +0530",
+		  "shortdate"  : "August 15, 2015"
+		} ,
+	
+		{
 		  "title"      : "Spring Framework - Why?",
 		  "category"   : "",
 		  "url"        : "/blog/computers/java/technology/spring-framework-why",

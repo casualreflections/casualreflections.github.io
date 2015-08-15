@@ -123,6 +123,11 @@ callback([
   {
     "text": "Spring Framework - Why?",
     "href": "/blog/computers/java/technology/spring-framework-why"
+  } ,
+
+  {
+    "text": "Galliyan Cover",
+    "href": "/music/guitar/vocals/Galliyan-Cover"
   } 
 
 ])
