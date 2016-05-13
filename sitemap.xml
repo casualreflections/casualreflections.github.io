@@ -19,10 +19,6 @@
     
     
     <url>
-        <loc>/music/guitar/vocals/Galliyan-Cover</loc>
-    </url>
-    
-    <url>
         <loc>/blog/computers/java/technology/spring-framework-why</loc>
     </url>
     
@@ -63,11 +59,11 @@
     </url>
     
     <url>
-        <loc>/computers/dsa/trees/Get-All-Leaves-Tree</loc>
+        <loc>/computers/dsa/trees/Check-If-Binary-Tree-BST</loc>
     </url>
     
     <url>
-        <loc>/computers/dsa/trees/Check-If-Binary-Tree-BST</loc>
+        <loc>/computers/dsa/trees/Get-All-Leaves-Tree</loc>
     </url>
     
     <url>
@@ -107,15 +103,15 @@
     </url>
     
     <url>
+        <loc>/photos/trekking/Dalhousie-Trek</loc>
+    </url>
+    
+    <url>
         <loc>/photos/trekking/Stok-Kangri-Trek</loc>
     </url>
     
     <url>
         <loc>/photos/trekking/Roopkund-Trek</loc>
-    </url>
-    
-    <url>
-        <loc>/photos/trekking/Dalhousie-Trek</loc>
     </url>
     
     <url>

@@ -1,14 +1,6 @@
 [
 	
 		{
-		  "title"      : "Galliyan Cover",
-		  "category"   : "",
-		  "url"        : "/music/guitar/vocals/Galliyan-Cover",
-		  "date"       : "2015-08-15 07:09:29 +0530",
-		  "shortdate"  : "August 15, 2015"
-		} ,
-	
-		{
 		  "title"      : "Spring Framework - Why?",
 		  "category"   : "",
 		  "url"        : "/blog/computers/java/technology/spring-framework-why",
@@ -89,17 +81,17 @@
 		} ,
 	
 		{
-		  "title"      : "Get all leaves of a binary tree",
+		  "title"      : "Check if a binary tree is binary search tree",
 		  "category"   : "",
-		  "url"        : "/computers/dsa/trees/Get-All-Leaves-Tree",
+		  "url"        : "/computers/dsa/trees/Check-If-Binary-Tree-BST",
 		  "date"       : "2015-01-19 04:17:29 +0530",
 		  "shortdate"  : "January 19, 2015"
 		} ,
 	
 		{
-		  "title"      : "Check if a binary tree is binary search tree",
+		  "title"      : "Get all leaves of a binary tree",
 		  "category"   : "",
-		  "url"        : "/computers/dsa/trees/Check-If-Binary-Tree-BST",
+		  "url"        : "/computers/dsa/trees/Get-All-Leaves-Tree",
 		  "date"       : "2015-01-19 04:17:29 +0530",
 		  "shortdate"  : "January 19, 2015"
 		} ,
@@ -177,6 +169,14 @@
 		} ,
 	
 		{
+		  "title"      : "Dalhousie Trek",
+		  "category"   : "",
+		  "url"        : "/photos/trekking/Dalhousie-Trek",
+		  "date"       : "2015-01-10 07:09:29 +0530",
+		  "shortdate"  : "January 10, 2015"
+		} ,
+	
+		{
 		  "title"      : "Stok Kangri Expedition",
 		  "category"   : "",
 		  "url"        : "/photos/trekking/Stok-Kangri-Trek",
@@ -188,14 +188,6 @@
 		  "title"      : "Roopkund Trek",
 		  "category"   : "",
 		  "url"        : "/photos/trekking/Roopkund-Trek",
-		  "date"       : "2015-01-10 07:09:29 +0530",
-		  "shortdate"  : "January 10, 2015"
-		} ,
-	
-		{
-		  "title"      : "Dalhousie Trek",
-		  "category"   : "",
-		  "url"        : "/photos/trekking/Dalhousie-Trek",
 		  "date"       : "2015-01-10 07:09:29 +0530",
 		  "shortdate"  : "January 10, 2015"
 		} ,

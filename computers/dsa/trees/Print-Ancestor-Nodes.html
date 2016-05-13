@@ -17,23 +17,23 @@ Description: Awesome dude, awesome life
 -->
 <head>
 <meta charset="utf-8">
-<title>Featured Posts &#8211; Bhuvan Rawal</title>
-<meta name="description" content="An archive of posts sorted by date.">
-
+<title>Print Ancestor Nodes &#8211; Bhuvan Rawal</title>
+<meta name="description" content="Given a node, print its ancestor nodes">
+<meta name="keywords" content="">
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="/images/omikron.png">
-<meta name="twitter:title" content="Featured Posts">
-<meta name="twitter:description" content="An archive of posts sorted by date.">
+<meta name="twitter:title" content="Print Ancestor Nodes">
+<meta name="twitter:description" content="Given a node, print its ancestor nodes">
 <meta name="twitter:creator" content="@beingbhuvan">
 
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Featured Posts">
-<meta property="og:description" content="An archive of posts sorted by date.">
-<meta property="og:url" content="/featured/">
+<meta property="og:title" content="Print Ancestor Nodes">
+<meta property="og:description" content="Given a node, print its ancestor nodes">
+<meta property="og:url" content="/computers/dsa/trees/Print-Ancestor-Nodes">
 <meta property="og:site_name" content="Bhuvan Rawal">
 <meta property="og:image" content="/images/default_bg1.jpg">
 
@@ -41,7 +41,7 @@ Description: Awesome dude, awesome life
 
 
 
-<link rel="canonical" href="/featured/">
+<link rel="canonical" href="/computers/dsa/trees/Print-Ancestor-Nodes">
 <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Bhuvan Rawal Feed">
 <link rel="author" href="https://plus.google.com/u/0/115368800868963120427?rel=author">
 <!-- http://t.co/dKP3o1e -->
@@ -79,7 +79,7 @@ Description: Awesome dude, awesome life
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
 
 </head>
-<body class="home-template" itemscope itemtype="http://schema.org/WebPage">
+<body class="post-template" itemscope itemtype="http://schema.org/WebPage">  
 <div id="fade"></div>
 <a id="slide" class="animated fade"></a>
 <aside id="sidebar">
@@ -155,73 +155,100 @@ Description: Awesome dude, awesome life
     </div>
     
 </header>
-<div id="main" class="content" role="main" itemprop="mainContentOfPage">
+<div id="main" class="content" role="main" itemprop="mainContentOfPage" itemscope itemtype="http://schema.org/Blog">
     <div class="container">
         <div class="row">
-            <div class="page-body col-md-10 col-md-offset-1" itemprop="description">
-                <ul class="post-list">
+            <article class="post col-md-8 col-md-offset-2 hentry" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+
+            
+            
+            
+                    <header class="post-header entry-header">
+                    
+                        
+                        <h1 class="post-title text-center hyper lighter bordered-bottom entry-title" itemprop="headline">Print Ancestor Nodes</h1>
+                        
+                        <div class="cursive" style="color: #000; font-style:italic;">Given a node, print its ancestor nodes</div>
+                        <div class="post-info text-center small">
+                            <span class="entry-date date published updated"><time datetime="2015-01-20T12:51:29+05:30" class="post-time" itemprop="datePublished">20 Jan 2015</time><span>
+                            in <span class="post-tags"><a href="/categories/index.html#computersdsatrees" data-toggle="tooltip" title="Other posts from the Computers category" rel="tag">Computers</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#computersdsatrees" data-toggle="tooltip" title="Other posts from the Dsa category" rel="tag">Dsa</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#computersdsatrees" data-toggle="tooltip" title="Other posts from the Trees category" rel="tag">Trees</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;Less than 1 minute read</span>
+                        </div>
+                    </header>
+                    <div class="post-body bordered-bottom" itemprop="description">
+                        
+                        <p>If tree is:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">    <span class="o">.</span>
+    <span class="mi">4</span>
+    <span class="o">/</span><span class="err">\</span>
+   <span class="mi">3</span>  <span class="mi">7</span>
+  <span class="o">/</span><span class="err">\</span>  <span class="o">/</span><span class="err">\</span>
+ <span class="mi">6</span> <span class="mi">4</span>  <span class="mi">8</span> <span class="mi">9</span></code></pre></figure>
+
+<p>Then, ancestors of 6 are 3 and 4</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
+<span class="cm"> * Print Ancestors of a given node in Binary Tree</span>
+<span class="cm"> * Given a Binary Tree and a key, write a function that prints all the ancestors of the key in the given binary tree.</span>
+<span class="cm"> * @param root</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">printAncestorsNode</span><span class="o">(</span><span class="n">Tree</span> <span class="n">root</span><span class="o">,</span> <span class="kt">int</span> <span class="n">target</span><span class="o">){</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">root</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">value</span> <span class="o">==</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">printAncestorsNode</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">left</span><span class="o">,</span><span class="n">target</span><span class="o">)</span> <span class="o">||</span> <span class="n">printAncestorsNode</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">right</span><span class="o">,</span><span class="n">target</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">value</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span></code></pre></figure>
 
 
-  <li><article><i class="icon-star-half-empty"></i> <a href="/blog/computers/java/technology/spring-framework-why">Spring Framework - Why? <span class="entry-date"><time datetime="2015-08-01T02:52:58+05:30">August 01, 2015</time></span></a></article></li>
-
-
-
-  <li><article><i class="icon-star-half-empty"></i> <a href="/blog/computers/linux/version-control-with-git-part1">Version Control with Git-Introduction <span class="entry-date"><time datetime="2015-07-26T02:52:58+05:30">July 26, 2015</time></span></a></article></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</ul>
-
-            </div>    
+                        <br>
+                    
+                    
+                    </div>
         </div>
+                    <footer class="post-footer entry-meta">
+                        <div class="post-share text-center">
+    <p class="light small">
+        Share this post
+    </p>
+    <ul class="social-mini">
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=&quot;Print Ancestor Nodes&quot;%20/computers/dsa/trees/Print-Ancestor-Nodes%20via%20&#64;beingbhuvan"
+            onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" data-toggle="tooltip" title="Share on Twitter" itemprop="Twitter">
+                <i class="icon-twitter"></i>
+            </a>
+        </li>
+        <li>
+            <a  href="https://www.facebook.com/sharer/sharer.php?u=/computers/dsa/trees/Print-Ancestor-Nodes"
+            onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" data-toggle="tooltip" title="Share on Facebook" itemprop="Facebook">
+                <i class="icon-facebook"></i>
+            </a>
+        </li>
+        <li>
+            <a href="https://plus.google.com/share?url=/computers/dsa/trees/Print-Ancestor-Nodes"
+           onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" data-toggle="tooltip" title="Share on Google plus" itemprop="GooglePlus">
+                <i class="icon-google-plus"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+                        <div class="post-author text-center">                       
+	        <img src="/images/bhuvanrawal.jpg" alt="Bhuvan Rawal's photo" itemprop="image" class="post-avatar img-circle img-responsive"/>    
+	    <h4 class="bordered-bottom vcard author" itemprop="author" itemscope itemtype="http://schema.org/Person">By <span itemprop="name" class="fn"><a href="/about" title="About Bhuvan Rawal" itemprop="url">Bhuvan Rawal</a></span></h4>
+	    <p>Bhuvan Rawal is a Computer Science engineer based in New Delhi, India. His interests are anything that&#8217;s related to Technology and Science, from math to programming languages to music to physics to engineering to philosophy.</p>
+</div> 
+                        
+                    </footer>
+            </article>
     </div>
 </div>
-    
+
 <footer id="footer"  class="blog-background overlay text-center align-middle animated from-top" style="background-image: url(/images/default_bg1.jpg)" >
 
 
@@ -324,6 +351,7 @@ Description: Awesome dude, awesome life
 
 </footer>
 
+    
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
 <script src="/assets/js/scripts.min.js"></script>
@@ -413,6 +441,6 @@ $("a#click-pages").click(function(){
 </script>
 
 
-  
+ 
 </body>
 </html>

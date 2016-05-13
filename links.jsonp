@@ -6,11 +6,6 @@ callback([
   } ,
 
   {
-    "text": "Dalhousie Trek",
-    "href": "/photos/trekking/Dalhousie-Trek"
-  } ,
-
-  {
     "text": "Roopkund Trek",
     "href": "/photos/trekking/Roopkund-Trek"
   } ,
@@ -18,6 +13,11 @@ callback([
   {
     "text": "Stok Kangri Expedition",
     "href": "/photos/trekking/Stok-Kangri-Trek"
+  } ,
+
+  {
+    "text": "Dalhousie Trek",
+    "href": "/photos/trekking/Dalhousie-Trek"
   } ,
 
   {
@@ -66,13 +66,13 @@ callback([
   } ,
 
   {
-    "text": "Check if a binary tree is binary search tree",
-    "href": "/computers/dsa/trees/Check-If-Binary-Tree-BST"
+    "text": "Get all leaves of a binary tree",
+    "href": "/computers/dsa/trees/Get-All-Leaves-Tree"
   } ,
 
   {
-    "text": "Get all leaves of a binary tree",
-    "href": "/computers/dsa/trees/Get-All-Leaves-Tree"
+    "text": "Check if a binary tree is binary search tree",
+    "href": "/computers/dsa/trees/Check-If-Binary-Tree-BST"
   } ,
 
   {
@@ -123,11 +123,6 @@ callback([
   {
     "text": "Spring Framework - Why?",
     "href": "/blog/computers/java/technology/spring-framework-why"
-  } ,
-
-  {
-    "text": "Galliyan Cover",
-    "href": "/music/guitar/vocals/Galliyan-Cover"
   } 
 
 ])
