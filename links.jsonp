@@ -123,6 +123,11 @@ callback([
   {
     "text": "Spring Framework - Why?",
     "href": "/blog/computers/java/technology/spring-framework-why"
+  } ,
+
+  {
+    "text": "Use rvm to install ruby",
+    "href": "/blog/computers/java/technology/Using-rvm-to-install-ruby-rubydev"
   } 
 
 ])
