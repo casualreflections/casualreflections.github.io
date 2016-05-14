@@ -12,10 +12,14 @@ featured: true
 post_format: [ ]
 ---
 
-Why Spring ?
+> **Why Spring?**
 
-Spring is used to efficiently and effortlessly wire all the components of a large application.
-This basically provides a framework for decoupling the application using dependency injection design pattern .
+> Spring has evolved over the years to provide numerous features to users in order to **avoid boiler plate code**. From Spring Data for Cassandra/MongoDB/Redis/Solr/Aerospike, etc to Spring Social to Spring Security to Spring Web Services in Scala.
+
+> But At the core, Spring Framework essentially provides Dependency Injection and Aspect Oriented Programming.
+> Spring is used to efficiently and effortlessly wire all the components of a large application.
+> This basically provides a framework for decoupling the application and fastest turn around time in order for an application to go live.
+> Here is a quick intro to why you might need spring.
 
 Consider a scenario where you only have to worry about making your object work as it is supposed to and leave the dependencies it requires to actually be provided by some one else. This some one is exactly what spring is !
 
@@ -56,17 +60,17 @@ public class ViewClass{
 
 Suppose, you are changing the business logic and now you want to fetch the list of users from a common seperated file instead of fetching it from the db. Now,lets look at the changes we need to make.
 
-We'll have an api which'll break down the comma seperated file to return a list. Let's say this api is implemented in ListFromFile class.
+We'll have an api which'll break down the comma separated file to return a list. Let's say this api is implemented in ListFromFile class.
 To render this list in the view, we'll have to create an instance of the class ListFromFile instead of ListFromDb.
 
 {% highlight java%}
 public List<Users> viewObject{
-private Listener newListener;
-public void render(){
-newListener = new ListFromFile();
-List<Users> list = newListener.showUsers();
-view.render(list);
-}
+    private Listener newListener;
+    public void render(){
+        newListener = new ListFromFile();
+        List<Users> list = newListener.showUsers();
+        view.render(list);
+    }
 }
 {% endhighlight %}
 
@@ -96,7 +100,7 @@ newListener = new ListFromDb();
 
 {% endhighlight%}
 
-If you want to change the logic to fetch it from the comma seperated file, all you have to do is make changes in the xml to create a setter method for the changed class.
+If you want to change the logic to fetch it from the comma separated file, all you have to do is make changes in the xml to create a setter method for the changed class.
 
 This injection of objects in spring is what makes it flexible to manage large applications .
 This is termed generically as Dependency Injection.
