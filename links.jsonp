@@ -126,8 +126,8 @@ callback([
   } ,
 
   {
-    "text": "Use rvm to install ruby",
-    "href": "/blog/computers/java/technology/Using-rvm-to-install-ruby-rubydev"
+    "text": "Use rvm to install ruby on Ubuntu",
+    "href": "/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev"
   } 
 
 ])

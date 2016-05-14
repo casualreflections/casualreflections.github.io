@@ -1,9 +1,9 @@
 [
 	
 		{
-		  "title"      : "Use rvm to install ruby",
+		  "title"      : "Use rvm to install ruby on Ubuntu",
 		  "category"   : "",
-		  "url"        : "/blog/computers/java/technology/Using-rvm-to-install-ruby-rubydev",
+		  "url"        : "/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev",
 		  "date"       : "2016-08-01 02:52:58 +0530",
 		  "shortdate"  : "August 01, 2016"
 		} ,

@@ -171,15 +171,25 @@ Description: Awesome dude, awesome life
                         <div class="cursive" style="color: #000; font-style:italic;">Solution for creating decoupled applications for web</div>
                         <div class="post-info text-center small">
                             <span class="entry-date date published updated"><time datetime="2015-08-01T02:52:58+05:30" class="post-time" itemprop="datePublished">01 Aug 2015</time><span>
-                            in <span class="post-tags"><a href="/categories/index.html#BlogComputersJavaTechnology" data-toggle="tooltip" title="Other posts from the Blog category" rel="tag">Blog</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#BlogComputersJavaTechnology" data-toggle="tooltip" title="Other posts from the Computers category" rel="tag">Computers</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#BlogComputersJavaTechnology" data-toggle="tooltip" title="Other posts from the Java category" rel="tag">Java</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#BlogComputersJavaTechnology" data-toggle="tooltip" title="Other posts from the Technology category" rel="tag">Technology</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;<span class="time">2.22</span> minutes read</span>
+                            in <span class="post-tags"><a href="/categories/index.html#BlogComputersJavaTechnology" data-toggle="tooltip" title="Other posts from the Blog category" rel="tag">Blog</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#BlogComputersJavaTechnology" data-toggle="tooltip" title="Other posts from the Computers category" rel="tag">Computers</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#BlogComputersJavaTechnology" data-toggle="tooltip" title="Other posts from the Java category" rel="tag">Java</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#BlogComputersJavaTechnology" data-toggle="tooltip" title="Other posts from the Technology category" rel="tag">Technology</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;<span class="time">2.56</span> minutes read</span>
                         </div>
                     </header>
                     <div class="post-body bordered-bottom" itemprop="description">
                         
-                        <p>Why Spring ?</p>
+                        <blockquote>
+  <p><strong>Why Spring?</strong></p>
+</blockquote>
 
-<p>Spring is used to efficiently and effortlessly wire all the components of a large application.
-This basically provides a framework for decoupling the application using dependency injection design pattern .</p>
+<blockquote>
+  <p>Spring has evolved over the years to provide numerous features to users in order to <strong>avoid boiler plate code</strong>. From Spring Data for Cassandra/MongoDB/Redis/Solr/Aerospike, etc to Spring Social to Spring Security to Spring Web Services in Scala.</p>
+</blockquote>
+
+<blockquote>
+  <p>But At the core, Spring Framework essentially provides Dependency Injection and Aspect Oriented Programming.
+Spring is used to efficiently and effortlessly wire all the components of a large application.
+This basically provides a framework for decoupling the application and fastest turn around time in order for an application to go live.
+Here is a quick intro to why you might need spring.</p>
+</blockquote>
 
 <p>Consider a scenario where you only have to worry about making your object work as it is supposed to and leave the dependencies it requires to actually be provided by some one else. This some one is exactly what spring is !</p>
 
@@ -213,16 +223,16 @@ Suppose you need to render a view with a list of listeners:</p>
 
 <p>Suppose, you are changing the business logic and now you want to fetch the list of users from a common seperated file instead of fetching it from the db. Now,lets look at the changes we need to make.</p>
 
-<p>We’ll have an api which’ll break down the comma seperated file to return a list. Let’s say this api is implemented in ListFromFile class.
+<p>We’ll have an api which’ll break down the comma separated file to return a list. Let’s say this api is implemented in ListFromFile class.
 To render this list in the view, we’ll have to create an instance of the class ListFromFile instead of ListFromDb.</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Users</span><span class="o">&gt;</span> <span class="n">viewObject</span><span class="o">{</span>
-<span class="kd">private</span> <span class="n">Listener</span> <span class="n">newListener</span><span class="o">;</span>
-<span class="kd">public</span> <span class="kt">void</span> <span class="nf">render</span><span class="o">(){</span>
-<span class="n">newListener</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ListFromFile</span><span class="o">();</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">Users</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">newListener</span><span class="o">.</span><span class="na">showUsers</span><span class="o">();</span>
-<span class="n">view</span><span class="o">.</span><span class="na">render</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
-<span class="o">}</span>
+    <span class="kd">private</span> <span class="n">Listener</span> <span class="n">newListener</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">render</span><span class="o">(){</span>
+        <span class="n">newListener</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ListFromFile</span><span class="o">();</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Users</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">newListener</span><span class="o">.</span><span class="na">showUsers</span><span class="o">();</span>
+        <span class="n">view</span><span class="o">.</span><span class="na">render</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
+    <span class="o">}</span>
 <span class="o">}</span></code></pre></figure>
 
 <p>This is a very simple scenario with a minor change. Consider a large tightly coupled project where you’ll have to change every implementation of logic for a minor change in business.
@@ -246,7 +256,7 @@ Create a setter method for the Listener class in an xml file and specify the dep
 <span class="n">The</span> <span class="n">listener</span> <span class="n">object</span> <span class="n">is</span> <span class="n">automatically</span> <span class="n">created</span> <span class="n">without</span> <span class="n">instantiating</span> <span class="n">it</span> <span class="n">using</span>
 <span class="n">newListener</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ListFromDb</span><span class="o">();</span></code></pre></figure>
 
-<p>If you want to change the logic to fetch it from the comma seperated file, all you have to do is make changes in the xml to create a setter method for the changed class.</p>
+<p>If you want to change the logic to fetch it from the comma separated file, all you have to do is make changes in the xml to create a setter method for the changed class.</p>
 
 <p>This injection of objects in spring is what makes it flexible to manage large applications .
 This is termed generically as Dependency Injection.</p>
@@ -327,7 +337,7 @@ This is termed generically as Dependency Injection.</p>
                 </a>
             </li>
             <li>
-                <a href="https://www.linkedin.com/profile/view?id=120133982" data-toggle="tooltip" title="Bhuvan Rawal on LinkedIn" target="_blank">
+                <a href="https://in.linkedin.com/in/bhuvanrawal" data-toggle="tooltip" title="Bhuvan Rawal on LinkedIn" target="_blank">
                     <i class="icon-linkedin"></i>
                 </a>
             </li>
