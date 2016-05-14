@@ -2,7 +2,8 @@
 layout:     post
 title:      Lowest Common Ancestor of a Binary Tree
 date:       2015-01-16 03:21:29
-description:    Finding the lowest common ancestor of a Binary Tree
+description:    Finding the lowest common ancestor of  any two nodes in a Binary Tree
+summary:    Finding lowest common ancestor of any two nodes in a binary tree
 categories: [computers,dsa,trees]
 post_format: [ ]
 share: true

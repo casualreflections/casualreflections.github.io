@@ -10,6 +10,8 @@ share: true
 ---
 ## Algorithm:
 
+{% highlight java %}
+
 /**
  * Dummy Method for checkIfBST(Tree, int, int)
  * @param root
@@ -43,3 +45,4 @@ public static boolean checkIfBST(Tree<Integer> root, int min, int max){
         min = Math.max(root.right.value, min);
     return checkIfBST(root.left,Integer.MIN_VALUE,max) & checkIfBST(root.right,min,Integer.MAX_VALUE);
 }
+{% endhighlight %}

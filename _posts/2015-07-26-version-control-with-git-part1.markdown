@@ -7,6 +7,7 @@ summary: Learn the most loved version control system on the planet
 description: Learn the most loved version control system on the planet
 share:  true
 comments:   true
+featured: true
 post_format: [ ]
 ---
 This post will help you learn basics of Git version control system without delving deep into its finer details. Learn all the basic tricks that can be useful for day today operations.

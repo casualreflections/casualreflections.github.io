@@ -3,6 +3,7 @@ layout:     post
 title:      Print all nodes in a binary tree that are at a distance k from a leaf node
 date:       2015-01-21 22:21:29
 description:    Given a Binary Tree and a positive integer k, print all nodes that are distance k from a leaf node. 
+summary: Given a Binary Tree and a positive integer k, print all nodes that are distance k from a leaf node. 
 categories: [computers,dsa,trees]
 post_format: [ ]
 share: true

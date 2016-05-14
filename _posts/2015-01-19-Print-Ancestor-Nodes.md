@@ -3,6 +3,7 @@ layout:     post
 title:      Print Ancestor Nodes
 date:       2015-01-20 07:21:29
 description:    Given a node, print its ancestor nodes
+summary:    Given a node, print its ancestor nodes
 categories: [computers,dsa,trees]
 post_format: [ ]
 share: true

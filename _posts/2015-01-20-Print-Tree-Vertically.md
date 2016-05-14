@@ -3,6 +3,7 @@ layout:     post
 title:      Print Tree Vertically
 date:       2015-01-20 19:21:29
 description:    Given a binary Tree, print it vertically
+summary: Given a binary tree, print it vertically
 categories: [computers,dsa,trees]
 post_format: [ ]
 share: true
