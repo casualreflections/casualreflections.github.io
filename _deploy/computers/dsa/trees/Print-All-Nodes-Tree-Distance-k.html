@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<!--
+====================================================
+ ____  _   _ _   ___     ___    _   _
+| __ )| | | | | | \ \   / / \  | \ | |
+|  _ \| |_| | | | |\ \ / / _ \ |  \| |
+| |_) |  _  | |_| | \ V / ___ \| |\  |
+|____/|_| |_|\___/   \_/_/   \_\_| \_|
+
+====================================================
+Owner Name: Bhuvan Rawal
+Profile: https://www.facebook.com/bhu1rawal
+Version: 1.1
+Description: Awesome dude, awesome life
+====================================================
+-->
+<head>
+<meta charset="utf-8">
+<title>Print all nodes in a binary tree that are at a distance k from a leaf node &#8211; Bhuvan Rawal</title>
+<meta name="description" content="Given a Binary Tree and a positive integer k, print all nodes that are distance k from a leaf node.">
+<meta name="keywords" content="">
+
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/images/omikron.png">
+<meta name="twitter:title" content="Print all nodes in a binary tree that are at a distance k from a leaf node">
+<meta name="twitter:description" content="Given a Binary Tree and a positive integer k, print all nodes that are distance k from a leaf node.">
+<meta name="twitter:creator" content="@beingbhuvan">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Print all nodes in a binary tree that are at a distance k from a leaf node">
+<meta property="og:description" content="Given a Binary Tree and a positive integer k, print all nodes that are distance k from a leaf node.">
+<meta property="og:url" content="/computers/dsa/trees/Print-All-Nodes-Tree-Distance-k">
+<meta property="og:site_name" content="Bhuvan Rawal">
+<meta property="og:image" content="/images/default_bg1.jpg">
+
+
+
+
+
+<link rel="canonical" href="/computers/dsa/trees/Print-All-Nodes-Tree-Distance-k">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Bhuvan Rawal Feed">
+<link rel="author" href="https://plus.google.com/u/0/115368800868963120427?rel=author">
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
+
+<div class="search-wrapper">
+    <div class="search-form">
+        <input type="text" class="search-field" placeholder="Search...">
+        <i class="icon-remove-sign"></i>
+        <ul class="search-results post-list"></ul><!-- /.search-results -->
+    </div><!-- /.search-form -->
+</div><!-- ./search-wrapper -->
+
+
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+<body class="post-template" itemscope itemtype="http://schema.org/WebPage">  
+<div id="fade"></div>
+<a id="slide" class="animated fade"></a>
+<aside id="sidebar">
+    <nav id="navigation">
+    <h2>MENU</h2>
+    <hr>
+
+            <li>
+                    <a href="/">Home</a>
+                 </li>
+
+            <li>
+                    <a href="/categories">Categories</a>
+                 </li>
+
+            <li>
+                    <a href="/tags">Tags</a>
+                 </li>
+
+            <li>
+                    <a href="/about">Bhuvan who?</a>
+                 </li>
+
+            <li>
+                    <a href="/contact">Contact me</a>
+                 </li>
+            
+           <li><a href="/feed.xml" title="Atom/RSS feed"><i class="icon-rss"></i> Feed</a></li>
+    </nav>
+    
+    
+</aside>
+
+<header id="masthead" class="blog-background overlay align-center align-middle animated from-bottom"  style="background-image: url(/images/default_bg1.jpg)" itemscope itemtype="http://schema.org/Organization">
+
+
+    <button class="menu-button animated fade dosearch">
+        <i class="icon-search"></i>
+    </button>
+
+
+    <div class="inner">
+        <div class="container">
+            <a class="brand" href="/" role="banner" itemprop="url">
+
+                <img itemprop="logo" src="/images/omikron.png" alt="Bhuvan Rawal Logo" />
+
+            <h1 class="blog-title light" itemprop="name">
+                Bhuvan Rawal
+            </h1>
+                
+            </a>
+        </div>
+    </div>
+    
+    
+    <div class="decor-wrapper">
+        <svg id="header-decor" class="decor bottom" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path class="large left" d="M0 0 L50 50 L0 100" fill="rgba(255,255,255, .1)"></path>
+            <path class="large right" d="M100 0 L50 50 L100 100" fill="rgba(255,255,255, .1)"></path>
+
+            <path class="medium left" d="M0 100 L50 50 L0 33.3" fill="rgba(255,255,255, .3)"></path>
+            <path class="medium right" d="M100 100 L50 50 L100 33.3" fill="rgba(255,255,255, .3)"></path>
+
+            <path class="small left" d="M0 100 L50 50 L0 66.6" fill="rgba(255,255,255, .5)"></path>
+            <path class="small right" d="M100 100 L50 50 L100 66.6" fill="rgba(255,255,255, .5)"></path>
+
+            <path d="M0 99.9 L50 49.9 L100 99.9 L0 99.9" fill="rgba(255,255,255, 1)"></path>
+
+            <path d="M48 52 L50 49 L52 52 L48 52" fill="rgba(255,255,255, 1)"></path>
+
+        </svg>
+    </div>
+    
+</header>
+<div id="main" class="content" role="main" itemprop="mainContentOfPage" itemscope itemtype="http://schema.org/Blog">
+    <div class="container">
+        <div class="row">
+            <article class="post col-md-8 col-md-offset-2 hentry" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+
+            
+            
+            
+                    <header class="post-header entry-header">
+                    
+                        
+                        <h1 class="post-title text-center hyper lighter bordered-bottom entry-title" itemprop="headline">Print all nodes in a binary tree that are at a distance k from a leaf node</h1>
+                        
+                        <div class="cursive" style="color: #000; font-style:italic;">Given a Binary Tree and a positive integer k, print all nodes that are distance k from a leaf node.</div>
+                        <div class="post-info text-center small">
+                            <span class="entry-date date published updated"><time datetime="2015-01-22T03:51:29+05:30" class="post-time" itemprop="datePublished">22 Jan 2015</time><span>
+                            in <span class="post-tags"><a href="/categories/index.html#computersdsatrees" data-toggle="tooltip" title="Other posts from the Computers category" rel="tag">Computers</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#computersdsatrees" data-toggle="tooltip" title="Other posts from the Dsa category" rel="tag">Dsa</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#computersdsatrees" data-toggle="tooltip" title="Other posts from the Trees category" rel="tag">Trees</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;Less than 1 minute read</span>
+                        </div>
+                    </header>
+                    <div class="post-body bordered-bottom" itemprop="description">
+                        
+                        <p>Given a Binary Tree and a positive integer k, print all nodes that are distance k from a leaf node.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">	  <span class="o">.</span>
+          <span class="mi">1</span>
+        <span class="o">/</span>    <span class="err">\</span>
+       <span class="mi">2</span>      <span class="mi">3</span>
+      <span class="o">/</span> <span class="err">\</span>    <span class="o">/</span> <span class="err">\</span>
+     <span class="mi">4</span>   <span class="mi">5</span>  <span class="mi">6</span>   <span class="mi">7</span>
+             <span class="err">\</span>   <span class="err">\</span>
+              <span class="mi">8</span>   <span class="mi">9</span>
+
+
+<span class="n">The</span> <span class="n">output</span> <span class="k">for</span> <span class="n">the</span> <span class="n">above</span> <span class="n">tree</span> <span class="k">for</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span> <span class="n">will</span> <span class="n">be</span>
+<span class="mi">2</span><span class="o">,</span><span class="mi">6</span><span class="o">,</span><span class="mi">7</span>
+
+<span class="n">For</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span> <span class="n">the</span> <span class="n">solution</span> <span class="n">would</span> <span class="nl">be:</span>
+<span class="mi">1</span><span class="o">,</span><span class="mi">3</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"> <span class="cm">/**</span>
+<span class="cm"> *</span>
+<span class="cm"> * @param node</span>
+<span class="cm"> * @param k</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">printNodesDistanceKromLeafNode</span> <span class="o">(</span><span class="n">Tree</span> <span class="n">node</span><span class="o">,</span> <span class="kt">int</span> <span class="n">k</span><span class="o">){</span>
+    <span class="c1">// Create an array with all the indices</span>
+    <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Tree</span><span class="o">&gt;</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">Tree</span><span class="o">&gt;();</span>
+    <span class="n">queue</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+    <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span><span class="mi">0</span><span class="o">;</span>
+    <span class="n">List</span> <span class="n">arrayList</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ArrayList</span><span class="o">();</span>
+    <span class="n">List</span> <span class="n">auxarray</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ArrayList</span><span class="o">();</span>
+    <span class="k">while</span> <span class="o">(!</span><span class="n">queue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()){</span>
+        <span class="n">Tree</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
+        <span class="n">arrayList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">index</span><span class="o">,</span> <span class="n">temp</span><span class="o">);</span>
+        <span class="n">auxarray</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">index</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+        <span class="n">index</span><span class="o">++;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">temp</span><span class="o">.</span><span class="na">left</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">temp</span><span class="o">.</span><span class="na">right</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="c1">// leaf node found print the parent at distance k</span>
+            <span class="c1">// from the array that we have created</span>
+            <span class="kt">int</span> <span class="n">t</span> <span class="o">=</span> <span class="n">k</span><span class="o">;</span>
+            <span class="kt">int</span> <span class="n">tempIndex</span> <span class="o">=</span> <span class="n">index</span><span class="o">;</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">t</span> <span class="o">&gt;=</span><span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">t</span><span class="o">--;</span>
+                <span class="n">tempIndex</span> <span class="o">=</span> <span class="n">tempIndex</span><span class="o">/</span><span class="mi">2</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">auxarray</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">tempIndex</span><span class="o">)</span> <span class="o">==</span> <span class="kc">false</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">arrayList</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">tempIndex</span><span class="o">));</span>
+                <span class="n">auxarray</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">index</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">temp</span><span class="o">.</span><span class="na">left</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="n">queue</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">temp</span><span class="o">.</span><span class="na">left</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">temp</span><span class="o">.</span><span class="na">right</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="n">queue</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">temp</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+<span class="o">}</span></code></pre></figure>
+
+
+                        <br>
+                    
+                    
+                    </div>
+        </div>
+                    <footer class="post-footer entry-meta">
+                        <div class="post-share text-center">
+    <p class="light small">
+        Share this post
+    </p>
+    <ul class="social-mini">
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=&quot;Print all nodes in a binary tree that are at a distance k from a leaf node&quot;%20/computers/dsa/trees/Print-All-Nodes-Tree-Distance-k%20via%20&#64;beingbhuvan"
+            onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" data-toggle="tooltip" title="Share on Twitter" itemprop="Twitter">
+                <i class="icon-twitter"></i>
+            </a>
+        </li>
+        <li>
+            <a  href="https://www.facebook.com/sharer/sharer.php?u=/computers/dsa/trees/Print-All-Nodes-Tree-Distance-k"
+            onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" data-toggle="tooltip" title="Share on Facebook" itemprop="Facebook">
+                <i class="icon-facebook"></i>
+            </a>
+        </li>
+        <li>
+            <a href="https://plus.google.com/share?url=/computers/dsa/trees/Print-All-Nodes-Tree-Distance-k"
+           onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" data-toggle="tooltip" title="Share on Google plus" itemprop="GooglePlus">
+                <i class="icon-google-plus"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+                        <div class="post-author text-center">                       
+	        <img src="/images/bhuvanrawal.jpg" alt="Bhuvan Rawal's photo" itemprop="image" class="post-avatar img-circle img-responsive"/>    
+	    <h4 class="bordered-bottom vcard author" itemprop="author" itemscope itemtype="http://schema.org/Person">By <span itemprop="name" class="fn"><a href="/about" title="About Bhuvan Rawal" itemprop="url">Bhuvan Rawal</a></span></h4>
+	    <p>Bhuvan Rawal is a Computer Science engineer based in New Delhi, India. His interests are anything that&#8217;s related to Technology and Science, from math to programming languages to music to physics to engineering to philosophy.</p>
+</div> 
+                        
+                    </footer>
+            </article>
+    </div>
+</div>
+
+<footer id="footer"  class="blog-background overlay text-center align-middle animated from-top" style="background-image: url(/images/default_bg1.jpg)" >
+
+
+    <div class="inner">
+        <div class="container">
+
+            <ul class="social-icons">
+            <li>
+                <a href="http://twitter.com/beingbhuvan" data-toggle="tooltip" title="Bhuvan Rawal on Twitter" target="_blank">
+                    <i class="icon-twitter"></i>
+                </a>
+            </li>
+            <li>
+                <a href="http://facebook.com/bhu1rawal" data-toggle="tooltip" title="Bhuvan Rawal on Facebook" target="_blank">
+                    <i class="icon-facebook"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://plus.google.com/u/0/115368800868963120427" data-toggle="tooltip" title="Bhuvan Rawal on Google+" target="_blank">
+                    <i class="icon-google-plus"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://stackexchange.com/users/4482379/bhuvan-rawal" data-toggle="tooltip" title="Bhuvan Rawal on StackExchange" target="_blank">
+                    <i class="icon-stackexchange"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/profile/view?id=120133982" data-toggle="tooltip" title="Bhuvan Rawal on LinkedIn" target="_blank">
+                    <i class="icon-linkedin"></i>
+                </a>
+            </li>
+            
+            
+            <li>
+                <a href="http://github.com/bhuvanrawal" data-toggle="tooltip" title="Bhuvan Rawal on Github" target="_blank">
+                    <i class="icon-github"></i>
+                </a>
+            </li>
+        </ul>
+            <div>
+                <a href="/about/">Bhuvan Rawal</a> &copy; 2016 &bull; All rights reserved.
+            </div>
+            <ul class="menu-items">
+            
+            <li>
+                
+                    <a href="/"><i class="icon-home"></i></a>&nbsp;&bull;
+                 
+            </li>
+            
+            <li>
+                
+                    <a href="/categories">Categories</a>&nbsp;&bull;
+                 
+            </li>
+            
+            <li>
+                
+                    <a href="/tags">Tags</a>&nbsp;&bull;
+                 
+            </li>
+            
+            <li>
+                
+                    <a href="/about">Bhuvan who?</a>&nbsp;&bull;
+                 
+            </li>
+            
+            <li>
+                
+                    <a href="/contact">Contact me</a>&nbsp;&bull;
+                 
+            </li>
+            
+            <li><a href="/feed.xml" title="Atom/RSS feed"><i class="icon-rss"></i> Feed</a></li>
+        </ul>
+        </div>
+    </div>
+    
+        <div class="decor-wrapper">
+            <svg id="footer-decor" class="decor top" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" preserveAspectRatio="none">
+
+                <path class="large left" d="M0 0 L50 50 L0 100" fill="rgba(255,255,255, .1)"></path>
+                <path class="large right" d="M100 0 L50 50 L100 100" fill="rgba(255,255,255, .1)"></path>
+
+                <path class="medium left" d="M0 0 L50 50 L0 66.6" fill="rgba(255,255,255, .3)"></path>
+                <path class="medium right" d="M100 0 L50 50 L100 66.6" fill="rgba(255,255,255, .3)"></path>
+
+                <path class="small left" d="M0 0 L50 50 L0 33.3" fill="rgba(255,255,255, .5)"></path>
+                <path class="small right" d="M100 0 L50 50 L100 33.3" fill="rgba(255,255,255, .5)"></path>
+
+                <path d="M0 0 L50 50 L100 0 L0 0" fill="rgba(255,255,255, 1)"></path>
+
+                <path d="M48 48 L50 51 L52 48 L48 48" fill="rgba(255,255,255, 1)"></path>
+
+            </svg>
+        </div>
+    
+
+</footer>
+
+    
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+<script type="text/javascript" src="/assets/js/waypoints.min.js"></script>
+<script type="text/javascript" src="/assets/js/script.js"></script>
+<script type='text/javascript'>$(document).ready(function(){$(".time").text(function(a,b){return Math.round(parseFloat(b))})});</script>
+
+<script type="text/javascript" src="/assets/js/custom.js"></script>
+
+<script type="text/javascript">
+
+/*      Slides       */
+
+$("a#slide").click(function(){
+    $("#sidebar,body,a#slide,#fade").addClass("slide")
+});
+
+$("#fade,#header,#posts-container").click(function(){
+    $("#sidebar,body,a#slide,#fade").removeClass("slide")
+});
+
+$("a#click-filter").click(function(){
+    $("#slide-filter").slideToggle("medium");
+    $("#slide-pages").slideOut("medium");
+});
+
+$("a#click-pages").click(function(){
+    $("#slide-pages").slideToggle("medium");
+    $("#slide-filter").slideOut("medium");
+});
+
+/*      End-Slides      */
+
+</script>
+
+
+<!-- Jekyll Simple Search option -->
+<script>
+  $(document).ready(function() {
+      $('.search-field').simpleJekyllSearch({
+          jsonFile : '/search.json',
+          searchResults : '.search-results',
+          template : '<li><article><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></article></li>',
+          noResults: '<p>Nothing found.</p>'
+        });
+  });
+
+  (function( $, window, undefined ) {
+    
+     var bs = {
+          close: $(".icon-remove-sign"),
+          searchform: $(".search-form"),
+          canvas: $("body"),
+          dothis: $('.dosearch')
+      };
+    
+    bs.dothis.on('click', function() {
+      $('.search-wrapper').css({ display: "block" });
+      bs.searchform.toggleClass('active');
+      bs.searchform.find('input').focus();
+      bs.canvas.toggleClass('search-overlay');
+    });
+    
+      bs.close.on('click', function() {
+        $('.search-wrapper').removeAttr( 'style' );
+        bs.searchform.toggleClass('active');
+        bs.canvas.removeClass('search-overlay');
+    });
+  })( jQuery, window );
+</script>
+
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  var _gaq = _gaq || [];
+  var pluginUrl = 
+ '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-58286706-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+ 
+</body>
+</html>
