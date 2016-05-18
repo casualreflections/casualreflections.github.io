@@ -171,7 +171,7 @@ Description: Awesome dude, awesome life
                         <div class="cursive" style="color: #000; font-style:italic;">Counting in cassandra? Maybe not so difficult</div>
                         <div class="post-info text-center small">
                             <span class="entry-date date published updated"><time datetime="2016-05-18T22:52:58+05:30" class="post-time" itemprop="datePublished">18 May 2016</time><span>
-                            in <span class="post-tags"><a href="/categories/index.html#CassandraOptimisation" data-toggle="tooltip" title="Other posts from the Cassandra category" rel="tag">Cassandra</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#CassandraOptimisation" data-toggle="tooltip" title="Other posts from the Optimisation category" rel="tag">Optimisation</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;<span class="time">1.84</span> minutes read</span>
+                            in <span class="post-tags"><a href="/categories/index.html#CassandraOptimisation" data-toggle="tooltip" title="Other posts from the Cassandra category" rel="tag">Cassandra</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#CassandraOptimisation" data-toggle="tooltip" title="Other posts from the Optimisation category" rel="tag">Optimisation</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;<span class="time">1.865</span> minutes read</span>
                         </div>
                     </header>
                     <div class="post-body bordered-bottom" itemprop="description">
@@ -188,10 +188,10 @@ Description: Awesome dude, awesome life
   <p>The workers assigned can lie different cpu’s/ client altogether.</p>
 </blockquote>
 
-<h2 id="the-code-that-i-am-using-can-be-found-below">The code that I am using can be found below:</h2>
+<h2 id="the-code-that-i-am-currently-using-can-be-found-below">The code that I am currently using can be found below:</h2>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Counts the number of rows in cassandra using inbuilt paging</span>
+<span class="sd">Counts the number of rows in cassandra using inbuilt paging, uses only one worker</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="k">def</span> <span class="nf">count_row_count</span><span class="p">(</span><span class="n">table_name</span><span class="p">):</span>
     <span class="n">cassandra_session</span> <span class="o">=</span> <span class="n">get_cassandra_session</span><span class="p">()</span>

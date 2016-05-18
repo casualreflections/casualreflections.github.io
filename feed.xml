@@ -4,7 +4,7 @@
   <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
   <link rel="self" type="application/atom+xml" href="/feed.xml" />
   <link rel="alternate" type="text/html" href="" />
-  <updated>2016-05-19T02:03:18+05:30</updated>
+  <updated>2016-05-19T02:04:55+05:30</updated>
   <id>/</id>
   <author>
     <name>Bhuvan Rawal</name>
@@ -36,10 +36,10 @@
   &lt;p&gt;The workers assigned can lie different cpu’s/ client altogether.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;the-code-that-i-am-using-can-be-found-below&quot;&gt;The code that I am using can be found below:&lt;/h2&gt;
+&lt;h2 id=&quot;the-code-that-i-am-currently-using-can-be-found-below&quot;&gt;The code that I am currently using can be found below:&lt;/h2&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;sd&quot;&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;sd&quot;&gt;Counts the number of rows in cassandra using inbuilt paging&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;Counts the number of rows in cassandra using inbuilt paging, uses only one worker&lt;/span&gt;
 &lt;span class=&quot;sd&quot;&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;count_row_count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_cassandra_session&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
