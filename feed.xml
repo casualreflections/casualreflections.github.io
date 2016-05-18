@@ -4,7 +4,7 @@
   <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
   <link rel="self" type="application/atom+xml" href="/feed.xml" />
   <link rel="alternate" type="text/html" href="" />
-  <updated>2016-05-14T18:01:44+05:30</updated>
+  <updated>2016-05-19T02:02:37+05:30</updated>
   <id>/</id>
   <author>
     <name>Bhuvan Rawal</name>
@@ -14,11 +14,104 @@
   
 
   <entry>
+    <title type="html"><![CDATA[Use token ranges for fast table scans and count calculation]]></title>
+    <link>/cassandra/optimisation/cassandra-tokenised-table-scan</link>
+    <id>/cassandra/optimisation/cassandra-tokenised-table-scan</id>
+    <published>2016-05-18T22:52:58+05:30</published>
+    <updated>2016-05-18T22:52:58+05:30</updated>
+    <author>
+      <name>Bhuvan Rawal</name>
+      <uri></uri>
+      <email>bhuvan@bhuvanrawal.me</email>
+    </author>
+    <content type="html">&lt;blockquote&gt;
+  &lt;p&gt;I have been using the default internal paging that Datastax Drivers provide, which was introduced in 2.0+ and works like a charm for small use cases. I have tried to count rows using the following code successfully for &lt;strong&gt;&lt;code&gt;~300M rows in ~15Mins&lt;/code&gt;&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;But over a period of time I have observed that scans use up only one core and there lies a scope of improvement in the approach. Using cluster metadata and vnode token ranges multiple workers can be assigned different token ranges to work upon.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The workers assigned can lie different cpu’s/ client altogether.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;the-code-that-i-am-using-can-be-found-below&quot;&gt;The code that I am using can be found below:&lt;/h2&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;sd&quot;&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;Counts the number of rows in cassandra using inbuilt paging&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;count_row_count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_cassandra_session&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;query&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;select * from &amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;table_name&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;rs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;has_more_pages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;rows&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;current_rows&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rows&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;c&quot;&gt;# Try fetching next page&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;rs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetch_next_page&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;except&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;c&quot;&gt;# In case of Time out exception or if some mishappening occurs&lt;/span&gt;
+            &lt;span class=&quot;c&quot;&gt;# Retry after 500 milliseconds&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Exception Occurred while fetching page, retrying again with same page&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;the-below-code-snippet-is-from-datastax-java-driver-test-cases-similar-code-used-for-python-driver-as-well&quot;&gt;The below code snippet is from &lt;strong&gt;datastax java driver test cases&lt;/strong&gt;, similar code used for python driver as well:&lt;/h2&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;should_expose_token_ranges&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Metadata&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;metadata&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cluster&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getMetadata&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;.......&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Iterate the cluster&amp;#39;s token ranges. For each one, use a range query to ask Cassandra which partition keys&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// are in this range.&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;token_range_query&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;SELECT i FROM foo WHERE token(i) &amp;gt; ? and token(i) &amp;lt;= ?&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;PreparedStatement&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rangeStmt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;prepare&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token_range_query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;TokenRange&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foundRange&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TokenRange&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;range&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getTokenRanges&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Row&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rows&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rangeQuery&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rangeStmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Row&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rows&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getInt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;i&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;testKey&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;// We should find our test key exactly once&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;assertThat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;foundRange&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+                        &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;describedAs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;found the same key in two ranges: &amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foundRange&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot; and &amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+                        &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isNull&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;foundRange&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;// That range should be managed by the replica&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;assertThat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getReplicas&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ks1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;contains&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;replica&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;assertThat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;foundRange&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isNotNull&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Row&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;rangeQuery&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PreparedStatement&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rangeStmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TokenRange&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Row&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rows&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Lists&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;newArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TokenRange&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;subRange&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;unwrap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Statement&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;statement&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rangeStmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subRange&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getStart&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;subRange&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getEnd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;rows&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;addAll&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;statement&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rows&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;use-cases&quot;&gt;Use Cases:&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;When complete table scans are going to be performed&lt;/li&gt;
+  &lt;li&gt;Exact Counting rows in a table&lt;/li&gt;
+&lt;/ul&gt;
+
+      &lt;p&gt;&lt;a href=&quot;/cassandra/optimisation/cassandra-tokenised-table-scan&quot;&gt;Use token ranges for fast table scans and count calculation&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on May 18, 2016.&lt;/p&gt;</content>
+  </entry>
+  
+
+  <entry>
     <title type="html"><![CDATA[Use rvm to install ruby on Ubuntu]]></title>
     <link>/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev</link>
     <id>/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev</id>
-    <published>2016-08-01T02:52:58+05:30</published>
-    <updated>2016-08-01T02:52:58+05:30</updated>
+    <published>2016-05-08T02:52:58+05:30</published>
+    <updated>2016-05-08T02:52:58+05:30</updated>
     <author>
       <name>Bhuvan Rawal</name>
       <uri></uri>
@@ -120,7 +213,7 @@ ironruby-head&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h2 id=&quot;thanks---rvmiorvmio&quot;&gt;Thanks - &lt;a href=&quot;rvm.io&quot;&gt;rvm.io&lt;/a&gt;&lt;/h2&gt;
 
-      &lt;p&gt;&lt;a href=&quot;/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev&quot;&gt;Use rvm to install ruby on Ubuntu&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on August 01, 2016.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev&quot;&gt;Use rvm to install ruby on Ubuntu&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on May 08, 2016.&lt;/p&gt;</content>
   </entry>
   
 
@@ -1404,48 +1497,6 @@ else recurse to the branch which is not null.&lt;/li&gt;
 &lt;/figure&gt;
 
       &lt;p&gt;&lt;a href=&quot;/photos/trekking/Phalut-Trek&quot;&gt;Phalut Trek&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
-  </entry>
-  
-
-  <entry>
-    <title type="html"><![CDATA[Boot windows from external USB hard drive for UEFI motherboards]]></title>
-    <link>/computers/technology/hack/Install-Windows-External-HardDisk</link>
-    <id>/computers/technology/hack/Install-Windows-External-HardDisk</id>
-    <published>2015-01-15T04:51:29+05:30</published>
-    <updated>2015-01-15T04:51:29+05:30</updated>
-    <author>
-      <name>Bhuvan Rawal</name>
-      <uri></uri>
-      <email>bhuvan@bhuvanrawal.me</email>
-    </author>
-    <content type="html">&lt;h2 id=&quot;this-post-will-help-you-install-windows-on-an-external-usb-hard-disk-and-boot-from-it&quot;&gt;This post will help you install windows on an external USB hard disk and boot from it&lt;/h2&gt;
-
-&lt;p&gt;Recent motherboards come with UEFI bios. Other methods which i found on the internet did not work when tried to install windows on my own computer which has Fedora in its primary hard disk. Hence this tutorial!&lt;/p&gt;
-
-&lt;h2 id=&quot;requirements&quot;&gt;Requirements&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;A windows PC&lt;/li&gt;
-  &lt;li&gt;Windows iso version earlier than xp, Windows 10 is supported.&lt;/li&gt;
-  &lt;li&gt;A spare hard drive&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;making-your-external-hard-drive-bootable-with-windows&quot;&gt;Making your external hard drive bootable with windows:&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Create an extra partition on your hard drive with 500MB space and filesystem FAT-32&lt;/li&gt;
-  &lt;li&gt;Go to &lt;a href=&quot;http://download.cnet.com/WinToUSB/3000-2094_4-76061723.html?part=dl-&amp;amp;subj=dl&amp;amp;tag=button&quot;&gt;link&lt;/a&gt; and download the WinToUSB software.&lt;/li&gt;
-  &lt;li&gt;Run the software, install it on your computer, connect the external hard drive where you want to install windows.&lt;/li&gt;
-  &lt;li&gt;Select the iso image of windows in the first page.&lt;/li&gt;
-  &lt;li&gt;In the second page select the newly created 500 MB fat32 partition as the system partition and the other partition as boot partition.&lt;/li&gt;
-  &lt;li&gt;Click on next. Windows will be installed on your secondary hard drive.&lt;/li&gt;
-  &lt;li&gt;When the process is finished connect the hard disk into a computer where you want to install windows, in the boot menu select external hard drive.&lt;/li&gt;
-  &lt;li&gt;Windows installation will start.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;note-do-not-plug-in-the-hard-drive-into-any-other-computer-than-the-intended-one-as-during-the-first-boot-as-it-will-start-installing-drivers-for-that-system&quot;&gt;Note: Do not plug in the hard drive into any other computer than the intended one as during the first boot as it will start installing drivers for that system.&lt;/h3&gt;
-
-      &lt;p&gt;&lt;a href=&quot;/computers/technology/hack/Install-Windows-External-HardDisk&quot;&gt;Boot windows from external USB hard drive for UEFI motherboards&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 15, 2015.&lt;/p&gt;</content>
   </entry>
   
 </feed>

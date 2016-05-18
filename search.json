@@ -1,11 +1,19 @@
 [
 	
 		{
+		  "title"      : "Use token ranges for fast table scans and count calculation",
+		  "category"   : "",
+		  "url"        : "/cassandra/optimisation/cassandra-tokenised-table-scan",
+		  "date"       : "2016-05-18 22:52:58 +0530",
+		  "shortdate"  : "May 18, 2016"
+		} ,
+	
+		{
 		  "title"      : "Use rvm to install ruby on Ubuntu",
 		  "category"   : "",
 		  "url"        : "/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev",
-		  "date"       : "2016-08-01 02:52:58 +0530",
-		  "shortdate"  : "August 01, 2016"
+		  "date"       : "2016-05-08 02:52:58 +0530",
+		  "shortdate"  : "May 08, 2016"
 		} ,
 	
 		{

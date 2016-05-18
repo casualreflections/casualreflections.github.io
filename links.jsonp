@@ -128,6 +128,11 @@ callback([
   {
     "text": "Use rvm to install ruby on Ubuntu",
     "href": "/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev"
+  } ,
+
+  {
+    "text": "Use token ranges for fast table scans and count calculation",
+    "href": "/cassandra/optimisation/cassandra-tokenised-table-scan"
   } 
 
 ])

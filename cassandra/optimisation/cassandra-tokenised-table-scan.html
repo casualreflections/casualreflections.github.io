@@ -17,23 +17,23 @@ Description: Awesome dude, awesome life
 -->
 <head>
 <meta charset="utf-8">
-<title>Use rvm to install ruby on Ubuntu &#8211; Bhuvan Rawal</title>
-<meta name="description" content="Install and use ruby using rvm on linux">
-<meta name="keywords" content="Ruby, Languages, Setup">
+<title>Use token ranges for fast table scans and count calculation &#8211; Bhuvan Rawal</title>
+<meta name="description" content="Counting in cassandra? Maybe not so difficult">
+<meta name="keywords" content="Cassandra, Optimisation">
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="/images/omikron.png">
-<meta name="twitter:title" content="Use rvm to install ruby on Ubuntu">
-<meta name="twitter:description" content="Install and use ruby using rvm on linux">
+<meta name="twitter:title" content="Use token ranges for fast table scans and count calculation">
+<meta name="twitter:description" content="Counting in cassandra? Maybe not so difficult">
 <meta name="twitter:creator" content="@beingbhuvan">
 
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Use rvm to install ruby on Ubuntu">
-<meta property="og:description" content="Install and use ruby using rvm on linux">
-<meta property="og:url" content="/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev">
+<meta property="og:title" content="Use token ranges for fast table scans and count calculation">
+<meta property="og:description" content="Counting in cassandra? Maybe not so difficult">
+<meta property="og:url" content="/cassandra/optimisation/cassandra-tokenised-table-scan">
 <meta property="og:site_name" content="Bhuvan Rawal">
 <meta property="og:image" content="/images/default_bg1.jpg">
 
@@ -41,7 +41,7 @@ Description: Awesome dude, awesome life
 
 
 
-<link rel="canonical" href="/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev">
+<link rel="canonical" href="/cassandra/optimisation/cassandra-tokenised-table-scan">
 <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Bhuvan Rawal Feed">
 <link rel="author" href="https://plus.google.com/u/0/115368800868963120427?rel=author">
 <!-- http://t.co/dKP3o1e -->
@@ -166,118 +166,100 @@ Description: Awesome dude, awesome life
                     <header class="post-header entry-header">
                     <div class="cursive">this post is featured</div>
                         
-                        <h1 class="post-title text-center hyper lighter bordered-bottom entry-title" itemprop="headline">Use rvm to install ruby on Ubuntu</h1>
+                        <h1 class="post-title text-center hyper lighter bordered-bottom entry-title" itemprop="headline">Use token ranges for fast table scans and count calculation</h1>
                         
-                        <div class="cursive" style="color: #000; font-style:italic;">Install and use ruby using rvm on linux</div>
+                        <div class="cursive" style="color: #000; font-style:italic;">Counting in cassandra? Maybe not so difficult</div>
                         <div class="post-info text-center small">
-                            <span class="entry-date date published updated"><time datetime="2016-05-08T02:52:58+05:30" class="post-time" itemprop="datePublished">08 May 2016</time><span>
-                            in <span class="post-tags"><a href="/categories/index.html#RubyLanguagesSetup" data-toggle="tooltip" title="Other posts from the Ruby category" rel="tag">Ruby</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#RubyLanguagesSetup" data-toggle="tooltip" title="Other posts from the Languages category" rel="tag">Languages</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#RubyLanguagesSetup" data-toggle="tooltip" title="Other posts from the Setup category" rel="tag">Setup</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;1 minute read</span>
+                            <span class="entry-date date published updated"><time datetime="2016-05-18T22:52:58+05:30" class="post-time" itemprop="datePublished">18 May 2016</time><span>
+                            in <span class="post-tags"><a href="/categories/index.html#CassandraOptimisation" data-toggle="tooltip" title="Other posts from the Cassandra category" rel="tag">Cassandra</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#CassandraOptimisation" data-toggle="tooltip" title="Other posts from the Optimisation category" rel="tag">Optimisation</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;<span class="time">1.84</span> minutes read</span>
                         </div>
                     </header>
                     <div class="post-body bordered-bottom" itemprop="description">
                         
                         <blockquote>
-  <p>I have tried installing ruby on ubuntu by multiple ways over the years as this site is built on jekyll, a rubygem which requires ruby, its always difficult to set up but recently I tried rvm.io and it ended up being a 3 command process, lightening fast.</p>
+  <p>I have been using the default internal paging that Datastax Drivers provide, which was introduced in 2.0+ and works like a charm for small use cases. I have tried to count rows using the following code successfully for <strong><code>~300M rows in ~15Mins</code></strong>.</p>
 </blockquote>
 
-<h2 id="the-below-steps-should-be-executed-as-root-change-to-root-user">The below steps should be executed as root, change to root user:</h2>
+<blockquote>
+  <p>But over a period of time I have observed that scans use up only one core and there lies a scope of improvement in the approach. Using cluster metadata and vnode token ranges multiple workers can be assigned different token ranges to work upon.</p>
+</blockquote>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sudo su</code></pre></figure>
+<blockquote>
+  <p>The workers assigned can lie different cpu’s/ client altogether.</p>
+</blockquote>
 
-<h2 id="in-order-to-proceed-with-rvm-install-fetch-the-rvm-public-key-into-system">In order to proceed with RVM install, fetch the rvm public key into system</h2>
+<h2 id="the-code-that-i-am-using-can-be-found-below">The code that I am using can be found below:</h2>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>apt-get install curl
-<span class="nv">$ </span>gpg --import mpapis.asc</code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Counts the number of rows in cassandra using inbuilt paging</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">count_row_count</span><span class="p">(</span><span class="n">table_name</span><span class="p">):</span>
+    <span class="n">cassandra_session</span> <span class="o">=</span> <span class="n">get_cassandra_session</span><span class="p">()</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;select * from &quot;</span> <span class="o">+</span> <span class="n">table_name</span>
+    <span class="n">rs</span> <span class="o">=</span> <span class="n">cassandra_session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">rs</span><span class="o">.</span><span class="n">has_more_pages</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rows</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="n">current_rows</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+            <span class="c"># Try fetching next page</span>
+            <span class="n">rs</span><span class="o">.</span><span class="n">fetch_next_page</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c"># In case of Time out exception or if some mishappening occurs</span>
+            <span class="c"># Retry after 500 milliseconds</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s">&quot;Exception Occurred while fetching page, retrying again with same page&quot;</span>
+            <span class="k">continue</span></code></pre></figure>
 
-<h2 id="then-download-the-rvm-installer-with-curl-and-execute-it-by-piping-the-curl-output-to-bash">Then download the RVM installer with curl and execute it (by piping the curl output to bash):</h2>
+<h2 id="the-below-code-snippet-is-from-datastax-java-driver-test-cases-similar-code-used-for-python-driver-as-well">The below code snippet is from <strong>datastax java driver test cases</strong>, similar code used for python driver as well:</h2>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>curl -sSL https://get.rvm.io <span class="p">|</span> bash -s stable</code></pre></figure>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">should_expose_token_ranges</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">Metadata</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">().</span><span class="na">getMetadata</span><span class="o">();</span>
 
-<h2 id="we-now-need-to-build-the-rvm-environment-in-order-to-do-that-source-the-rvmsh-file-into-the-env">We now need to build the RVM environment, in order to do that source the rvm.sh file into the env:</h2>
+<span class="o">.......</span>
+    <span class="c1">// Iterate the cluster&#39;s token ranges. For each one, use a range query to ask Cassandra which partition keys</span>
+    <span class="c1">// are in this range.</span>
+    <span class="n">String</span> <span class="n">token_range_query</span> <span class="o">=</span> <span class="s">&quot;SELECT i FROM foo WHERE token(i) &gt; ? and token(i) &lt;= ?&quot;</span><span class="o">;</span>
+    <span class="n">PreparedStatement</span> <span class="n">rangeStmt</span> <span class="o">=</span> <span class="n">session</span><span class="o">().</span><span class="na">prepare</span><span class="o">(</span><span class="n">token_range_query</span><span class="o">);</span>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">source</span> /etc/profile.d/rvm.sh</code></pre></figure>
+    <span class="n">TokenRange</span> <span class="n">foundRange</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">TokenRange</span> <span class="n">range</span> <span class="o">:</span> <span class="n">metadata</span><span class="o">.</span><span class="na">getTokenRanges</span><span class="o">())</span> <span class="o">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Row</span><span class="o">&gt;</span> <span class="n">rows</span> <span class="o">=</span> <span class="n">rangeQuery</span><span class="o">(</span><span class="n">rangeStmt</span><span class="o">,</span> <span class="n">range</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Row</span> <span class="n">row</span> <span class="o">:</span> <span class="n">rows</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">row</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">&quot;i&quot;</span><span class="o">)</span> <span class="o">==</span> <span class="n">testKey</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// We should find our test key exactly once</span>
+                <span class="n">assertThat</span><span class="o">(</span><span class="n">foundRange</span><span class="o">)</span>
+                        <span class="o">.</span><span class="na">describedAs</span><span class="o">(</span><span class="s">&quot;found the same key in two ranges: &quot;</span> <span class="o">+</span> <span class="n">foundRange</span> <span class="o">+</span> <span class="s">&quot; and &quot;</span> <span class="o">+</span> <span class="n">range</span><span class="o">)</span>
+                        <span class="o">.</span><span class="na">isNull</span><span class="o">();</span>
+                <span class="n">foundRange</span> <span class="o">=</span> <span class="n">range</span><span class="o">;</span>
+                <span class="c1">// That range should be managed by the replica</span>
+                <span class="n">assertThat</span><span class="o">(</span><span class="n">metadata</span><span class="o">.</span><span class="na">getReplicas</span><span class="o">(</span><span class="n">ks1</span><span class="o">,</span> <span class="n">range</span><span class="o">)).</span><span class="na">contains</span><span class="o">(</span><span class="n">replica</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">assertThat</span><span class="o">(</span><span class="n">foundRange</span><span class="o">).</span><span class="na">isNotNull</span><span class="o">();</span>
+<span class="o">}</span>
 
-<h2 id="install-the-ruby-dependencies">Install the ruby dependencies</h2>
+<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Row</span><span class="o">&gt;</span> <span class="nf">rangeQuery</span><span class="o">(</span><span class="n">PreparedStatement</span> <span class="n">rangeStmt</span><span class="o">,</span> <span class="n">TokenRange</span> <span class="n">range</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Row</span><span class="o">&gt;</span> <span class="n">rows</span> <span class="o">=</span> <span class="n">Lists</span><span class="o">.</span><span class="na">newArrayList</span><span class="o">();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">TokenRange</span> <span class="n">subRange</span> <span class="o">:</span> <span class="n">range</span><span class="o">.</span><span class="na">unwrap</span><span class="o">())</span> <span class="o">{</span>
+        <span class="n">Statement</span> <span class="n">statement</span> <span class="o">=</span> <span class="n">rangeStmt</span><span class="o">.</span><span class="na">bind</span><span class="o">(</span><span class="n">subRange</span><span class="o">.</span><span class="na">getStart</span><span class="o">(),</span> <span class="n">subRange</span><span class="o">.</span><span class="na">getEnd</span><span class="o">());</span>
+        <span class="n">rows</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">session</span><span class="o">().</span><span class="na">execute</span><span class="o">(</span><span class="n">statement</span><span class="o">).</span><span class="na">all</span><span class="o">());</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">rows</span><span class="o">;</span>
+<span class="o">}</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rvm requirements</code></pre></figure>
-
-<h2 id="to-show-the-available-packages-do-rvm-list">To show the available packages do <code>rvm list</code>:</h2>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># rvm list known</span>
-<span class="c"># MRI Rubies</span>
-<span class="o">[</span>ruby-<span class="o">]</span>1.8.6<span class="o">[</span>-p420<span class="o">]</span>
-<span class="o">[</span>ruby-<span class="o">]</span>1.8.7<span class="o">[</span>-head<span class="o">]</span> <span class="c"># security released on head</span>
-<span class="o">[</span>ruby-<span class="o">]</span>1.9.1<span class="o">[</span>-p431<span class="o">]</span>
-<span class="o">[</span>ruby-<span class="o">]</span>1.9.2<span class="o">[</span>-p330<span class="o">]</span>
-<span class="o">[</span>ruby-<span class="o">]</span>1.9.3<span class="o">[</span>-p551<span class="o">]</span>
-<span class="o">[</span>ruby-<span class="o">]</span>2.0.0<span class="o">[</span>-p648<span class="o">]</span>
-<span class="o">[</span>ruby-<span class="o">]</span>2.1<span class="o">[</span>.8<span class="o">]</span>
-<span class="o">[</span>ruby-<span class="o">]</span>2.2<span class="o">[</span>.4<span class="o">]</span>
-<span class="o">[</span>ruby-<span class="o">]</span>2.3<span class="o">[</span>.0<span class="o">]</span>
-<span class="o">[</span>ruby-<span class="o">]</span>2.2-head
-ruby-head
-
-<span class="c"># for forks use: rvm install ruby-head-&lt;name&gt; --url https://github.com/github/ruby.git --branch 2.2</span>
-
-<span class="c"># JRuby</span>
-jruby-1.6<span class="o">[</span>.8<span class="o">]</span>
-jruby-1.7<span class="o">[</span>.23<span class="o">]</span>
-jruby<span class="o">[</span>-9.0.5.0<span class="o">]</span>
-jruby-head
-
-<span class="c"># Rubinius</span>
-rbx-1<span class="o">[</span>.4.3<span class="o">]</span>
-rbx-2.3<span class="o">[</span>.0<span class="o">]</span>
-rbx-2.4<span class="o">[</span>.1<span class="o">]</span>
-rbx<span class="o">[</span>-2.5.8<span class="o">]</span>
-rbx-head
-
-<span class="c"># Opal</span>
-opal
-
-<span class="c"># Minimalistic ruby implementation - ISO 30170:2012</span>
-mruby<span class="o">[</span>-head<span class="o">]</span>
-
-<span class="c"># Ruby Enterprise Edition</span>
-ree-1.8.6
-ree<span class="o">[</span>-1.8.7<span class="o">][</span>-2012.02<span class="o">]</span>
-
-<span class="c"># GoRuby</span>
-goruby
-
-<span class="c"># Topaz</span>
-topaz
-
-<span class="c"># MagLev</span>
-maglev<span class="o">[</span>-head<span class="o">]</span>
-maglev-1.0.0
-
-<span class="c"># Mac OS X Snow Leopard Or Newer</span>
-macruby-0.10
-macruby-0.11
-macruby<span class="o">[</span>-0.12<span class="o">]</span>
-macruby-nightly
-macruby-head
-
-<span class="c"># IronRuby</span>
-ironruby<span class="o">[</span>-1.1.3<span class="o">]</span>
-ironruby-head</code></pre></figure>
-
-<h2 id="install-the-preferred-version-using-rvm-install-version-number">Install the preferred version using <code>rvm install &lt;version number&gt;</code></h2>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rvm install 2.3.0
-
-<span class="c"># Now change default version to 2.3.0 (If other ruby version exists):</span>
-<span class="nv">$ </span>rvm use 2.3.0 --default</code></pre></figure>
-
-<h2 id="thanks---rvmiorvmio">Thanks - <a href="rvm.io">rvm.io</a></h2>
+<h2 id="use-cases">Use Cases:</h2>
+<ul>
+  <li>When complete table scans are going to be performed</li>
+  <li>Exact Counting rows in a table</li>
+</ul>
 
                         <br>
                     
                     
                     <div class="entry-tags text-center">
                     
-                        <i class="icon-tags"></i>&nbsp;Tagged with <a href="/tags/index.html#Ruby" data-toggle="tooltip" title="Posts tagged with Ruby" rel="tag">Ruby</a>&nbsp;&bull;&nbsp;<a href="/tags/index.html#Languages" data-toggle="tooltip" title="Posts tagged with Languages" rel="tag">Languages</a>&nbsp;&bull;&nbsp;<a href="/tags/index.html#Setup" data-toggle="tooltip" title="Posts tagged with Setup" rel="tag">Setup</a>
+                        <i class="icon-tags"></i>&nbsp;Tagged with <a href="/tags/index.html#Cassandra" data-toggle="tooltip" title="Posts tagged with Cassandra" rel="tag">Cassandra</a>&nbsp;&bull;&nbsp;<a href="/tags/index.html#Optimisation" data-toggle="tooltip" title="Posts tagged with Optimisation" rel="tag">Optimisation</a>
                     
                     </div>
                     
@@ -290,19 +272,19 @@ ironruby-head</code></pre></figure>
     </p>
     <ul class="social-mini">
         <li>
-            <a href="https://twitter.com/intent/tweet?text=&quot;Use rvm to install ruby on Ubuntu&quot;%20/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev%20via%20&#64;beingbhuvan"
+            <a href="https://twitter.com/intent/tweet?text=&quot;Use token ranges for fast table scans and count calculation&quot;%20/cassandra/optimisation/cassandra-tokenised-table-scan%20via%20&#64;beingbhuvan"
             onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" data-toggle="tooltip" title="Share on Twitter" itemprop="Twitter">
                 <i class="icon-twitter"></i>
             </a>
         </li>
         <li>
-            <a  href="https://www.facebook.com/sharer/sharer.php?u=/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev"
+            <a  href="https://www.facebook.com/sharer/sharer.php?u=/cassandra/optimisation/cassandra-tokenised-table-scan"
             onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" data-toggle="tooltip" title="Share on Facebook" itemprop="Facebook">
                 <i class="icon-facebook"></i>
             </a>
         </li>
         <li>
-            <a href="https://plus.google.com/share?url=/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev"
+            <a href="https://plus.google.com/share?url=/cassandra/optimisation/cassandra-tokenised-table-scan"
            onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" data-toggle="tooltip" title="Share on Google plus" itemprop="GooglePlus">
                 <i class="icon-google-plus"></i>
             </a>
