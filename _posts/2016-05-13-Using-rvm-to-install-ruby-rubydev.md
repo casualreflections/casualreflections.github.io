@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Use rvm to install ruby on Ubuntu"
-date: 2016-08-01T02:52:58+05:30
+date: 2016-05-08T02:52:58+05:30
 categories: [Ruby, Languages, Setup]
 tags: [Ruby, Languages, Setup]
 summary: Ease your brains - use rvm to manage ruby installations
