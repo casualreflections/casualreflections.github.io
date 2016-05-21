@@ -39,11 +39,15 @@ def count_row_count(table_name):
             time.sleep(.5)
             print "Exception Occurred while fetching page, retrying again with same page"
             continue
+    # This needs to be done as last page count wont be calculated
+    # and python does not support do while loops
+    count += rs.current_rows
+    return count
 {% endhighlight%}
 
 
 ## The below code snippet is from **datastax java driver test cases**, this has the possibility of scaling out into multiple workers by distributing each token range to multiple workers
-## similar code can be used for python driver as well:
+##  similar code can be used for python driver as well:
 
 {% highlight java %}
 public void should_expose_token_ranges() throws Exception {
