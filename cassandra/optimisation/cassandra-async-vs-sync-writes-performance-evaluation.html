@@ -17,23 +17,23 @@ Description: Awesome dude, awesome life
 -->
 <head>
 <meta charset="utf-8">
-<title>Use token ranges for fast table scans and count calculation &#8211; Bhuvan Rawal</title>
+<title>Sync vs Async write performance to Cassandra Server - A performance Evaluation &#8211; Bhuvan Rawal</title>
 <meta name="description" content="Counting in cassandra? Maybe not so difficult">
 <meta name="keywords" content="Cassandra, Optimisation">
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="/images/omikron.png">
-<meta name="twitter:title" content="Use token ranges for fast table scans and count calculation">
+<meta name="twitter:title" content="Sync vs Async write performance to Cassandra Server - A performance Evaluation">
 <meta name="twitter:description" content="Counting in cassandra? Maybe not so difficult">
 <meta name="twitter:creator" content="@beingbhuvan">
 
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Use token ranges for fast table scans and count calculation">
+<meta property="og:title" content="Sync vs Async write performance to Cassandra Server - A performance Evaluation">
 <meta property="og:description" content="Counting in cassandra? Maybe not so difficult">
-<meta property="og:url" content="/cassandra/optimisation/cassandra-tokenised-table-scan">
+<meta property="og:url" content="/cassandra/optimisation/cassandra-async-vs-sync-writes-performance-evaluation">
 <meta property="og:site_name" content="Bhuvan Rawal">
 <meta property="og:image" content="/images/default_bg1.jpg">
 
@@ -41,7 +41,7 @@ Description: Awesome dude, awesome life
 
 
 
-<link rel="canonical" href="/cassandra/optimisation/cassandra-tokenised-table-scan">
+<link rel="canonical" href="/cassandra/optimisation/cassandra-async-vs-sync-writes-performance-evaluation">
 <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Bhuvan Rawal Feed">
 <link rel="author" href="https://plus.google.com/u/0/115368800868963120427?rel=author">
 <!-- http://t.co/dKP3o1e -->
@@ -166,11 +166,11 @@ Description: Awesome dude, awesome life
                     <header class="post-header entry-header">
                     <div class="cursive">this post is featured</div>
                         
-                        <h1 class="post-title text-center hyper lighter bordered-bottom entry-title" itemprop="headline">Use token ranges for fast table scans and count calculation</h1>
+                        <h1 class="post-title text-center hyper lighter bordered-bottom entry-title" itemprop="headline">Sync vs Async write performance to Cassandra Server - A performance Evaluation</h1>
                         
                         <div class="cursive" style="color: #000; font-style:italic;">Counting in cassandra? Maybe not so difficult</div>
                         <div class="post-info text-center small">
-                            <span class="entry-date date published updated"><time datetime="2016-05-18T22:52:58+05:30" class="post-time" itemprop="datePublished">18 May 2016</time><span>
+                            <span class="entry-date date published updated"><time datetime="2016-05-21T10:52:58+05:30" class="post-time" itemprop="datePublished">21 May 2016</time><span>
                             in <span class="post-tags"><a href="/categories/index.html#CassandraOptimisation" data-toggle="tooltip" title="Other posts from the Cassandra category" rel="tag">Cassandra</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#CassandraOptimisation" data-toggle="tooltip" title="Other posts from the Optimisation category" rel="tag">Optimisation</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;<span class="time">2.155</span> minutes read</span>
                         </div>
                     </header>
@@ -277,19 +277,19 @@ Description: Awesome dude, awesome life
     </p>
     <ul class="social-mini">
         <li>
-            <a href="https://twitter.com/intent/tweet?text=&quot;Use token ranges for fast table scans and count calculation&quot;%20/cassandra/optimisation/cassandra-tokenised-table-scan%20via%20&#64;beingbhuvan"
+            <a href="https://twitter.com/intent/tweet?text=&quot;Sync vs Async write performance to Cassandra Server - A performance Evaluation&quot;%20/cassandra/optimisation/cassandra-async-vs-sync-writes-performance-evaluation%20via%20&#64;beingbhuvan"
             onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" data-toggle="tooltip" title="Share on Twitter" itemprop="Twitter">
                 <i class="icon-twitter"></i>
             </a>
         </li>
         <li>
-            <a  href="https://www.facebook.com/sharer/sharer.php?u=/cassandra/optimisation/cassandra-tokenised-table-scan"
+            <a  href="https://www.facebook.com/sharer/sharer.php?u=/cassandra/optimisation/cassandra-async-vs-sync-writes-performance-evaluation"
             onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" data-toggle="tooltip" title="Share on Facebook" itemprop="Facebook">
                 <i class="icon-facebook"></i>
             </a>
         </li>
         <li>
-            <a href="https://plus.google.com/share?url=/cassandra/optimisation/cassandra-tokenised-table-scan"
+            <a href="https://plus.google.com/share?url=/cassandra/optimisation/cassandra-async-vs-sync-writes-performance-evaluation"
            onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" data-toggle="tooltip" title="Share on Google plus" itemprop="GooglePlus">
                 <i class="icon-google-plus"></i>
             </a>

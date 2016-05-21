@@ -1,6 +1,14 @@
 [
 	
 		{
+		  "title"      : "Sync vs Async write performance to Cassandra Server - A performance Evaluation",
+		  "category"   : "",
+		  "url"        : "/cassandra/optimisation/performance/cassandra-async-vs-sync-writes-performance-evaluation",
+		  "date"       : "2016-05-21 10:52:58 +0530",
+		  "shortdate"  : "May 21, 2016"
+		} ,
+	
+		{
 		  "title"      : "Use token ranges for fast table scans and count calculation",
 		  "category"   : "",
 		  "url"        : "/cassandra/optimisation/cassandra-tokenised-table-scan",

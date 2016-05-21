@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html>
+<!--
+====================================================
+ ____  _   _ _   ___     ___    _   _
+| __ )| | | | | | \ \   / / \  | \ | |
+|  _ \| |_| | | | |\ \ / / _ \ |  \| |
+| |_) |  _  | |_| | \ V / ___ \| |\  |
+|____/|_| |_|\___/   \_/_/   \_\_| \_|
+
+====================================================
+Owner Name: Bhuvan Rawal
+Profile: https://www.facebook.com/bhu1rawal
+Version: 1.1
+Description: Awesome dude, awesome life
+====================================================
+-->
+<head>
+<meta charset="utf-8">
+<title>Sync vs Async write performance to Cassandra Server - A performance Evaluation &#8211; Bhuvan Rawal</title>
+<meta name="description" content="Achieve best performance out of cassandra driver - async writes with error callbacks">
+<meta name="keywords" content="Cassandra, Optimisation, Performance">
+
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/images/omikron.png">
+<meta name="twitter:title" content="Sync vs Async write performance to Cassandra Server - A performance Evaluation">
+<meta name="twitter:description" content="Achieve best performance out of cassandra driver - async writes with error callbacks">
+<meta name="twitter:creator" content="@beingbhuvan">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sync vs Async write performance to Cassandra Server - A performance Evaluation">
+<meta property="og:description" content="Achieve best performance out of cassandra driver - async writes with error callbacks">
+<meta property="og:url" content="/cassandra/optimisation/performance/cassandra-async-vs-sync-writes-performance-evaluation">
+<meta property="og:site_name" content="Bhuvan Rawal">
+<meta property="og:image" content="/images/default_bg1.jpg">
+
+
+
+
+
+<link rel="canonical" href="/cassandra/optimisation/performance/cassandra-async-vs-sync-writes-performance-evaluation">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Bhuvan Rawal Feed">
+<link rel="author" href="https://plus.google.com/u/0/115368800868963120427?rel=author">
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
+
+<div class="search-wrapper">
+    <div class="search-form">
+        <input type="text" class="search-field" placeholder="Search...">
+        <i class="icon-remove-sign"></i>
+        <ul class="search-results post-list"></ul><!-- /.search-results -->
+    </div><!-- /.search-form -->
+</div><!-- ./search-wrapper -->
+
+
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+<body class="post-template" itemscope itemtype="http://schema.org/WebPage">  
+<div id="fade"></div>
+<a id="slide" class="animated fade"></a>
+<aside id="sidebar">
+    <nav id="navigation">
+    <h2>MENU</h2>
+    <hr>
+
+            <li>
+                    <a href="/">Home</a>
+                 </li>
+
+            <li>
+                    <a href="/categories">Categories</a>
+                 </li>
+
+            <li>
+                    <a href="/tags">Tags</a>
+                 </li>
+
+            <li>
+                    <a href="/about">Bhuvan who?</a>
+                 </li>
+
+            <li>
+                    <a href="/contact">Contact me</a>
+                 </li>
+            
+           <li><a href="/feed.xml" title="Atom/RSS feed"><i class="icon-rss"></i> Feed</a></li>
+    </nav>
+    
+    
+</aside>
+
+<header id="masthead" class="blog-background overlay align-center align-middle animated from-bottom"  style="background-image: url(/images/default_bg1.jpg)" itemscope itemtype="http://schema.org/Organization">
+
+
+    <button class="menu-button animated fade dosearch">
+        <i class="icon-search"></i>
+    </button>
+
+
+    <div class="inner">
+        <div class="container">
+            <a class="brand" href="/" role="banner" itemprop="url">
+
+                <img itemprop="logo" src="/images/omikron.png" alt="Bhuvan Rawal Logo" />
+
+            <h1 class="blog-title light" itemprop="name">
+                Bhuvan Rawal
+            </h1>
+                
+            </a>
+        </div>
+    </div>
+    
+    
+    <div class="decor-wrapper">
+        <svg id="header-decor" class="decor bottom" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path class="large left" d="M0 0 L50 50 L0 100" fill="rgba(255,255,255, .1)"></path>
+            <path class="large right" d="M100 0 L50 50 L100 100" fill="rgba(255,255,255, .1)"></path>
+
+            <path class="medium left" d="M0 100 L50 50 L0 33.3" fill="rgba(255,255,255, .3)"></path>
+            <path class="medium right" d="M100 100 L50 50 L100 33.3" fill="rgba(255,255,255, .3)"></path>
+
+            <path class="small left" d="M0 100 L50 50 L0 66.6" fill="rgba(255,255,255, .5)"></path>
+            <path class="small right" d="M100 100 L50 50 L100 66.6" fill="rgba(255,255,255, .5)"></path>
+
+            <path d="M0 99.9 L50 49.9 L100 99.9 L0 99.9" fill="rgba(255,255,255, 1)"></path>
+
+            <path d="M48 52 L50 49 L52 52 L48 52" fill="rgba(255,255,255, 1)"></path>
+
+        </svg>
+    </div>
+    
+</header>
+<div id="main" class="content" role="main" itemprop="mainContentOfPage" itemscope itemtype="http://schema.org/Blog">
+    <div class="container">
+        <div class="row">
+            <article class="post col-md-8 col-md-offset-2 hentry" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+
+            
+            
+            
+                    <header class="post-header entry-header">
+                    <div class="cursive">this post is featured</div>
+                        
+                        <h1 class="post-title text-center hyper lighter bordered-bottom entry-title" itemprop="headline">Sync vs Async write performance to Cassandra Server - A performance Evaluation</h1>
+                        
+                        <div class="cursive" style="color: #000; font-style:italic;">Achieve best performance out of cassandra driver - async writes with error callbacks</div>
+                        <div class="post-info text-center small">
+                            <span class="entry-date date published updated"><time datetime="2016-05-21T10:52:58+05:30" class="post-time" itemprop="datePublished">21 May 2016</time><span>
+                            in <span class="post-tags"><a href="/categories/index.html#CassandraOptimisationPerformance" data-toggle="tooltip" title="Other posts from the Cassandra category" rel="tag">Cassandra</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#CassandraOptimisationPerformance" data-toggle="tooltip" title="Other posts from the Optimisation category" rel="tag">Optimisation</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#CassandraOptimisationPerformance" data-toggle="tooltip" title="Other posts from the Performance category" rel="tag">Performance</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;<span class="time">4.155</span> minutes read</span>
+                        </div>
+                    </header>
+                    <div class="post-body bordered-bottom" itemprop="description">
+                        
+                        <blockquote>
+  <p>I had a requirement where we were ingesting a huge amount of data <code>~350M rows in 2-3 Hours</code> into a 3Node r3xlarge machine (64Gig Ram, 16 Cores). I used python at the client side and multiprocessing module to boot up a number of processes to ingest data into cassandra after picking up message from a queue and applying some operations on them.</p>
+</blockquote>
+
+<blockquote>
+  <p>It worked great and we achieved decent speed, but while observing client performance logs, I observed that processes are using only 25-30% of CPU and possibly a lot of the time is spent in network IO waiting for response as I used <code>session.execute() instead of session.execute_async()</code>.</p>
+</blockquote>
+
+<blockquote>
+  <p>I had known that execute_async would give best performance per worker and its obvious but I did not know how much and could not find a benchmark for the same. Also before going into production deployment it was extremely essential to test the failover cases with callbacks and implementation of threads per connection limitations so as to avoid uncalled for errors.</p>
+</blockquote>
+
+<p>I created 2 tables, one for handling async writes and another for sync ones, the tables have 3 columns- <code>key bigint PRIMARY KEY, str text, value bigint</code>. All 3 of those were generated randomly per hit. I used google stopwatch to start stop timer and avoid unnecessary time which was spent in random data generation.</p>
+
+<p>The results seem interesting, I have achieved approx <code>4x fast writes using async execution</code>. For Writing 1 Million records by a single worker it took <code>342.4s</code> for async writes, and <code>1229.5s</code> for synchronous ones. Time spent in random number generation came out to be <code>~35s</code> for both of these.</p>
+
+<h2 id="here-is-what-i-did-for-error-handling">Here is what I did for error handling:</h2>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">errback function to be attached to future in case if some error occurs</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">errback_fn</span><span class="p">(</span><span class="n">error</span> <span class="p">,</span><span class="n">prepared_statement</span><span class="p">,</span> <span class="n">statement_params</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">exception_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">global</span> <span class="n">cassandra_session</span>
+        <span class="k">if</span> <span class="n">cassandra_session</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">cassandra_session</span><span class="o">.</span><span class="n">is_shutdown</span> <span class="ow">or</span> <span class="n">error</span><span class="p">:</span>
+            <span class="n">cassandra_session</span> <span class="o">=</span> <span class="n">get_cassandra_session</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">cassandra_session</span><span class="o">.</span><span class="n">get_pool_state</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">in_flight</span> <span class="ow">in</span> <span class="n">cassandra_session</span><span class="o">.</span><span class="n">get_pool_state</span><span class="p">()[</span><span class="n">key</span><span class="p">][</span><span class="s">&#39;in_flights&#39;</span><span class="p">]:</span>
+                <span class="k">print</span> <span class="s">&quot;in_flight count is &quot;</span><span class="p">,</span> <span class="n">in_flight</span>
+                <span class="k">if</span> <span class="n">in_flight</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">:</span>
+                    <span class="k">print</span> <span class="s">&quot;Future thread Sleeping for 500ms, in_flight is &quot;</span><span class="p">,</span> <span class="n">in_flight</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s">&quot;Open Count is &quot;</span><span class="p">,</span> <span class="n">cassandra_session</span><span class="o">.</span><span class="n">get_pool_state</span><span class="p">()[</span><span class="n">key</span><span class="p">][</span><span class="s">&#39;open_count&#39;</span><span class="p">]</span>
+
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;inside errback, after encountering error: &quot;</span><span class="p">,</span><span class="n">error</span>
+                <span class="k">print</span> <span class="s">&quot;Statement is :&quot;</span><span class="p">,</span><span class="n">prepared_statement</span>
+                <span class="k">print</span> <span class="s">&quot;Params are :&quot;</span><span class="p">,</span> <span class="n">statement_params</span>
+                <span class="c"># In case of errback I have used blocking execute statement with 5 retries.</span>
+                <span class="n">cassandra_session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">prepared_statement</span><span class="p">,</span> <span class="n">statement_params</span><span class="p">)</span>
+                <span class="n">exception_count</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">break</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">print</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+                <span class="c"># Get a new cassandra session if the current session is exhausted or closed</span>
+                <span class="k">if</span> <span class="n">cassandra_session</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">cassandra_session</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">:</span>
+                    <span class="n">cassandra_session</span> <span class="o">=</span> <span class="n">get_cassandra_session</span><span class="p">()</span>
+                <span class="n">exception_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">exception_count</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+                    <span class="k">print</span> <span class="s">&quot;Severe Error Occured for statement: &quot;</span><span class="p">,</span> <span class="n">prepared_statement</span><span class="p">,</span> <span class="s">&quot; Params: &quot;</span><span class="p">,</span> <span class="n">statement_params</span><span class="p">,</span> <span class="s">&quot; Breaking out of loop&quot;</span>
+                    <span class="k">break</span>
+                <span class="k">continue</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span></code></pre></figure>
+
+<blockquote>
+  <p>If there are more than 1000 queries which are in flight I am issuing a <code>sleep of 500ms</code> which sufficed the test conditions. This can be possibly lowered down in production.</p>
+</blockquote>
+
+<h2 id="generator-approach-for-async-can-be-found-below">Generator approach for async can be found below:</h2>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Clear out existing rows if any</span>
+<span class="n">cassandra_session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;truncate table test.test_async;&quot;</span><span class="p">)</span>
+<span class="n">sw</span> <span class="o">=</span> <span class="n">stopwatch</span><span class="o">.</span><span class="n">StopWatch</span><span class="p">()</span>
+<span class="c"># Start the stopwatch for async test</span>
+<span class="n">sw</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="s">&#39;complete-async&#39;</span><span class="p">)</span>
+<span class="n">num_count_test</span> <span class="o">=</span> <span class="mi">1000000</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_count_test</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c"># start stopwatch for calculating time spent in random generation</span>
+        <span class="n">sw</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="s">&#39;async-randomgen&#39;</span><span class="p">)</span>
+        <span class="c"># Generate 2 random ints of size 1 to 1Million</span>
+        <span class="n">param1</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">)</span>
+        <span class="n">param2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">)</span>
+        <span class="c"># Generate a random string of 20 Characters</span>
+        <span class="n">param3</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">ascii_uppercase</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
+        <span class="c"># stop the random gen stopwatch</span>
+        <span class="n">sw</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="s">&#39;async-randomgen&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">cassandra_session</span><span class="o">.</span><span class="n">get_pool_state</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">in_flight</span> <span class="ow">in</span> <span class="n">cassandra_session</span><span class="o">.</span><span class="n">get_pool_state</span><span class="p">()[</span><span class="n">key</span><span class="p">][</span><span class="s">&#39;in_flights&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">in_flight</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">:</span>
+                    <span class="k">print</span> <span class="s">&quot;Future thread Sleeping for 500ms, in_flight is &quot;</span><span class="p">,</span> <span class="n">in_flight</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+            <span class="c"># if cassandra_session.get_pool_state()[key][&#39;open_count&#39;] &gt; 20:</span>
+            <span class="c">#     print &quot;Future thread Sleeping for 500ms&quot;</span>
+            <span class="c">#     time.sleep(.5)</span>
+
+        <span class="n">future</span> <span class="o">=</span> <span class="n">cassandra_session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="n">prepared_query</span><span class="p">,(</span><span class="n">param1</span><span class="p">,</span><span class="n">param2</span><span class="p">,</span><span class="n">param3</span><span class="p">))</span>
+        <span class="n">future</span><span class="o">.</span><span class="n">add_errback</span><span class="p">(</span><span class="n">errback_fn</span><span class="p">,</span> <span class="n">prepared_query</span><span class="p">,</span> <span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">,</span> <span class="n">param3</span><span class="p">))</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">cassandra_session</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">cassandra_session</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Reinitializing Cassandra Session&quot;</span>
+            <span class="n">cassandra_session</span> <span class="o">=</span> <span class="n">get_cassandra_session</span><span class="p">()</span>
+        <span class="k">continue</span>
+
+<span class="c"># Job is complete stop the async complete stopwatch</span>
+<span class="n">sw</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="s">&#39;complete-async&#39;</span><span class="p">)</span></code></pre></figure>
+
+<h1 id="for-the-other-test---blocking-execute-one-i-used-below-approach">For the other test - blocking execute one I used below approach:</h1>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Clearing out existing rows if any</span>
+<span class="n">cassandra_session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;truncate table test.test_non_async&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;Truncated table test_non_async&quot;</span>
+
+<span class="n">_start_non_async</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s">&quot;INSERT INTO test_non_async(key,value,str) VALUES (?, ?, ?)&quot;</span>
+<span class="n">prepared_query</span> <span class="o">=</span> <span class="n">cassandra_session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="n">prepared_query</span><span class="o">.</span><span class="n">consistency_level</span> <span class="o">=</span> <span class="n">ConsistencyLevel</span><span class="o">.</span><span class="n">LOCAL_ONE</span>
+<span class="k">print</span> <span class="s">&quot;Query Prepared for test_non_async&quot;</span>
+<span class="n">sw</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="s">&#39;complete-non-async&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_count_test</span><span class="p">):</span>
+    <span class="c"># Start the stopwatch to find time spent in random gen</span>
+    <span class="n">sw</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="s">&#39;non-async-randomgen&#39;</span><span class="p">)</span>
+    <span class="c"># Generate 2 random ints of size 1 to 1Million</span>
+    <span class="n">param1</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">)</span>
+    <span class="n">param2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">)</span>
+    <span class="c"># Generate a random string of 20 Characters</span>
+    <span class="n">param3</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">ascii_uppercase</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
+    <span class="c"># Stop the randomgen stopwatch</span>
+    <span class="n">sw</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="s">&#39;non-async-randomgen&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cassandra_session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">prepared_query</span><span class="p">,</span> <span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">,</span> <span class="n">param3</span><span class="p">))</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
+
+<span class="n">sw</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="s">&#39;complete-non-async&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">sw</span><span class="o">.</span><span class="n">accum</span></code></pre></figure>
+
+<p>The line <code>sw.accum</code> at the very end prints the accumulated counts by each of the stopwatches used in the format:</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="err">complete-async&#39;:</span> <span class="err">342.4494869709015,</span> <span class="err">&#39;complete-non-async&#39;:</span> <span class="err">1229.5772993564606,</span> <span class="err">&#39;async-randomgen&#39;:</span> <span class="err">38.901955127716064,</span> <span class="err">&#39;non-async-randomgen&#39;:</span> <span class="err">33.869492053985596</span><span class="p">}</span></code></pre></figure>
+
+<p>Complete code can be found at <a href="https://gist.github.com/bhuvanrawal/502aa963cc9df25bc0a69ae0fb7be648">Github</a></p>
+
+<h2 id="use-cases">Use Cases:</h2>
+<ul>
+  <li>Almost everytime a write is performed, it can be done in async fashion in order for best performance</li>
+  <li>Best case would be fast ingestion by limited client bandwidth</li>
+</ul>
+
+<h2 id="coming-up">Coming Up:</h2>
+<ul>
+  <li>Comparision with batched - Logged and Unlogged writes</li>
+</ul>
+
+                        <br>
+                    
+                    
+                    <div class="entry-tags text-center">
+                    
+                        <i class="icon-tags"></i>&nbsp;Tagged with <a href="/tags/index.html#Cassandra" data-toggle="tooltip" title="Posts tagged with Cassandra" rel="tag">Cassandra</a>&nbsp;&bull;&nbsp;<a href="/tags/index.html#Optimisation" data-toggle="tooltip" title="Posts tagged with Optimisation" rel="tag">Optimisation</a>&nbsp;&bull;&nbsp;<a href="/tags/index.html#Performance" data-toggle="tooltip" title="Posts tagged with Performance" rel="tag">Performance</a>
+                    
+                    </div>
+                    
+                    </div>
+        </div>
+                    <footer class="post-footer entry-meta">
+                        <div class="post-share text-center">
+    <p class="light small">
+        Share this post
+    </p>
+    <ul class="social-mini">
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=&quot;Sync vs Async write performance to Cassandra Server - A performance Evaluation&quot;%20/cassandra/optimisation/performance/cassandra-async-vs-sync-writes-performance-evaluation%20via%20&#64;beingbhuvan"
+            onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" data-toggle="tooltip" title="Share on Twitter" itemprop="Twitter">
+                <i class="icon-twitter"></i>
+            </a>
+        </li>
+        <li>
+            <a  href="https://www.facebook.com/sharer/sharer.php?u=/cassandra/optimisation/performance/cassandra-async-vs-sync-writes-performance-evaluation"
+            onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" data-toggle="tooltip" title="Share on Facebook" itemprop="Facebook">
+                <i class="icon-facebook"></i>
+            </a>
+        </li>
+        <li>
+            <a href="https://plus.google.com/share?url=/cassandra/optimisation/performance/cassandra-async-vs-sync-writes-performance-evaluation"
+           onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" data-toggle="tooltip" title="Share on Google plus" itemprop="GooglePlus">
+                <i class="icon-google-plus"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+                        <div class="post-author text-center">                       
+	        <img src="/images/bhuvanrawal.jpg" alt="Bhuvan Rawal's photo" itemprop="image" class="post-avatar img-circle img-responsive"/>    
+	    <h4 class="bordered-bottom vcard author" itemprop="author" itemscope itemtype="http://schema.org/Person">By <span itemprop="name" class="fn"><a href="/about" title="About Bhuvan Rawal" itemprop="url">Bhuvan Rawal</a></span></h4>
+	    <p>Bhuvan Rawal is a Computer Science engineer based in New Delhi, India. His interests are anything that&#8217;s related to Technology and Science, from math to programming languages to music to physics to engineering to philosophy.</p>
+</div> 
+                        <div id="disqus_thread"></div><!-- /#disqus_thread -->
+                    </footer>
+            </article>
+    </div>
+</div>
+
+<footer id="footer"  class="blog-background overlay text-center align-middle animated from-top" style="background-image: url(/images/default_bg1.jpg)" >
+
+
+    <div class="inner">
+        <div class="container">
+
+            <ul class="social-icons">
+            <li>
+                <a href="http://twitter.com/beingbhuvan" data-toggle="tooltip" title="Bhuvan Rawal on Twitter" target="_blank">
+                    <i class="icon-twitter"></i>
+                </a>
+            </li>
+            <li>
+                <a href="http://facebook.com/bhu1rawal" data-toggle="tooltip" title="Bhuvan Rawal on Facebook" target="_blank">
+                    <i class="icon-facebook"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://plus.google.com/u/0/115368800868963120427" data-toggle="tooltip" title="Bhuvan Rawal on Google+" target="_blank">
+                    <i class="icon-google-plus"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://stackexchange.com/users/4482379/bhuvan-rawal" data-toggle="tooltip" title="Bhuvan Rawal on StackExchange" target="_blank">
+                    <i class="icon-stackexchange"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://in.linkedin.com/in/bhuvanrawal" data-toggle="tooltip" title="Bhuvan Rawal on LinkedIn" target="_blank">
+                    <i class="icon-linkedin"></i>
+                </a>
+            </li>
+            
+            
+            <li>
+                <a href="http://github.com/bhuvanrawal" data-toggle="tooltip" title="Bhuvan Rawal on Github" target="_blank">
+                    <i class="icon-github"></i>
+                </a>
+            </li>
+        </ul>
+            <div>
+                <a href="/about/">Bhuvan Rawal</a> &copy; 2016 &bull; All rights reserved.
+            </div>
+            <ul class="menu-items">
+            
+            <li>
+                
+                    <a href="/"><i class="icon-home"></i></a>&nbsp;&bull;
+                 
+            </li>
+            
+            <li>
+                
+                    <a href="/categories">Categories</a>&nbsp;&bull;
+                 
+            </li>
+            
+            <li>
+                
+                    <a href="/tags">Tags</a>&nbsp;&bull;
+                 
+            </li>
+            
+            <li>
+                
+                    <a href="/about">Bhuvan who?</a>&nbsp;&bull;
+                 
+            </li>
+            
+            <li>
+                
+                    <a href="/contact">Contact me</a>&nbsp;&bull;
+                 
+            </li>
+            
+            <li><a href="/feed.xml" title="Atom/RSS feed"><i class="icon-rss"></i> Feed</a></li>
+        </ul>
+        </div>
+    </div>
+    
+        <div class="decor-wrapper">
+            <svg id="footer-decor" class="decor top" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" preserveAspectRatio="none">
+
+                <path class="large left" d="M0 0 L50 50 L0 100" fill="rgba(255,255,255, .1)"></path>
+                <path class="large right" d="M100 0 L50 50 L100 100" fill="rgba(255,255,255, .1)"></path>
+
+                <path class="medium left" d="M0 0 L50 50 L0 66.6" fill="rgba(255,255,255, .3)"></path>
+                <path class="medium right" d="M100 0 L50 50 L100 66.6" fill="rgba(255,255,255, .3)"></path>
+
+                <path class="small left" d="M0 0 L50 50 L0 33.3" fill="rgba(255,255,255, .5)"></path>
+                <path class="small right" d="M100 0 L50 50 L100 33.3" fill="rgba(255,255,255, .5)"></path>
+
+                <path d="M0 0 L50 50 L100 0 L0 0" fill="rgba(255,255,255, 1)"></path>
+
+                <path d="M48 48 L50 51 L52 48 L48 48" fill="rgba(255,255,255, 1)"></path>
+
+            </svg>
+        </div>
+    
+
+</footer>
+
+    
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+<script type="text/javascript" src="/assets/js/waypoints.min.js"></script>
+<script type="text/javascript" src="/assets/js/script.js"></script>
+<script type='text/javascript'>$(document).ready(function(){$(".time").text(function(a,b){return Math.round(parseFloat(b))})});</script>
+
+<script type="text/javascript" src="/assets/js/custom.js"></script>
+
+<script type="text/javascript">
+
+/*      Slides       */
+
+$("a#slide").click(function(){
+    $("#sidebar,body,a#slide,#fade").addClass("slide")
+});
+
+$("#fade,#header,#posts-container").click(function(){
+    $("#sidebar,body,a#slide,#fade").removeClass("slide")
+});
+
+$("a#click-filter").click(function(){
+    $("#slide-filter").slideToggle("medium");
+    $("#slide-pages").slideOut("medium");
+});
+
+$("a#click-pages").click(function(){
+    $("#slide-pages").slideToggle("medium");
+    $("#slide-filter").slideOut("medium");
+});
+
+/*      End-Slides      */
+
+</script>
+
+
+<!-- Jekyll Simple Search option -->
+<script>
+  $(document).ready(function() {
+      $('.search-field').simpleJekyllSearch({
+          jsonFile : '/search.json',
+          searchResults : '.search-results',
+          template : '<li><article><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></article></li>',
+          noResults: '<p>Nothing found.</p>'
+        });
+  });
+
+  (function( $, window, undefined ) {
+    
+     var bs = {
+          close: $(".icon-remove-sign"),
+          searchform: $(".search-form"),
+          canvas: $("body"),
+          dothis: $('.dosearch')
+      };
+    
+    bs.dothis.on('click', function() {
+      $('.search-wrapper').css({ display: "block" });
+      bs.searchform.toggleClass('active');
+      bs.searchform.find('input').focus();
+      bs.canvas.toggleClass('search-overlay');
+    });
+    
+      bs.close.on('click', function() {
+        $('.search-wrapper').removeAttr( 'style' );
+        bs.searchform.toggleClass('active');
+        bs.canvas.removeClass('search-overlay');
+    });
+  })( jQuery, window );
+</script>
+
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  var _gaq = _gaq || [];
+  var pluginUrl = 
+ '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-58286706-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'bhuvanrawal'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+ 
+</body>
+</html>

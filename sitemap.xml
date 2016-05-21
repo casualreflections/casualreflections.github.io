@@ -19,6 +19,10 @@
     
     
     <url>
+        <loc>/cassandra/optimisation/performance/cassandra-async-vs-sync-writes-performance-evaluation</loc>
+    </url>
+    
+    <url>
         <loc>/cassandra/optimisation/cassandra-tokenised-table-scan</loc>
     </url>
     

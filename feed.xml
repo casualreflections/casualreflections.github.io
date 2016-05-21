@@ -4,13 +4,178 @@
   <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
   <link rel="self" type="application/atom+xml" href="/feed.xml" />
   <link rel="alternate" type="text/html" href="" />
-  <updated>2016-05-19T02:04:55+05:30</updated>
+  <updated>2016-05-21T18:24:46+05:30</updated>
   <id>/</id>
   <author>
     <name>Bhuvan Rawal</name>
     <uri>/</uri>
     <email>bhuvan@bhuvanrawal.me</email>
   </author>
+  
+
+  <entry>
+    <title type="html"><![CDATA[Sync vs Async write performance to Cassandra Server - A performance Evaluation]]></title>
+    <link>/cassandra/optimisation/performance/cassandra-async-vs-sync-writes-performance-evaluation</link>
+    <id>/cassandra/optimisation/performance/cassandra-async-vs-sync-writes-performance-evaluation</id>
+    <published>2016-05-21T10:52:58+05:30</published>
+    <updated>2016-05-21T10:52:58+05:30</updated>
+    <author>
+      <name>Bhuvan Rawal</name>
+      <uri></uri>
+      <email>bhuvan@bhuvanrawal.me</email>
+    </author>
+    <content type="html">&lt;blockquote&gt;
+  &lt;p&gt;I had a requirement where we were ingesting a huge amount of data &lt;code&gt;~350M rows in 2-3 Hours&lt;/code&gt; into a 3Node r3xlarge machine (64Gig Ram, 16 Cores). I used python at the client side and multiprocessing module to boot up a number of processes to ingest data into cassandra after picking up message from a queue and applying some operations on them.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;It worked great and we achieved decent speed, but while observing client performance logs, I observed that processes are using only 25-30% of CPU and possibly a lot of the time is spent in network IO waiting for response as I used &lt;code&gt;session.execute() instead of session.execute_async()&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;I had known that execute_async would give best performance per worker and its obvious but I did not know how much and could not find a benchmark for the same. Also before going into production deployment it was extremely essential to test the failover cases with callbacks and implementation of threads per connection limitations so as to avoid uncalled for errors.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I created 2 tables, one for handling async writes and another for sync ones, the tables have 3 columns- &lt;code&gt;key bigint PRIMARY KEY, str text, value bigint&lt;/code&gt;. All 3 of those were generated randomly per hit. I used google stopwatch to start stop timer and avoid unnecessary time which was spent in random data generation.&lt;/p&gt;
+
+&lt;p&gt;The results seem interesting, I have achieved approx &lt;code&gt;4x fast writes using async execution&lt;/code&gt;. For Writing 1 Million records by a single worker it took &lt;code&gt;342.4s&lt;/code&gt; for async writes, and &lt;code&gt;1229.5s&lt;/code&gt; for synchronous ones. Time spent in random number generation came out to be &lt;code&gt;~35s&lt;/code&gt; for both of these.&lt;/p&gt;
+
+&lt;h2 id=&quot;here-is-what-i-did-for-error-handling&quot;&gt;Here is what I did for error handling:&lt;/h2&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;sd&quot;&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;errback function to be attached to future in case if some error occurs&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;errback_fn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prepared_statement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;statement_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;exception_count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;global&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_shutdown&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_cassandra_session&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_pool_state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in_flight&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_pool_state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;in_flights&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;in_flight count is &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in_flight&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in_flight&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Future thread Sleeping for 500ms, in_flight is &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in_flight&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Open Count is &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_pool_state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;open_count&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;inside errback, after encountering error: &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Statement is :&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prepared_statement&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Params are :&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;statement_params&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;# In case of errback I have used blocking execute statement with 5 retries.&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prepared_statement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;statement_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;exception_count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;except&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;traceback&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format_exc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;# Get a new cassandra session if the current session is exhausted or closed&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_shutdown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_cassandra_session&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;exception_count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exception_count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Severe Error Occured for statement: &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prepared_statement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot; Params: &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;statement_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot; Breaking out of loop&amp;quot;&lt;/span&gt;
+                    &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;except&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;traceback&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format_exc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;If there are more than 1000 queries which are in flight I am issuing a &lt;code&gt;sleep of 500ms&lt;/code&gt; which sufficed the test conditions. This can be possibly lowered down in production.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;generator-approach-for-async-can-be-found-below&quot;&gt;Generator approach for async can be found below:&lt;/h2&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Clear out existing rows if any&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;truncate table test.test_async;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sw&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stopwatch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StopWatch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Start the stopwatch for async test&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;complete-async&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;num_count_test&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_count_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;# start stopwatch for calculating time spent in random generation&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;sw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;async-randomgen&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;# Generate 2 random ints of size 1 to 1Million&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;param1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;param2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;# Generate a random string of 20 Characters&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;param3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;choice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ascii_uppercase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;# stop the random gen stopwatch&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;sw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;async-randomgen&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_pool_state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in_flight&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_pool_state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;in_flights&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in_flight&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Future thread Sleeping for 500ms, in_flight is &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in_flight&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;c&quot;&gt;# if cassandra_session.get_pool_state()[key][&amp;#39;open_count&amp;#39;] &amp;gt; 20:&lt;/span&gt;
+            &lt;span class=&quot;c&quot;&gt;#     print &amp;quot;Future thread Sleeping for 500ms&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;c&quot;&gt;#     time.sleep(.5)&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;future&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute_async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prepared_query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;param1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;param2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;param3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;future&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_errback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;errback_fn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prepared_query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;param1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;param2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;param3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;except&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;traceback&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format_exc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_shutdown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Reinitializing Cassandra Session&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_cassandra_session&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Job is complete stop the async complete stopwatch&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;complete-async&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h1 id=&quot;for-the-other-test---blocking-execute-one-i-used-below-approach&quot;&gt;For the other test - blocking execute one I used below approach:&lt;/h1&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Clearing out existing rows if any&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;truncate table test.test_non_async&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Truncated table test_non_async&amp;quot;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;_start_non_async&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;query&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;INSERT INTO test_non_async(key,value,str) VALUES (?, ?, ?)&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;prepared_query&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prepare&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;prepared_query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;consistency_level&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ConsistencyLevel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LOCAL_ONE&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Query Prepared for test_non_async&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;complete-non-async&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_count_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# Start the stopwatch to find time spent in random gen&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;sw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;non-async-randomgen&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# Generate 2 random ints of size 1 to 1Million&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;param1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;param2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# Generate a random string of 20 Characters&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;param3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;choice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ascii_uppercase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# Stop the randomgen stopwatch&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;sw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;non-async-randomgen&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cassandra_session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prepared_query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;param1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;param2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;param3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;except&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;traceback&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format_exc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;sw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;complete-non-async&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;accum&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The line &lt;code&gt;sw.accum&lt;/code&gt; at the very end prints the accumulated counts by each of the stopwatches used in the format:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;complete-async&amp;#39;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;342.4494869709015,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;&amp;#39;complete-non-async&amp;#39;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;1229.5772993564606,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;&amp;#39;async-randomgen&amp;#39;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;38.901955127716064,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;&amp;#39;non-async-randomgen&amp;#39;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;33.869492053985596&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Complete code can be found at &lt;a href=&quot;https://gist.github.com/bhuvanrawal/502aa963cc9df25bc0a69ae0fb7be648&quot;&gt;Github&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;use-cases&quot;&gt;Use Cases:&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Almost everytime a write is performed, it can be done in async fashion in order for best performance&lt;/li&gt;
+  &lt;li&gt;Best case would be fast ingestion by limited client bandwidth&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;coming-up&quot;&gt;Coming Up:&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Comparision with batched - Logged and Unlogged writes&lt;/li&gt;
+&lt;/ul&gt;
+
+      &lt;p&gt;&lt;a href=&quot;/cassandra/optimisation/performance/cassandra-async-vs-sync-writes-performance-evaluation&quot;&gt;Sync vs Async write performance to Cassandra Server - A performance Evaluation&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on May 21, 2016.&lt;/p&gt;</content>
+  </entry>
   
 
   <entry>
@@ -25,7 +190,7 @@
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;blockquote&gt;
-  &lt;p&gt;I have been using the default internal paging that Datastax Drivers provide, which was introduced in 2.0+ and works like a charm for small use cases. I have tried to count rows using the following code successfully for &lt;strong&gt;&lt;code&gt;~300M rows in ~15Mins&lt;/code&gt;&lt;/strong&gt;.&lt;/p&gt;
+  &lt;p&gt;I have been using the default internal paging that Datastax Drivers provide, which was introduced in 2.0+ and works like a charm for small use cases. I have tried to count rows using the following code successfully for &lt;strong&gt;&lt;code&gt;~350M rows in ~15Mins&lt;/code&gt;&lt;/strong&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
@@ -33,10 +198,10 @@
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;The workers assigned can lie different cpu’s/ client altogether.&lt;/p&gt;
+  &lt;p&gt;The workers assigned can lie different cpu’s/ client altogether thereby the possibility of good improvement.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;the-code-that-i-am-currently-using-can-be-found-below&quot;&gt;The code that I am currently using can be found below:&lt;/h2&gt;
+&lt;h2 id=&quot;the-code-that-i-am-currently-using-using-a-single-worker-can-be-found-below&quot;&gt;The code that I am currently using using a single worker can be found below:&lt;/h2&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;sd&quot;&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
 &lt;span class=&quot;sd&quot;&gt;Counts the number of rows in cassandra using inbuilt paging, uses only one worker&lt;/span&gt;
@@ -56,9 +221,14 @@
             &lt;span class=&quot;c&quot;&gt;# Retry after 500 milliseconds&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
             &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Exception Occurred while fetching page, retrying again with same page&amp;quot;&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+            &lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# This needs to be done as last page count wont be calculated&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# and python does not support do while loops&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;current_rows&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;the-below-code-snippet-is-from-datastax-java-driver-test-cases-similar-code-used-for-python-driver-as-well&quot;&gt;The below code snippet is from &lt;strong&gt;datastax java driver test cases&lt;/strong&gt;, similar code used for python driver as well:&lt;/h2&gt;
+&lt;h2 id=&quot;the-below-code-snippet-is-from-datastax-java-driver-test-cases-this-has-the-possibility-of-scaling-out-into-multiple-workers-by-distributing-each-token-range-to-multiple-workers&quot;&gt;The below code snippet is from &lt;strong&gt;datastax java driver test cases&lt;/strong&gt;, this has the possibility of scaling out into multiple workers by distributing each token range to multiple workers&lt;/h2&gt;
+&lt;p&gt;##  similar code can be used for python driver as well:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;should_expose_token_ranges&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;Metadata&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;metadata&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cluster&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getMetadata&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
@@ -1432,71 +1602,6 @@ else recurse to the branch which is not null.&lt;/li&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
       &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Lowest-Common-Ancestor&quot;&gt;Lowest Common Ancestor of a Binary Tree&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
-  </entry>
-  
-
-  <entry>
-    <title type="html"><![CDATA[Phalut Trek]]></title>
-    <link>/photos/trekking/Phalut-Trek</link>
-    <id>/photos/trekking/Phalut-Trek</id>
-    <published>2015-01-16T07:09:29+05:30</published>
-    <updated>2015-01-16T07:09:29+05:30</updated>
-    <author>
-      <name>Bhuvan Rawal</name>
-      <uri></uri>
-      <email>bhuvan@bhuvanrawal.me</email>
-    </author>
-    <content type="html">&lt;figure class=&quot;third&quot;&gt;
-
-&lt;a href=&quot;/images/posts/phalut-trek/10153602920065032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602920065032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153602920760032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602920760032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153602920785032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602920785032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153602921075032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602921075032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153602921080032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602921080032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153602949855032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602949855032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153602950040032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602950040032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153602950170032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602950170032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153602956320032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602956320032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153602956560032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153602956560032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603131420032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603131420032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603131560032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603131560032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603131655032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603131655032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603131680032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603131680032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603201270032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603201270032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603201285032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603201285032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603201325032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603201325032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603201370032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603201370032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603201425032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603201425032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603201500032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603201500032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603201560032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603201560032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603731595032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603731595032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603731610032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603731610032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603731630032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603731630032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603731675032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603731675032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603731725032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603731725032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603731850032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603731850032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603793025032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603793025032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603793030032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603793030032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603793050032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603793050032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153603793315032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153603793315032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153604239505032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604239505032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153604599055032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604599055032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153604599120032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604599120032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153604599125032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604599125032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153604599310032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604599310032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153604599560032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604599560032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153604599730032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604599730032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153604599825032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604599825032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153604600025032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604600025032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153604600155032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604600155032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153604600395032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604600395032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153604600740032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604600740032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153604600780032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604600780032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153604600880032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604600880032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;a href=&quot;/images/posts/phalut-trek/10153604600895032.jpg&quot;&gt;&lt;img src=&quot;/images/posts/phalut-trek/10153604600895032.jpg&quot; /&gt;&lt;/a&gt;
-&lt;/figure&gt;
-
-      &lt;p&gt;&lt;a href=&quot;/photos/trekking/Phalut-Trek&quot;&gt;Phalut Trek&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
   </entry>
   
 </feed>

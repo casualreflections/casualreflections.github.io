@@ -133,6 +133,11 @@ callback([
   {
     "text": "Use token ranges for fast table scans and count calculation",
     "href": "/cassandra/optimisation/cassandra-tokenised-table-scan"
+  } ,
+
+  {
+    "text": "Sync vs Async write performance to Cassandra Server - A performance Evaluation",
+    "href": "/cassandra/optimisation/performance/cassandra-async-vs-sync-writes-performance-evaluation"
   } 
 
 ])
