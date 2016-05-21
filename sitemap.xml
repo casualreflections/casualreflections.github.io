@@ -5,24 +5,10 @@
 
 	
 	<url>
-	<loc>/404</loc>
+	<!--loc>/404</loc-->
+	<loc>http://bhuvanrawal.me/404</loc>
 	
-		<lastmod>2016-05-22T02:38:51+05:30</lastmod>
-	
-	
-		<changefreq>monthly</changefreq>
-	
-	
-		<priority>0.3</priority>
-	
-	</url>
-	
-
-	
-	<url>
-	<loc>/about/</loc>
-	
-		<lastmod>2016-05-22T02:38:51+05:30</lastmod>
+		<lastmod>2016-05-22T02:48:18+05:30</lastmod>
 	
 	
 		<changefreq>monthly</changefreq>
@@ -35,24 +21,10 @@
 
 	
 	<url>
-	<loc>/categories/</loc>
+	<!--loc>/about/</loc-->
+	<loc>http://bhuvanrawal.me/about/</loc>
 	
-		<lastmod>2016-05-22T02:38:51+05:30</lastmod>
-	
-	
-		<changefreq>monthly</changefreq>
-	
-	
-		<priority>0.3</priority>
-	
-	</url>
-	
-
-	
-	<url>
-	<loc>/contact/</loc>
-	
-		<lastmod>2016-05-22T02:38:51+05:30</lastmod>
+		<lastmod>2016-05-22T02:48:18+05:30</lastmod>
 	
 	
 		<changefreq>monthly</changefreq>
@@ -65,24 +37,10 @@
 
 	
 	<url>
-	<loc>/featured/</loc>
+	<!--loc>/categories/</loc-->
+	<loc>http://bhuvanrawal.me/categories/</loc>
 	
-		<lastmod>2016-05-22T02:38:51+05:30</lastmod>
-	
-	
-		<changefreq>monthly</changefreq>
-	
-	
-		<priority>0.3</priority>
-	
-	</url>
-	
-
-	
-	<url>
-	<loc>/feed.xml</loc>
-	
-		<lastmod>2016-05-22T02:38:51+05:30</lastmod>
+		<lastmod>2016-05-22T02:48:18+05:30</lastmod>
 	
 	
 		<changefreq>monthly</changefreq>
@@ -95,24 +53,10 @@
 
 	
 	<url>
-	<loc>/</loc>
+	<!--loc>/contact/</loc-->
+	<loc>http://bhuvanrawal.me/contact/</loc>
 	
-		<lastmod>2016-05-22T02:38:51+05:30</lastmod>
-	
-	
-		<changefreq>monthly</changefreq>
-	
-	
-		<priority>0.3</priority>
-	
-	</url>
-	
-
-	
-	<url>
-	<loc>/license/</loc>
-	
-		<lastmod>2016-05-22T02:38:51+05:30</lastmod>
+		<lastmod>2016-05-22T02:48:18+05:30</lastmod>
 	
 	
 		<changefreq>monthly</changefreq>
@@ -125,24 +69,10 @@
 
 	
 	<url>
-	<loc>/links.jsonp</loc>
+	<!--loc>/featured/</loc-->
+	<loc>http://bhuvanrawal.me/featured/</loc>
 	
-		<lastmod>2016-05-22T02:38:51+05:30</lastmod>
-	
-	
-		<changefreq>monthly</changefreq>
-	
-	
-		<priority>0.3</priority>
-	
-	</url>
-	
-
-	
-	<url>
-	<loc>/search.json</loc>
-	
-		<lastmod>2016-05-22T02:38:51+05:30</lastmod>
+		<lastmod>2016-05-22T02:48:18+05:30</lastmod>
 	
 	
 		<changefreq>monthly</changefreq>
@@ -155,24 +85,10 @@
 
 	
 	<url>
-	<loc>/sitemap.xml</loc>
+	<!--loc>/feed.xml</loc-->
+	<loc>http://bhuvanrawal.me/feed.xml</loc>
 	
-		<lastmod>2016-05-22T02:38:51+05:30</lastmod>
-	
-	
-		<changefreq>monthly</changefreq>
-	
-	
-		<priority>0.3</priority>
-	
-	</url>
-	
-
-	
-	<url>
-	<loc>/tags/</loc>
-	
-		<lastmod>2016-05-22T02:38:51+05:30</lastmod>
+		<lastmod>2016-05-22T02:48:18+05:30</lastmod>
 	
 	
 		<changefreq>monthly</changefreq>
@@ -185,24 +101,10 @@
 
 	
 	<url>
-	<loc>/page2/</loc>
+	<!--loc>/</loc-->
+	<loc>http://bhuvanrawal.me/</loc>
 	
-		<lastmod>2016-05-22T02:38:51+05:30</lastmod>
-	
-	
-		<changefreq>monthly</changefreq>
-	
-	
-		<priority>0.3</priority>
-	
-	</url>
-	
-
-	
-	<url>
-	<loc>/page3/</loc>
-	
-		<lastmod>2016-05-22T02:38:51+05:30</lastmod>
+		<lastmod>2016-05-22T02:48:18+05:30</lastmod>
 	
 	
 		<changefreq>monthly</changefreq>
@@ -215,9 +117,10 @@
 
 	
 	<url>
-	<loc>/page4/</loc>
+	<!--loc>/license/</loc-->
+	<loc>http://bhuvanrawal.me/license/</loc>
 	
-		<lastmod>2016-05-22T02:38:51+05:30</lastmod>
+		<lastmod>2016-05-22T02:48:18+05:30</lastmod>
 	
 	
 		<changefreq>monthly</changefreq>
@@ -230,9 +133,122 @@
 
 	
 	<url>
-	<loc>/page5/</loc>
+	<!--loc>/links.jsonp</loc-->
+	<loc>http://bhuvanrawal.me/links.jsonp</loc>
 	
-		<lastmod>2016-05-22T02:38:51+05:30</lastmod>
+		<lastmod>2016-05-22T02:48:18+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<!--loc>/search.json</loc-->
+	<loc>http://bhuvanrawal.me/search.json</loc>
+	
+		<lastmod>2016-05-22T02:48:18+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<!--loc>/sitemap.xml</loc-->
+	<loc>http://bhuvanrawal.me/sitemap.xml</loc>
+	
+		<lastmod>2016-05-22T02:48:18+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<!--loc>/tags/</loc-->
+	<loc>http://bhuvanrawal.me/tags/</loc>
+	
+		<lastmod>2016-05-22T02:48:18+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<!--loc>/page2/</loc-->
+	<loc>http://bhuvanrawal.me/page2/</loc>
+	
+		<lastmod>2016-05-22T02:48:18+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<!--loc>/page3/</loc-->
+	<loc>http://bhuvanrawal.me/page3/</loc>
+	
+		<lastmod>2016-05-22T02:48:18+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<!--loc>/page4/</loc-->
+	<loc>http://bhuvanrawal.me/page4/</loc>
+	
+		<lastmod>2016-05-22T02:48:18+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<!--loc>/page5/</loc-->
+	<loc>http://bhuvanrawal.me/page5/</loc>
+	
+		<lastmod>2016-05-22T02:48:18+05:30</lastmod>
 	
 	
 		<changefreq>monthly</changefreq>
@@ -248,7 +264,8 @@
 
 	
 	<url>
-	<loc>/cassandra/optimisation/performance/cassandra-async-vs-sync-writes-performance-evaluation</loc>
+	<!--loc>/cassandra/optimisation/performance/cassandra-async-vs-sync-writes-performance-evaluation</loc-->
+	<loc>http://bhuvanrawal.me/cassandra/optimisation/performance/cassandra-async-vs-sync-writes-performance-evaluation</loc>
 	
 		<lastmod>2016-05-21T10:52:58+05:30</lastmod>
 	
@@ -263,7 +280,8 @@
 
 	
 	<url>
-	<loc>/cassandra/optimisation/cassandra-tokenised-table-scan</loc>
+	<!--loc>/cassandra/optimisation/cassandra-tokenised-table-scan</loc-->
+	<loc>http://bhuvanrawal.me/cassandra/optimisation/cassandra-tokenised-table-scan</loc>
 	
 		<lastmod>2016-05-18T22:52:58+05:30</lastmod>
 	
@@ -278,7 +296,8 @@
 
 	
 	<url>
-	<loc>/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev</loc>
+	<!--loc>/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev</loc-->
+	<loc>http://bhuvanrawal.me/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev</loc>
 	
 		<lastmod>2016-05-08T02:52:58+05:30</lastmod>
 	
@@ -293,7 +312,8 @@
 
 	
 	<url>
-	<loc>/blog/computers/java/technology/spring-framework-why</loc>
+	<!--loc>/blog/computers/java/technology/spring-framework-why</loc-->
+	<loc>http://bhuvanrawal.me/blog/computers/java/technology/spring-framework-why</loc>
 	
 		<lastmod>2015-08-01T02:52:58+05:30</lastmod>
 	
@@ -308,7 +328,8 @@
 
 	
 	<url>
-	<loc>/blog/computers/linux/version-control-with-git-part1</loc>
+	<!--loc>/blog/computers/linux/version-control-with-git-part1</loc-->
+	<loc>http://bhuvanrawal.me/blog/computers/linux/version-control-with-git-part1</loc>
 	
 		<lastmod>2015-07-26T02:52:58+05:30</lastmod>
 	
@@ -323,7 +344,8 @@
 
 	
 	<url>
-	<loc>/dsa/computers/backtracking/Rat-In-A-Maze</loc>
+	<!--loc>/dsa/computers/backtracking/Rat-In-A-Maze</loc-->
+	<loc>http://bhuvanrawal.me/dsa/computers/backtracking/Rat-In-A-Maze</loc>
 	
 		<lastmod>2015-02-07T01:30:29+05:30</lastmod>
 	
@@ -338,7 +360,8 @@
 
 	
 	<url>
-	<loc>/dsa/computers/backtracking/Print-All-Permutations</loc>
+	<!--loc>/dsa/computers/backtracking/Print-All-Permutations</loc-->
+	<loc>http://bhuvanrawal.me/dsa/computers/backtracking/Print-All-Permutations</loc>
 	
 		<lastmod>2015-02-06T23:05:29+05:30</lastmod>
 	
@@ -353,7 +376,8 @@
 
 	
 	<url>
-	<loc>/computers/dsa/trees/Convert-Binary-Tree-Sum-Tree</loc>
+	<!--loc>/computers/dsa/trees/Convert-Binary-Tree-Sum-Tree</loc-->
+	<loc>http://bhuvanrawal.me/computers/dsa/trees/Convert-Binary-Tree-Sum-Tree</loc>
 	
 		<lastmod>2015-01-24T12:51:29+05:30</lastmod>
 	
@@ -368,7 +392,8 @@
 
 	
 	<url>
-	<loc>/computers/dsa/trees/Print-Nodes-With-No-Siblings</loc>
+	<!--loc>/computers/dsa/trees/Print-Nodes-With-No-Siblings</loc-->
+	<loc>http://bhuvanrawal.me/computers/dsa/trees/Print-Nodes-With-No-Siblings</loc>
 	
 		<lastmod>2015-01-22T12:51:29+05:30</lastmod>
 	
@@ -383,7 +408,8 @@
 
 	
 	<url>
-	<loc>/computers/dsa/trees/Distance-Between-Two-Keys</loc>
+	<!--loc>/computers/dsa/trees/Distance-Between-Two-Keys</loc-->
+	<loc>http://bhuvanrawal.me/computers/dsa/trees/Distance-Between-Two-Keys</loc>
 	
 		<lastmod>2015-01-22T12:51:29+05:30</lastmod>
 	
@@ -398,7 +424,8 @@
 
 	
 	<url>
-	<loc>/computers/dsa/trees/Print-All-Nodes-Tree-Distance-k</loc>
+	<!--loc>/computers/dsa/trees/Print-All-Nodes-Tree-Distance-k</loc-->
+	<loc>http://bhuvanrawal.me/computers/dsa/trees/Print-All-Nodes-Tree-Distance-k</loc>
 	
 		<lastmod>2015-01-22T03:51:29+05:30</lastmod>
 	
@@ -413,7 +440,8 @@
 
 	
 	<url>
-	<loc>/computers/dsa/trees/Print-Tree-Vertically</loc>
+	<!--loc>/computers/dsa/trees/Print-Tree-Vertically</loc-->
+	<loc>http://bhuvanrawal.me/computers/dsa/trees/Print-Tree-Vertically</loc>
 	
 		<lastmod>2015-01-21T00:51:29+05:30</lastmod>
 	
@@ -428,7 +456,8 @@
 
 	
 	<url>
-	<loc>/computers/dsa/trees/Print-Ancestor-Nodes</loc>
+	<!--loc>/computers/dsa/trees/Print-Ancestor-Nodes</loc-->
+	<loc>http://bhuvanrawal.me/computers/dsa/trees/Print-Ancestor-Nodes</loc>
 	
 		<lastmod>2015-01-20T12:51:29+05:30</lastmod>
 	
@@ -443,7 +472,8 @@
 
 	
 	<url>
-	<loc>/computers/dsa/trees/Check-If-Binary-Tree-BST</loc>
+	<!--loc>/computers/dsa/trees/Check-If-Binary-Tree-BST</loc-->
+	<loc>http://bhuvanrawal.me/computers/dsa/trees/Check-If-Binary-Tree-BST</loc>
 	
 		<lastmod>2015-01-19T04:17:29+05:30</lastmod>
 	
@@ -458,7 +488,8 @@
 
 	
 	<url>
-	<loc>/computers/dsa/trees/Get-All-Leaves-Tree</loc>
+	<!--loc>/computers/dsa/trees/Get-All-Leaves-Tree</loc-->
+	<loc>http://bhuvanrawal.me/computers/dsa/trees/Get-All-Leaves-Tree</loc>
 	
 		<lastmod>2015-01-19T04:17:29+05:30</lastmod>
 	
@@ -473,7 +504,8 @@
 
 	
 	<url>
-	<loc>/computers/dsa/trees/Finding-Diameter-Binary-Tree</loc>
+	<!--loc>/computers/dsa/trees/Finding-Diameter-Binary-Tree</loc-->
+	<loc>http://bhuvanrawal.me/computers/dsa/trees/Finding-Diameter-Binary-Tree</loc>
 	
 		<lastmod>2015-01-16T12:51:29+05:30</lastmod>
 	
@@ -488,7 +520,8 @@
 
 	
 	<url>
-	<loc>/computers/dsa/trees/Is-Binary-Tree-Foldable</loc>
+	<!--loc>/computers/dsa/trees/Is-Binary-Tree-Foldable</loc-->
+	<loc>http://bhuvanrawal.me/computers/dsa/trees/Is-Binary-Tree-Foldable</loc>
 	
 		<lastmod>2015-01-16T11:51:29+05:30</lastmod>
 	
@@ -503,7 +536,8 @@
 
 	
 	<url>
-	<loc>/computers/dsa/trees/Max-Width-Binary-Tree</loc>
+	<!--loc>/computers/dsa/trees/Max-Width-Binary-Tree</loc-->
+	<loc>http://bhuvanrawal.me/computers/dsa/trees/Max-Width-Binary-Tree</loc>
 	
 		<lastmod>2015-01-16T10:51:29+05:30</lastmod>
 	
@@ -518,7 +552,8 @@
 
 	
 	<url>
-	<loc>/computers/dsa/trees/Convert-A-Binary-Tree-To-Doubly-Linked-List</loc>
+	<!--loc>/computers/dsa/trees/Convert-A-Binary-Tree-To-Doubly-Linked-List</loc-->
+	<loc>http://bhuvanrawal.me/computers/dsa/trees/Convert-A-Binary-Tree-To-Doubly-Linked-List</loc>
 	
 		<lastmod>2015-01-16T09:51:29+05:30</lastmod>
 	
@@ -533,7 +568,8 @@
 
 	
 	<url>
-	<loc>/computers/dsa/trees/Lowest-Common-Ancestor</loc>
+	<!--loc>/computers/dsa/trees/Lowest-Common-Ancestor</loc-->
+	<loc>http://bhuvanrawal.me/computers/dsa/trees/Lowest-Common-Ancestor</loc>
 	
 		<lastmod>2015-01-16T08:51:29+05:30</lastmod>
 	
@@ -548,7 +584,8 @@
 
 	
 	<url>
-	<loc>/photos/trekking/Phalut-Trek</loc>
+	<!--loc>/photos/trekking/Phalut-Trek</loc-->
+	<loc>http://bhuvanrawal.me/photos/trekking/Phalut-Trek</loc>
 	
 		<lastmod>2015-01-16T07:09:29+05:30</lastmod>
 	
@@ -563,7 +600,8 @@
 
 	
 	<url>
-	<loc>/computers/technology/hack/Install-Windows-External-HardDisk</loc>
+	<!--loc>/computers/technology/hack/Install-Windows-External-HardDisk</loc-->
+	<loc>http://bhuvanrawal.me/computers/technology/hack/Install-Windows-External-HardDisk</loc>
 	
 		<lastmod>2015-01-15T04:51:29+05:30</lastmod>
 	
@@ -578,7 +616,8 @@
 
 	
 	<url>
-	<loc>/dsa/computers/dp/Longest-Palindromic-Subsequence</loc>
+	<!--loc>/dsa/computers/dp/Longest-Palindromic-Subsequence</loc-->
+	<loc>http://bhuvanrawal.me/dsa/computers/dp/Longest-Palindromic-Subsequence</loc>
 	
 		<lastmod>2015-01-13T04:51:29+05:30</lastmod>
 	
@@ -593,7 +632,8 @@
 
 	
 	<url>
-	<loc>/computers/java/Difference-Between-import-include</loc>
+	<!--loc>/computers/java/Difference-Between-import-include</loc-->
+	<loc>http://bhuvanrawal.me/computers/java/Difference-Between-import-include</loc>
 	
 		<lastmod>2015-01-11T04:51:29+05:30</lastmod>
 	
@@ -608,7 +648,8 @@
 
 	
 	<url>
-	<loc>/photos/trekking/Dalhousie-Trek</loc>
+	<!--loc>/photos/trekking/Dalhousie-Trek</loc-->
+	<loc>http://bhuvanrawal.me/photos/trekking/Dalhousie-Trek</loc>
 	
 		<lastmod>2015-01-10T07:09:29+05:30</lastmod>
 	
@@ -623,7 +664,8 @@
 
 	
 	<url>
-	<loc>/photos/trekking/Stok-Kangri-Trek</loc>
+	<!--loc>/photos/trekking/Stok-Kangri-Trek</loc-->
+	<loc>http://bhuvanrawal.me/photos/trekking/Stok-Kangri-Trek</loc>
 	
 		<lastmod>2015-01-10T07:09:29+05:30</lastmod>
 	
@@ -638,7 +680,8 @@
 
 	
 	<url>
-	<loc>/photos/trekking/Roopkund-Trek</loc>
+	<!--loc>/photos/trekking/Roopkund-Trek</loc-->
+	<loc>http://bhuvanrawal.me/photos/trekking/Roopkund-Trek</loc>
 	
 		<lastmod>2015-01-10T07:09:29+05:30</lastmod>
 	
@@ -653,7 +696,8 @@
 
 	
 	<url>
-	<loc>/webdesign/first%20blog/Testing-post</loc>
+	<!--loc>/webdesign/first%20blog/Testing-post</loc-->
+	<loc>http://bhuvanrawal.me/webdesign/first%20blog/Testing-post</loc>
 	
 		<lastmod>2015-01-05T04:51:29+05:30</lastmod>
 	
