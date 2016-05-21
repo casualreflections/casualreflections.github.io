@@ -61,6 +61,8 @@ links:
     url: /about
   - title: Contact me
     url: /contact
+  - title: Resume
+    url: /resume
 
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones

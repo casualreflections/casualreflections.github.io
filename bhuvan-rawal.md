@@ -44,3 +44,5 @@ But over the years, I noticed that somehow, along the way, software designed to 
 > the original thinkers,
 > 
 > ### *This is the space to create.* ###
+
+## Have a challenging opportunity for me? Here's my [Resume](http://bhuvanrawal.me/resume)
