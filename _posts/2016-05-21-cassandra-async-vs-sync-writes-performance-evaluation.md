@@ -11,7 +11,7 @@ featured: true
 post_format: [ ]
 ---
 
-> I had a requirement where we were ingesting a huge amount of data `~350M rows in 2-3 Hours` into a 3Node r3xlarge machine (64Gig Ram, 16 Cores). I used python at the client side and multiprocessing module to boot up a number of processes to ingest data into cassandra after picking up message from a queue and applying some operations on them.
+> We had a requirement where we were ingesting a huge amount of data `~350M rows in 2-3 Hours` into a 3Node r3xlarge machine (64Gig Ram, 16 Cores). I used python driver at the client side and multiprocessing module to boot up a number of processes to ingest data into cassandra after picking up message from a queue and applying some operations on them.
 
 > It worked great and we achieved decent speed, but while observing client performance logs, I observed that processes are using only 25-30% of CPU and possibly a lot of the time is spent in network IO waiting for response as I used `session.execute() instead of session.execute_async()`.
 
