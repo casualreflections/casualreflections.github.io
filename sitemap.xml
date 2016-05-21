@@ -1,133 +1,670 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-     
-    <url>
-        <loc>/</loc>
-    </url> 
-    <url>
-        <loc>/categories</loc>
-    </url> 
-    <url>
-        <loc>/tags</loc>
-    </url> 
-    <url>
-        <loc>/about</loc>
-    </url> 
-    <url>
-        <loc>/contact</loc>
-    </url>
-    
-    
-    <url>
-        <loc>/cassandra/optimisation/performance/cassandra-async-vs-sync-writes-performance-evaluation</loc>
-    </url>
-    
-    <url>
-        <loc>/cassandra/optimisation/cassandra-tokenised-table-scan</loc>
-    </url>
-    
-    <url>
-        <loc>/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev</loc>
-    </url>
-    
-    <url>
-        <loc>/blog/computers/java/technology/spring-framework-why</loc>
-    </url>
-    
-    <url>
-        <loc>/blog/computers/linux/version-control-with-git-part1</loc>
-    </url>
-    
-    <url>
-        <loc>/dsa/computers/backtracking/Rat-In-A-Maze</loc>
-    </url>
-    
-    <url>
-        <loc>/dsa/computers/backtracking/Print-All-Permutations</loc>
-    </url>
-    
-    <url>
-        <loc>/computers/dsa/trees/Convert-Binary-Tree-Sum-Tree</loc>
-    </url>
-    
-    <url>
-        <loc>/computers/dsa/trees/Print-Nodes-With-No-Siblings</loc>
-    </url>
-    
-    <url>
-        <loc>/computers/dsa/trees/Distance-Between-Two-Keys</loc>
-    </url>
-    
-    <url>
-        <loc>/computers/dsa/trees/Print-All-Nodes-Tree-Distance-k</loc>
-    </url>
-    
-    <url>
-        <loc>/computers/dsa/trees/Print-Tree-Vertically</loc>
-    </url>
-    
-    <url>
-        <loc>/computers/dsa/trees/Print-Ancestor-Nodes</loc>
-    </url>
-    
-    <url>
-        <loc>/computers/dsa/trees/Check-If-Binary-Tree-BST</loc>
-    </url>
-    
-    <url>
-        <loc>/computers/dsa/trees/Get-All-Leaves-Tree</loc>
-    </url>
-    
-    <url>
-        <loc>/computers/dsa/trees/Finding-Diameter-Binary-Tree</loc>
-    </url>
-    
-    <url>
-        <loc>/computers/dsa/trees/Is-Binary-Tree-Foldable</loc>
-    </url>
-    
-    <url>
-        <loc>/computers/dsa/trees/Max-Width-Binary-Tree</loc>
-    </url>
-    
-    <url>
-        <loc>/computers/dsa/trees/Convert-A-Binary-Tree-To-Doubly-Linked-List</loc>
-    </url>
-    
-    <url>
-        <loc>/computers/dsa/trees/Lowest-Common-Ancestor</loc>
-    </url>
-    
-    <url>
-        <loc>/photos/trekking/Phalut-Trek</loc>
-    </url>
-    
-    <url>
-        <loc>/computers/technology/hack/Install-Windows-External-HardDisk</loc>
-    </url>
-    
-    <url>
-        <loc>/dsa/computers/dp/Longest-Palindromic-Subsequence</loc>
-    </url>
-    
-    <url>
-        <loc>/computers/java/Difference-Between-import-include</loc>
-    </url>
-    
-    <url>
-        <loc>/photos/trekking/Dalhousie-Trek</loc>
-    </url>
-    
-    <url>
-        <loc>/photos/trekking/Stok-Kangri-Trek</loc>
-    </url>
-    
-    <url>
-        <loc>/photos/trekking/Roopkund-Trek</loc>
-    </url>
-    
-    <url>
-        <loc>/webdesign/first%20blog/Testing-post</loc>
-    </url>
-    
+<!-- Pages: 16 links with priority=0.3, changefreq=monthly -->
+
+	
+	<url>
+	<loc>/404</loc>
+	
+		<lastmod>2016-05-22T02:38:11+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/about/</loc>
+	
+		<lastmod>2016-05-22T02:38:11+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/categories/</loc>
+	
+		<lastmod>2016-05-22T02:38:11+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/contact/</loc>
+	
+		<lastmod>2016-05-22T02:38:11+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/featured/</loc>
+	
+		<lastmod>2016-05-22T02:38:11+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/feed.xml</loc>
+	
+		<lastmod>2016-05-22T02:38:11+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/</loc>
+	
+		<lastmod>2016-05-22T02:38:11+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/license/</loc>
+	
+		<lastmod>2016-05-22T02:38:11+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/links.jsonp</loc>
+	
+		<lastmod>2016-05-22T02:38:11+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/search.json</loc>
+	
+		<lastmod>2016-05-22T02:38:11+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/sitemap.xml</loc>
+	
+		<lastmod>2016-05-22T02:38:11+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/tags/</loc>
+	
+		<lastmod>2016-05-22T02:38:11+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/page2/</loc>
+	
+		<lastmod>2016-05-22T02:38:11+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/page3/</loc>
+	
+		<lastmod>2016-05-22T02:38:11+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/page4/</loc>
+	
+		<lastmod>2016-05-22T02:38:11+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/page5/</loc>
+	
+		<lastmod>2016-05-22T02:38:11+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+
+<!-- Posts: 28 links with priority=0.5, changefreq=monthly -->
+
+	
+	<url>
+	<loc>/cassandra/optimisation/performance/cassandra-async-vs-sync-writes-performance-evaluation</loc>
+	
+		<lastmod>2016-05-21T10:52:58+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/cassandra/optimisation/cassandra-tokenised-table-scan</loc>
+	
+		<lastmod>2016-05-18T22:52:58+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/ruby/languages/setup/Using-rvm-to-install-ruby-rubydev</loc>
+	
+		<lastmod>2016-05-08T02:52:58+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/blog/computers/java/technology/spring-framework-why</loc>
+	
+		<lastmod>2015-08-01T02:52:58+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/blog/computers/linux/version-control-with-git-part1</loc>
+	
+		<lastmod>2015-07-26T02:52:58+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/dsa/computers/backtracking/Rat-In-A-Maze</loc>
+	
+		<lastmod>2015-02-07T01:30:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/dsa/computers/backtracking/Print-All-Permutations</loc>
+	
+		<lastmod>2015-02-06T23:05:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/computers/dsa/trees/Convert-Binary-Tree-Sum-Tree</loc>
+	
+		<lastmod>2015-01-24T12:51:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/computers/dsa/trees/Print-Nodes-With-No-Siblings</loc>
+	
+		<lastmod>2015-01-22T12:51:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/computers/dsa/trees/Distance-Between-Two-Keys</loc>
+	
+		<lastmod>2015-01-22T12:51:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/computers/dsa/trees/Print-All-Nodes-Tree-Distance-k</loc>
+	
+		<lastmod>2015-01-22T03:51:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/computers/dsa/trees/Print-Tree-Vertically</loc>
+	
+		<lastmod>2015-01-21T00:51:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/computers/dsa/trees/Print-Ancestor-Nodes</loc>
+	
+		<lastmod>2015-01-20T12:51:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/computers/dsa/trees/Check-If-Binary-Tree-BST</loc>
+	
+		<lastmod>2015-01-19T04:17:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/computers/dsa/trees/Get-All-Leaves-Tree</loc>
+	
+		<lastmod>2015-01-19T04:17:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/computers/dsa/trees/Finding-Diameter-Binary-Tree</loc>
+	
+		<lastmod>2015-01-16T12:51:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/computers/dsa/trees/Is-Binary-Tree-Foldable</loc>
+	
+		<lastmod>2015-01-16T11:51:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/computers/dsa/trees/Max-Width-Binary-Tree</loc>
+	
+		<lastmod>2015-01-16T10:51:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/computers/dsa/trees/Convert-A-Binary-Tree-To-Doubly-Linked-List</loc>
+	
+		<lastmod>2015-01-16T09:51:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/computers/dsa/trees/Lowest-Common-Ancestor</loc>
+	
+		<lastmod>2015-01-16T08:51:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/photos/trekking/Phalut-Trek</loc>
+	
+		<lastmod>2015-01-16T07:09:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/computers/technology/hack/Install-Windows-External-HardDisk</loc>
+	
+		<lastmod>2015-01-15T04:51:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/dsa/computers/dp/Longest-Palindromic-Subsequence</loc>
+	
+		<lastmod>2015-01-13T04:51:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/computers/java/Difference-Between-import-include</loc>
+	
+		<lastmod>2015-01-11T04:51:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/photos/trekking/Dalhousie-Trek</loc>
+	
+		<lastmod>2015-01-10T07:09:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/photos/trekking/Stok-Kangri-Trek</loc>
+	
+		<lastmod>2015-01-10T07:09:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/photos/trekking/Roopkund-Trek</loc>
+	
+		<lastmod>2015-01-10T07:09:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>/webdesign/first%20blog/Testing-post</loc>
+	
+		<lastmod>2015-01-05T04:51:29+05:30</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.5</priority>
+	
+	</url>
+	
+
+
 </urlset>
