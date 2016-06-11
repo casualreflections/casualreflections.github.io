@@ -4,7 +4,7 @@
   <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
   <link rel="self" type="application/atom+xml" href="/feed.xml" />
   <link rel="alternate" type="text/html" href="" />
-  <updated>2016-06-11T21:38:46+05:30</updated>
+  <updated>2016-06-11T21:50:49+05:30</updated>
   <id>/</id>
   <author>
     <name>Bhuvan Rawal</name>
@@ -51,19 +51,21 @@
 
 &lt;p&gt;Files can be shared via FTP Server or mounted as NFS Drives or Samba for windows. If you have a fast enough wifi it just feels like an internal drive - A 24TB Internal Drive! :)&lt;/p&gt;
 
-&lt;p&gt;One feature that I really like a lot is quickconnect feature that Synology provides out of the box. Using this the web interface of NAS can be accessed via a link over the internet even remotely. If a direct connection can be established NAS is connected to directly otherwise it is routed via Synology Servers.&lt;/p&gt;
+&lt;p&gt;One feature that I really like a lot is quickconnect which Synology provides out of the box for free. Using this the web interface of NAS can be accessed via a link over the internet even remotely. If a direct connection can be established NAS is connected to directly otherwise it is routed via Synology Servers.&lt;/p&gt;
 
-&lt;p&gt;Synology has an Android as well as iOS app for managing it via Mobile. A number of web apps are present to be used out of the box like Download Station, Hyper Backup, Text Editor, Cloud Station Server, File Station,  High Availability manager to name a few.&lt;/p&gt;
+&lt;p&gt;Synology has an Android as well as iOS app for managing it via Mobile. A number of web apps are present to be used out of the box like Surveillance Station, Download Station, Hyper Backup, Text Editor, Cloud Station Server, File Station,  High Availability manager to name a few.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://s33.postimg.org/4cvkv65pb/Screenshot_from_2016_06_11_20_20_11.png&quot; alt=&quot;Some Apps&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The current favorite app of mine is Plex, its an amazing software to organize and view Movie collection, Music, TV Series as well as Pictures. It automagically scans the Diskstation volumes specified for relavant media and fetches metadata from internet from various sources. With Quad core power of Diskstation 4+ optimised videos can be viewed at a time on different devices. It has an app for Samsung Smart tv, chromecast, Android, iOS.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://s33.postimg.org/uvaf08nhb/Screenshot_from_2016_06_11_20_58_02.png&quot; alt=&quot;Movie Collection in Plex&quot; /&gt;
-Plex organises the collection beautifully, fetches Artwork, Trailers, Subtitles, Rating from number of sources and organises them. Content can be filtered by IMDB Rating,&lt;/p&gt;
+Plex organises the collection beautifully, fetches Artwork, Trailers, Subtitles, Rating from number of sources and organises them. Content can be filtered by IMDB Rating, Genre, Release Date, Resolution , etc.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://s33.postimg.org/5nizmimlb/Screenshot_from_2016_06_11_21_00_36.png&quot; alt=&quot;Plex Music&quot; /&gt;
 Plex Music Library&lt;/p&gt;
+
+&lt;p&gt;All in all its an amazing device for organising files and media, transform your home into smart home.&lt;/p&gt;
 
 &lt;p&gt;For any query about buying/setting up NAS/Plex, say Hello at : &lt;a href=&quot;/contact&quot;&gt;Contact&lt;/a&gt;&lt;/p&gt;
 
