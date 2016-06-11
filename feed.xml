@@ -4,13 +4,71 @@
   <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
   <link rel="self" type="application/atom+xml" href="/feed.xml" />
   <link rel="alternate" type="text/html" href="" />
-  <updated>2016-05-22T02:59:51+05:30</updated>
+  <updated>2016-06-11T21:38:46+05:30</updated>
   <id>/</id>
   <author>
     <name>Bhuvan Rawal</name>
     <uri>/</uri>
     <email>bhuvan@bhuvanrawal.me</email>
   </author>
+  
+
+  <entry>
+    <title type="html"><![CDATA[Synology Diskstation 1815+ - A Review]]></title>
+    <link>/tech/synology/synology-diskstation-review</link>
+    <id>/tech/synology/synology-diskstation-review</id>
+    <published>2016-06-11T10:52:58+05:30</published>
+    <updated>2016-06-11T10:52:58+05:30</updated>
+    <author>
+      <name>Bhuvan Rawal</name>
+      <uri></uri>
+      <email>bhuvan@bhuvanrawal.me</email>
+    </author>
+    <content type="html">&lt;blockquote&gt;
+  &lt;p&gt;I recently got hold of a Synology Diskstation Box after lurking over it for a long long time. I wanted a file organizer and I tried USB router with HDD but it caused more pains than easing off some.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Thanks to Amazon’s brisk delivery I got the Diskstation + 4 HDDS delivered within a week when ordered from Amazon US to my Home in India, there were a couple of issues pertaining to Custom clearance other than that it was pretty smooth.&lt;/p&gt;
+
+&lt;h2 id=&quot;ds-1815-specs&quot;&gt;DS-1815+ Specs:&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Quad Core CPU&lt;/li&gt;
+  &lt;li&gt;450 MBPS+ Read / 400 MBPS+ Write&lt;/li&gt;
+  &lt;li&gt;8 Drive Bays with max capacity of 8TB in each&lt;/li&gt;
+  &lt;li&gt;4 LAN ports with link aggregation and failover support&lt;/li&gt;
+  &lt;li&gt;2 DX-513 Supported for further expansion upto 150TB&lt;/li&gt;
+  &lt;li&gt;4 USB-3 and e-SATA connections to connect with external drives&lt;/li&gt;
+  &lt;li&gt;RAID - 0/1/5/6/10 supported + SHR (Synology Hybrid RAID) support&lt;/li&gt;
+  &lt;li&gt;2GB inbuilt RAM with Support till 6GB&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I have configured the 4 hard drives that I bought with SHR with a disk tolerance of 1. So basically if a disk fails data remains intact and dead drive can be replaced to retain initial state. So right now SHR is utilising 25% Capacity (1 of four drives) but when all bays are utilized it will still be using 1 drive to provide failover.&lt;/p&gt;
+
+&lt;p&gt;I had a healthy comparison between QNAP, Freenas Devices and Synology and it appeared this one is a pretty good device at the price point. And on the day Amazon had a 100$ off additionally and I just went for it.&lt;/p&gt;
+
+&lt;h2 id=&quot;dsm---os&quot;&gt;DSM - OS&lt;/h2&gt;
+&lt;p&gt;DSM is something really special about Synology, its a web based OS but pretty much feels like a desktop one. Its quirky and responsive. I have not had an issue with it and help docs are there at the right place. Just like spotlight in Mac it has a search bar where I can search for just anything - a file or help doc admin privileges or finding any App.&lt;/p&gt;
+
+&lt;p&gt;Files can be shared via FTP Server or mounted as NFS Drives or Samba for windows. If you have a fast enough wifi it just feels like an internal drive - A 24TB Internal Drive! :)&lt;/p&gt;
+
+&lt;p&gt;One feature that I really like a lot is quickconnect feature that Synology provides out of the box. Using this the web interface of NAS can be accessed via a link over the internet even remotely. If a direct connection can be established NAS is connected to directly otherwise it is routed via Synology Servers.&lt;/p&gt;
+
+&lt;p&gt;Synology has an Android as well as iOS app for managing it via Mobile. A number of web apps are present to be used out of the box like Download Station, Hyper Backup, Text Editor, Cloud Station Server, File Station,  High Availability manager to name a few.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://s33.postimg.org/4cvkv65pb/Screenshot_from_2016_06_11_20_20_11.png&quot; alt=&quot;Some Apps&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The current favorite app of mine is Plex, its an amazing software to organize and view Movie collection, Music, TV Series as well as Pictures. It automagically scans the Diskstation volumes specified for relavant media and fetches metadata from internet from various sources. With Quad core power of Diskstation 4+ optimised videos can be viewed at a time on different devices. It has an app for Samsung Smart tv, chromecast, Android, iOS.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://s33.postimg.org/uvaf08nhb/Screenshot_from_2016_06_11_20_58_02.png&quot; alt=&quot;Movie Collection in Plex&quot; /&gt;
+Plex organises the collection beautifully, fetches Artwork, Trailers, Subtitles, Rating from number of sources and organises them. Content can be filtered by IMDB Rating,&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://s33.postimg.org/5nizmimlb/Screenshot_from_2016_06_11_21_00_36.png&quot; alt=&quot;Plex Music&quot; /&gt;
+Plex Music Library&lt;/p&gt;
+
+&lt;p&gt;For any query about buying/setting up NAS/Plex, say Hello at : &lt;a href=&quot;/contact&quot;&gt;Contact&lt;/a&gt;&lt;/p&gt;
+
+      &lt;p&gt;&lt;a href=&quot;/tech/synology/synology-diskstation-review&quot;&gt;Synology Diskstation 1815+ - A Review&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on June 11, 2016.&lt;/p&gt;</content>
+  </entry>
   
 
   <entry>
@@ -1547,61 +1605,6 @@ For case 2 , if the left node exists then add the difference to that node and ke
 But this approach would not work if we want to get a sorted linked list from a BST.&lt;/p&gt;
 
       &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Convert-A-Binary-Tree-To-Doubly-Linked-List&quot;&gt;Convert a Binary Tree to Doubly Linked list&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
-  </entry>
-  
-
-  <entry>
-    <title type="html"><![CDATA[Lowest Common Ancestor of a Binary Tree]]></title>
-    <link>/computers/dsa/trees/Lowest-Common-Ancestor</link>
-    <id>/computers/dsa/trees/Lowest-Common-Ancestor</id>
-    <published>2015-01-16T08:51:29+05:30</published>
-    <updated>2015-01-16T08:51:29+05:30</updated>
-    <author>
-      <name>Bhuvan Rawal</name>
-      <uri></uri>
-      <email>bhuvan@bhuvanrawal.me</email>
-    </author>
-    <content type="html">&lt;p&gt;Here we look at finding lowest common ancestor of a binary tree. Finding LCA of a BST is an easy application, comparatively for Binary Tree its a tough nut to crack.
-The algo goes as follows:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Check if one of the numbers lie in the left sub tree.&lt;/li&gt;
-  &lt;li&gt;Check if one of the numbers lie in the right sub tree.&lt;/li&gt;
-  &lt;li&gt;If both 1,2 are true then return the current node.
-else recurse to the branch which is not null.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * http://www.geeksforgeeks.org/lowest-common-ancestor-binary-tree-set-1/&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * Given a binary tree (not a binary search tree) and two values say n1 and n2,&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * write a program to find the least common ancestor.&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * Following is definition of LCA from Wikipedia:&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * Let T be a rooted tree. The lowest common ancestor between two nodes n1 and n2 is&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * defined as the lowest node in T that has both n1 and n2 as descendants&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * (where we allow a node to be a descendant of itself).&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * @param root&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * @param n1&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * @param n2&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * @return&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; */&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Tree&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;lowestCommonAncestor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tree&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Tree&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;left&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lowestCommonAncestor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;n2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Tree&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;right&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lowestCommonAncestor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;n2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;left&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;right&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;left&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;left:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-      &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Lowest-Common-Ancestor&quot;&gt;Lowest Common Ancestor of a Binary Tree&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
   </entry>
   
 </feed>

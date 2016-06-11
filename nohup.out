@@ -1,3 +1,4 @@
-Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
-[  17404]   WARN - om.intellij.util.ProfilingUtil - Profiling agent is not enabled. Add -agentlib:yjpagent to idea.vmoptions if necessary to profile IDEA. 
-WARN: Can't load Python: since build 145.970 does not match IU-145.597
+[  10943]   WARN - om.intellij.util.ProfilingUtil - Profiling agent is not enabled. Add -agentlib:yjpagent to idea.vmoptions if necessary to profile IDEA. 
+[  23227]   WARN - .ExternalResourceManagerExImpl - Cannot find standard resource. filename:/META-INF/tapestry_5_3.xsd class=class com.intellij.javaee.ResourceRegistrarImpl, classLoader:null 
+MEvent. CASE!
+MEvent. CASE!

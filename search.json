@@ -1,6 +1,14 @@
 [
 	
 		{
+		  "title"      : "Synology Diskstation 1815+ - A Review",
+		  "category"   : "",
+		  "url"        : "/tech/synology/synology-diskstation-review",
+		  "date"       : "2016-06-11 10:52:58 +0530",
+		  "shortdate"  : "June 11, 2016"
+		} ,
+	
+		{
 		  "title"      : "Sync vs Async write performance to Cassandra Server - A performance Evaluation",
 		  "category"   : "",
 		  "url"        : "/cassandra/optimisation/performance/cassandra-async-vs-sync-writes-performance-evaluation",
