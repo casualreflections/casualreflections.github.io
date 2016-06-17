@@ -8,7 +8,7 @@ summary: Ease your brains - use rvm to manage ruby installations
 description: Install and use ruby using rvm on linux
 share:  true
 comments:   true
-featured: true
+featured: false
 post_format: [ ]
 ---
 

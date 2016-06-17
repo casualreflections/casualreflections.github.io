@@ -8,7 +8,7 @@ summary: Solution for creating decoupled applications for web
 description: Solution for creating decoupled applications for web
 share:  true
 comments:   true
-featured: true
+featured: false
 post_format: [ ]
 ---
 
