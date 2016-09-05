@@ -147,7 +147,7 @@ callback([
 
   {
     "text": "Python Multiprocessing - A design paradigm",
-    "href": "/tech/synology/multiprocessing-python"
+    "href": "/tech/python/multiprocessing-python"
   } 
 
 ])

@@ -4,7 +4,7 @@
   <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
   <link rel="self" type="application/atom+xml" href="/feed.xml" />
   <link rel="alternate" type="text/html" href="" />
-  <updated>2016-09-05T13:24:25+05:30</updated>
+  <updated>2016-09-05T18:27:59+05:30</updated>
   <id>/</id>
   <author>
     <name>Bhuvan Rawal</name>
@@ -15,8 +15,8 @@
 
   <entry>
     <title type="html"><![CDATA[Python Multiprocessing - A design paradigm]]></title>
-    <link>/tech/synology/multiprocessing-python</link>
-    <id>/tech/synology/multiprocessing-python</id>
+    <link>/tech/python/multiprocessing-python</link>
+    <id>/tech/python/multiprocessing-python</id>
     <published>2016-09-05T10:52:58+05:30</published>
     <updated>2016-09-05T10:52:58+05:30</updated>
     <author>
@@ -79,7 +79,7 @@ One of the challenge that I faced was to find ways and means to scale out the pr
 
 &lt;h4 id=&quot;high-scalability---to-scale-the-program-across-multiple-nodes-zero-mq--rabbit-mq-can-be-used-as-a-queue-in-producer-and-consumers-can-be-booted-on-physically-different-machines&quot;&gt;3. High Scalability - To scale the program across multiple nodes zero mq / rabbit mq can be used as a queue in producer and consumers can be booted on physically different machines&lt;/h4&gt;
 
-      &lt;p&gt;&lt;a href=&quot;/tech/synology/multiprocessing-python&quot;&gt;Python Multiprocessing - A design paradigm&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on September 05, 2016.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/tech/python/multiprocessing-python&quot;&gt;Python Multiprocessing - A design paradigm&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on September 05, 2016.&lt;/p&gt;</content>
   </entry>
   
 
