@@ -143,6 +143,11 @@ callback([
   {
     "text": "Synology Diskstation 1815+ - A Review",
     "href": "/tech/synology/synology-diskstation-review"
+  } ,
+
+  {
+    "text": "Python Multiprocessing - A design paradigm",
+    "href": "/tech/synology/multiprocessing-python"
   } 
 
 ])

@@ -1,6 +1,14 @@
 [
 	
 		{
+		  "title"      : "Python Multiprocessing - A design paradigm",
+		  "category"   : "",
+		  "url"        : "/tech/synology/multiprocessing-python",
+		  "date"       : "2016-09-05 10:52:58 +0530",
+		  "shortdate"  : "September 05, 2016"
+		} ,
+	
+		{
 		  "title"      : "Synology Diskstation 1815+ - A Review",
 		  "category"   : "",
 		  "url"        : "/tech/synology/synology-diskstation-review",
