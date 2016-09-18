@@ -2,7 +2,7 @@
 layout: page
 permalink: /license/index.html
 title: LICENSE
-description: "License for Jekyll theme HMFAYSAL OMEGA."
+description: "License for Jekyll theme"
 headline: "The MIT License"
 tags: [Jekyll, theme, license]
 image:
@@ -11,7 +11,7 @@ image:
 
 The MIT License (MIT)
 
-Copyright (c) {{ site.time | date: '%Y' }} Hossain Mohd Faysal <[hmfaysal@alum.mit.edu](mailto:hmfaysal@alum.mit.edu)>
+Copyright (c) {{ site.time | date: '%Y' }} Bhuvan Rawal <[hmfaysal@alum.mit.edu](mailto:hmfaysal@alum.mit.edu)>
 
 [http://alum.mit.edu/www/hmfaysal](http://alum.mit.edu/www/hmfaysal)
 
