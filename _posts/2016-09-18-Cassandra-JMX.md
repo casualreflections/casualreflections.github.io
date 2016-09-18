@@ -255,6 +255,7 @@ assassinateEndPoint operation removes a node from the ring by telling the other 
 ### Metrics MBeans
 The ability to access metrics related to application performance health and key activities has become an essential tool for maintaining web-scale applications. Fortunately cassandra collects a wide range of metrics on its own activities to help us understand the behaviour.
 Some of these are :
+
 * `Cache Metrices` - Key cache/ Counter cache / Row cache - hitrate , capacity , utilization
 * `Client Metrices` such as number of connected clients and information about client requests such as latency, failures and timeouts
 * `Commitlog Metrices` such as size, stats on pending and completed tasks
