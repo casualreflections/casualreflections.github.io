@@ -1,6 +1,14 @@
 [
 	
 		{
+		  "title"      : "JMX &amp; Cassandra - Maintaining &amp; Monitoring at Scale",
+		  "category"   : "",
+		  "url"        : "/tech/cassandra/jmx/monitoring/administration/java/Cassandra-JMX",
+		  "date"       : "2016-09-19 02:52:58 +0530",
+		  "shortdate"  : "September 19, 2016"
+		} ,
+	
+		{
 		  "title"      : "Python Multiprocessing - A design paradigm",
 		  "category"   : "",
 		  "url"        : "/tech/python/multiprocessing-python",

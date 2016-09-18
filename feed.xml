@@ -4,13 +4,288 @@
   <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
   <link rel="self" type="application/atom+xml" href="/feed.xml" />
   <link rel="alternate" type="text/html" href="" />
-  <updated>2016-09-05T18:27:59+05:30</updated>
+  <updated>2016-09-19T02:33:47+05:30</updated>
   <id>/</id>
   <author>
     <name>Bhuvan Rawal</name>
     <uri>/</uri>
     <email>bhuvan@bhuvanrawal.me</email>
   </author>
+  
+
+  <entry>
+    <title type="html"><![CDATA[JMX & Cassandra - Maintaining & Monitoring at Scale]]></title>
+    <link>/tech/cassandra/jmx/monitoring/administration/java/Cassandra-JMX</link>
+    <id>/tech/cassandra/jmx/monitoring/administration/java/Cassandra-JMX</id>
+    <published>2016-09-19T02:52:58+05:30</published>
+    <updated>2016-09-19T02:52:58+05:30</updated>
+    <author>
+      <name>Bhuvan Rawal</name>
+      <uri></uri>
+      <email>bhuvan@bhuvanrawal.me</email>
+    </author>
+    <content type="html">&lt;blockquote&gt;
+  &lt;p&gt;JMX (Java Management Extensions - JSR 262)  Provides tools for web based, modular extensions for monitoring java based applications. Starting with Java 5 JMX is plugged into Java SE.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;JMX helps monitor java application in two key ways 1. It helps understand app health in terms of memory, heap, cpu usage, threads, garbage collection, etc. Secondly, JMX allows you to work with specific aspects of app through instrumentation, i.e. putting wrapper in application code in order to allow JVM to gather data that external tool can use.
+More on JMX can be obtained by going through java.lang.management package&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Being a Storage Server it becomes critical to provide means to expose metrics as well as a way to change node config during runtime without restarting the node. JMX quite easily is the preferred choice as its pretty extensible, as compared to SNMP which is not very extensible and can only expose what is provided in that MIB.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;overview-of-mbeans&quot;&gt;Overview of MBeans:&lt;/h2&gt;
+
+&lt;p&gt;A managed bean or MBean is a special type of Java Bean that represents a single manageable resource inside the JVM. MBeans interact with an MBean server to make their functions remotely available. When an MBean is registered with the MBean server, it specifies an object name that is used to identify the MBean to JMX clients. An object name consists of a domain followed by a list of key-value pairs, atleast one of which must identify a type. Typical convention is to use chose a domain name that is similar to the Java package name of the MBean, and to name the type after MBean interface name.
+Some simple values in application are exposed as attributes for example attribute PeakThreadCount of Threading Bean, which stores the greatest number of threads present in application at anytime since startup. Other MBeans are configurable for example JMXConfigurator bean in logback is configurable and loglevel can be altered at runtime using method setLoggerLevel &lt;code&gt;nodetool status&lt;/code&gt; internally calls this functionality for getting &amp;amp; setting loglevels.&lt;/p&gt;
+
+&lt;p&gt;Another type of MBean operation is one that doesnt simply show a value, but lets you execute some useful action. dumpAllThreads and resetPeakThreadCount are two such operations.&lt;/p&gt;
+
+&lt;h2 id=&quot;cassandra-mbeans-&quot;&gt;Cassandra MBeans :&lt;/h2&gt;
+&lt;p&gt;Once connected with a jmx client like JConsole / Java Mission Control the MBeans can be managed. Cassandra’s beans are organized in packages which start with &lt;code&gt;org.apache.cassandra&lt;/code&gt;, one such example that can be looked over here is CompactionManagerMbean interface:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;apache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;cassandra&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;compaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.Map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;javax.management.openmbean.TabularData&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CompactionManagerMBean&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;/** List of running compaction objects. */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getCompactions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/** List of running compaction summary strings. */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getCompactionSummary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/** compaction history **/&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TabularData&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getCompactionHistory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * Triggers the compaction of user specified sstables.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * You can specify files from various keyspaces and columnfamilies.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * If you do so, user defined compaction is performed several times to the groups of files&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * in the same keyspace/columnfamily.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * @param dataFiles a comma separated list of sstable file to compact.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *                  must contain keyspace and columnfamily name in path(for 2.1+) or file name itself.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;forceUserDefinedCompaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dataFiles&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * Triggers the cleanup of user specified sstables.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * You can specify files from various keyspaces and columnfamilies.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * If you do so, cleanup is performed each file individually&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * @param dataFiles a comma separated list of sstable file to cleanup.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *                  must contain keyspace and columnfamily name in path(for 2.1+) or file name itself.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;forceUserDefinedCleanup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dataFiles&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+
+    &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * Stop all running compaction-like tasks having the provided {@code type}.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * @param type the type of compaction to stop. Can be one of:&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *   - COMPACTION&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *   - VALIDATION&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *   - CLEANUP&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *   - SCRUB&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *   - INDEX_BUILD&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;stopCompaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * Stop an individual running compaction using the compactionId.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * @param compactionId Compaction ID of compaction to stop. Such IDs can be found in&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *                     the transaction log files whose name starts with compaction_,&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *                     located in the table transactions folder.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;stopCompactionById&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;compactionId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * Returns core size of compaction thread pool&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getCoreCompactorThreads&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * Allows user to resize maximum size of the compaction thread pool.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * @param number New maximum of compaction threads&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setCoreCompactorThreads&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * Returns maximum size of compaction thread pool&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getMaximumCompactorThreads&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * Allows user to resize maximum size of the compaction thread pool.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * @param number New maximum of compaction threads&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setMaximumCompactorThreads&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * Returns core size of validation thread pool&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getCoreValidationThreads&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * Allows user to resize maximum size of the compaction thread pool.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * @param number New maximum of compaction threads&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setCoreValidationThreads&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * Returns size of validator thread pool&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getMaximumValidatorThreads&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * Allows user to resize maximum size of the validator thread pool.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * @param number New maximum of validator threads&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setMaximumValidatorThreads&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The class &lt;code&gt;CompactionManager&lt;/code&gt; implements this bean, it is exposed in the domain org.apache.cassandra.db under CompactionManager in jmx clients. It does all the work that it is intended to do, and has implementation of methods that are only necessary for talking to the MBean server. Here is how the CompactionManager registers itself in a static block as can be seen below:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CompactionManager&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CompactionManagerMBean&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MBEAN_OBJECT_NAME&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;org.apache.cassandra.db:type=CompactionManager&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CompactionManager&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;instance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;.......&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;instance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;CompactionManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;MBeanServer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mbs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ManagementFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getPlatformMBeanServer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;mbs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;registerMBean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;instance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ObjectName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MBEAN_OBJECT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;RuntimeException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * Stop all running compaction-like tasks having the provided {@code type}.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * @param type the type of compaction to stop. Can be one of:&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *   - COMPACTION&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *   - VALIDATION&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *   - CLEANUP&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *   - SCRUB&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *   - INDEX_BUILD&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;stopCompaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;OperationType&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;operation&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OperationType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;valueOf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Holder&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;holder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CompactionMetrics&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getCompactions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;holder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getCompactionInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getTaskType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;operation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;holder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;stop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;stopCompactionById&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;compactionId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Holder&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;holder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CompactionMetrics&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getCompactions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;UUID&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;holderId&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;holder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getCompactionInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;compactionId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;holderId&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;holderId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;equals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UUID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;fromString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compactionId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)))&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;holder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;stop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;.......&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;cassandra-db-mbeans&quot;&gt;Cassandra DB MBeans:&lt;/h2&gt;
+
+&lt;h3 id=&quot;storageservicembean&quot;&gt;StorageServiceMBean&lt;/h3&gt;
+
+&lt;p&gt;As cassandra is a database software, the first places to look in case of an issue is org.apache.cassandra.service.StorageServiceMBean, this allows you to see operation mode which is either of : &lt;code&gt;leaving, joining, decommissioned and client&lt;/code&gt;. The set of live and unreachable nodes can also be found here.&lt;/p&gt;
+
+&lt;p&gt;To change the loglevel at runtime setLogLevel can be invoked. To get amount of data stored per node, getLoadMap() method can be invoked which presents a java map with key as ip address as node and value as corresponding storage load. Also effective ownership operation can be used to access the percentage of data in a keyspace owned by each node.&lt;/p&gt;
+
+&lt;p&gt;In order to find the node ownership of a partition key getNaturalEndpoints(String table, byte[] key) can be used. StorageServiceMBean offers many other maintenance operations like resumeBootstrap, joinRing, repairAsync, drain, removeNode, decommission and operations to start and stop gossip.&lt;/p&gt;
+
+&lt;h3 id=&quot;storageproxymbean&quot;&gt;StorageProxyMBean:&lt;/h3&gt;
+&lt;p&gt;The &lt;code&gt;org.apache.cassandra.service.StorageProxy&lt;/code&gt; provides a layer on top of StorageService to handle client requests and inter node communications. The StorageProxyMBean provides the ability to check and set timeout values for various operations including read and write.&lt;/p&gt;
+
+&lt;p&gt;This MBean also provides access to hinted handoff settings such as the maximum time window for storing hints. Hinted handoff statistics include getTotalHints, and getHintsInProgress. This can be disabled with the disableHintsForDC operation.&lt;/p&gt;
+
+&lt;p&gt;A particular nodes hints can be disabled via setHintedHandoffEnabled and status can be checked via getHintedHandoffEnabled. These are used by &lt;code&gt;nodetool enablehandoff / disablehandoff / statushandoff&lt;/code&gt; commands. realoadTriggerClasses allows to install a new trigger without having to restart a node.&lt;/p&gt;
+
+&lt;h3 id=&quot;columnfamilystorembean&quot;&gt;ColumnFamilyStoreMBean&lt;/h3&gt;
+&lt;p&gt;The table stats of cassandra are stored in org.apache.cassandr.db &amp;gt; Tables (Which previously was ColumnFamilies). This MBean provides access to compaction and compression stats for each table. This allows to temporarily override the setting on specific node. The values will be reset to those configured on the table schema when the node is restarted.&lt;/p&gt;
+
+&lt;p&gt;The MBean also exposes a lot of information about the node’s storage of data for this table on disk. The getSSTableCountPerLevel() operation provides a list of how many sstables are in each tier. The estimateKeys() operation provides an estimate of number of partition stored on the node. Taken together this information can give some insight whether forceMajorCompaction operation for this table might help free up space and increase read performance.&lt;/p&gt;
+
+&lt;p&gt;There is also trueSnapshotSize method which allows finding the size of snapshots which are no longer valid. As cassandra stores indexes in tables, there is a ColumnFamilyStoreMBean instance for each indexed column available under IndexTables.&lt;/p&gt;
+
+&lt;h3 id=&quot;cacheservicembean&quot;&gt;CacheServiceMBean&lt;/h3&gt;
+&lt;p&gt;The &lt;code&gt;org.apache.cassandra.service.CacheServiceMBean&lt;/code&gt; provides access to Cassandra’s key cache, row cache and counter cache under the domain name &lt;code&gt;org.apache.cassandra.db&lt;/code&gt; &amp;gt; Caches. The info available for each caches includes maximum size and time duration to cache items and ability to invalidate each cache.&lt;/p&gt;
+
+&lt;h3 id=&quot;commitlogmbean&quot;&gt;CommitLogMBean&lt;/h3&gt;
+&lt;p&gt;The &lt;code&gt;org.apache.cassandra.db.commitlog.CommitLogMBean&lt;/code&gt; exposes attributes and operations that allow you to learn about the current state of commit logs. Default commitlog configuratios are defined in conf/commitlog_archiving.properties but can be overrided via MBean.&lt;/p&gt;
+
+&lt;h3 id=&quot;compactionmanagermbean&quot;&gt;CompactionManagerMBean&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;org.apache.cassandra.db.CompactionManagerMBean&lt;/code&gt; allows to get stats about compactions performed in the past and the ability to perform compactions of specific SSTable files we identify by calling the forceUserDefinedCompaction method of the CompactionManager class.&lt;/p&gt;
+
+&lt;p&gt;This MBean is leveraged by nodetool commands including compact, compactionhistory, and compactionstats.&lt;/p&gt;
+
+&lt;h3 id=&quot;snitchmbeans&quot;&gt;SnitchMBeans&lt;/h3&gt;
+&lt;p&gt;Two MBeans are provided by cassandra to monitor and configure behaviour of snitch. The ``org.apache.cassandra.locator.EndpointSnitchInfoMBean` provides the name of the rack and data center for a given host, as well as the name of the snitch in use.&lt;/p&gt;
+
+&lt;p&gt;If DynamicEndpointSnitch is being used, the ``org.apache.cassandra.locator.DynamicEndpointSnitchMBean` is registered, this MBean exposes the ability to reset the badness threshold used by the snitch for making nodes as offline, as well as allowing you to see the scores of various nodes.&lt;/p&gt;
+
+&lt;h3 id=&quot;hintedhandoffmanagermbean&quot;&gt;HintedHandoffManagerMBean&lt;/h3&gt;
+&lt;p&gt;Cassandra provides fine grained control of hinted handoff via &lt;code&gt;org.apache.cassandra.db.HintedHandoffManagerMBean&lt;/code&gt;, the MBean exposes the ability to list nodes for which hints are stored by calling listEndpointsPendingHints(). You can then force delivery by calling scheduleHintDelivery() or delete hints via deleteHintsForEndpoint().&lt;/p&gt;
+
+&lt;p&gt;Additionally, you can pause and resume hint delivery to all nodes with pauseHintDelivery or delete stored hints for all nodes with the truncateAllHints operation. These are used by &lt;code&gt;nodetool&#39;s pausehandoff, resumehandoff and truncatehints&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;networking-mbeans&quot;&gt;Networking MBeans&lt;/h3&gt;
+
+&lt;p&gt;The &lt;code&gt;org.apache.cassandra.net&lt;/code&gt; domain contains MBeans to help cassandra manage Cassandra’s network related activities includin phi failure detection and gossip, the Message Service, and Stream Manager.&lt;/p&gt;
+
+&lt;h3 id=&quot;failuredetectormbean&quot;&gt;FailureDetectorMBean&lt;/h3&gt;
+&lt;p&gt;The &lt;code&gt;org.apache.cassandra.gms.FailureDetectorMBean&lt;/code&gt; provides attributes describing the states and Phi scores of other nodes as well as the Phi convict threshold.&lt;/p&gt;
+
+&lt;h3 id=&quot;gossipermbean&quot;&gt;GossiperMBean&lt;/h3&gt;
+&lt;p&gt;The &lt;code&gt;org.apache.cassandra.gms.GossiperMBean&lt;/code&gt; provides access to gossiper. The method getEndpointDowntime() can be called to know for how long a particular node has been down. Cassandra uses this value internally to know when it can discard hints for that node.&lt;/p&gt;
+
+&lt;p&gt;The getCurrentGenerationNumber operation returns the generation number associated with the specific node. The generation number is included in gossip messages exchanged between nodes and is used to distinguish the current state of a node from the state prior to restart. Each time node restarts generation number is incremented.&lt;/p&gt;
+
+&lt;p&gt;assassinateEndPoint operation removes a node from the ring by telling the other nodes that the node has been permanently removed.&lt;/p&gt;
+
+&lt;h3 id=&quot;streammanagermbean&quot;&gt;StreamManagerMBean&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;org.apache.cassandra.streaming.StreamManagerMBean&lt;/code&gt; allows us to see the streaming activities that occur between a node and peers. There are two endpoints here - stream source and a stream destination. StreamManagerMBean supports two modes of operation - getCurrentStreams operation provides a snapshot of the current incoming and outgoing streams and the MBean also publishes notification associated with teh stream state changes.&lt;/p&gt;
+
+&lt;h3 id=&quot;metrics-mbeans&quot;&gt;Metrics MBeans&lt;/h3&gt;
+&lt;p&gt;The ability to access metrics related to application performance health and key activities has become an essential tool for maintaining web-scale applications. Fortunately cassandra collects a wide range of metrics on its own activities to help us understand the behaviour.
+Some of these are :
+* &lt;code&gt;Cache Metrices&lt;/code&gt; - Key cache/ Counter cache / Row cache - hitrate , capacity , utilization
+* &lt;code&gt;Client Metrices&lt;/code&gt; such as number of connected clients and information about client requests such as latency, failures and timeouts
+* &lt;code&gt;Commitlog Metrices&lt;/code&gt; such as size, stats on pending and completed tasks
+* &lt;code&gt;Compaction Metrices&lt;/code&gt; such as total bytes compacted, and stats on pending and completed compactions
+* &lt;code&gt;Connection Metrices&lt;/code&gt; to each node in the cluster including gossip
+* &lt;code&gt;Dropped message&lt;/code&gt; metrices which are a part of nodetool tpstats
+* &lt;code&gt;Read repair&lt;/code&gt; metrices describing the number of background vs blocking read repairs performed
+* &lt;code&gt;Storage&lt;/code&gt; metrices including count of hints in progress and total hints
+* &lt;code&gt;Thread pool&lt;/code&gt;metrices including active, completed and blocked tasks for each threadpool
+* &lt;code&gt;Table&lt;/code&gt; metrices including memtables, SSTables and bloom filter usage and the latency of various read and write operations reported at one, five, and fifteen min intervals
+* &lt;code&gt;Keyspace&lt;/code&gt; metrices - provide aggregate of table metrices&lt;/p&gt;
+
+&lt;h3 id=&quot;threading-mbeans&quot;&gt;Threading MBeans&lt;/h3&gt;
+&lt;p&gt;The &lt;code&gt;org.apache.cassandra.internal&lt;/code&gt; domain houses MBeans that allow user to configure the thread pools associated with each stage in cassandra’s staged event driven architecture. The stages include AntiEntropyStage, GossipStage, InternalResponseStage, MigrationStage and others&lt;/p&gt;
+
+&lt;p&gt;An easy way to use the jmx MBeans is via &lt;code&gt;nodetool&lt;/code&gt; utility which provides access to a limited number of jmx functionalities.&lt;/p&gt;
+
+      &lt;p&gt;&lt;a href=&quot;/tech/cassandra/jmx/monitoring/administration/java/Cassandra-JMX&quot;&gt;JMX & Cassandra - Maintaining & Monitoring at Scale&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on September 19, 2016.&lt;/p&gt;</content>
+  </entry>
   
 
   <entry>
@@ -1552,59 +1827,6 @@ For case 2 , if the left node exists then add the difference to that node and ke
 
 
       &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Is-Binary-Tree-Foldable&quot;&gt;Is the binary tree foldable?&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
-  </entry>
-  
-
-  <entry>
-    <title type="html"><![CDATA[Max Width of a Binary Tree]]></title>
-    <link>/computers/dsa/trees/Max-Width-Binary-Tree</link>
-    <id>/computers/dsa/trees/Max-Width-Binary-Tree</id>
-    <published>2015-01-16T10:51:29+05:30</published>
-    <updated>2015-01-16T10:51:29+05:30</updated>
-    <author>
-      <name>Bhuvan Rawal</name>
-      <uri></uri>
-      <email>bhuvan@bhuvanrawal.me</email>
-    </author>
-    <content type="html">&lt;p&gt;For solving this problem we use level order traversal, putting the next level nodes in a new queue.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * PseudoCode for MaxWidth&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * start with list containing just the trees root. call it CurrNodes.&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * maxWidth = 1;&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * start with empty list. call it NextNodes.&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * while(CurrNodes is not empty) {&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; *      get all children of nodes in CurrNodes and add them to NextNodes&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; *      if number of children is &amp;gt; maxWidth, # of children is the new maxWidth&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; *          CurrNodes = NextNodes&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; *          NextNodes = empty.&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * }&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * http://www.geeksforgeeks.org/maximum-width-of-a-binary-tree/&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * @param root&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; */&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;maxWidthBinaryTree&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tree&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// do a level order traversal and at each level update the count&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// of that level save the count into max if its greater than previous max&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tree&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;LinkedList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tree&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nextQueue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;LinkedList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maxWidth&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isEmpty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nextQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isEmpty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()){&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Tree&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;nextQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;nextQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isEmpty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()){&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maxWidth&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nextQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;maxWidth&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nextQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nextQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maxWidth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-      &lt;p&gt;&lt;a href=&quot;/computers/dsa/trees/Max-Width-Binary-Tree&quot;&gt;Max Width of a Binary Tree&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on January 16, 2015.&lt;/p&gt;</content>
   </entry>
   
 </feed>

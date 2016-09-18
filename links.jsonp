@@ -148,6 +148,11 @@ callback([
   {
     "text": "Python Multiprocessing - A design paradigm",
     "href": "/tech/python/multiprocessing-python"
+  } ,
+
+  {
+    "text": "JMX & Cassandra - Maintaining & Monitoring at Scale",
+    "href": "/tech/cassandra/jmx/monitoring/administration/java/Cassandra-JMX"
   } 
 
 ])
