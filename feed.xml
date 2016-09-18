@@ -4,7 +4,7 @@
   <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
   <link rel="self" type="application/atom+xml" href="/feed.xml" />
   <link rel="alternate" type="text/html" href="" />
-  <updated>2016-09-19T02:33:47+05:30</updated>
+  <updated>2016-09-19T02:39:59+05:30</updated>
   <id>/</id>
   <author>
     <name>Bhuvan Rawal</name>
@@ -266,18 +266,21 @@ Some simple values in application are exposed as attributes for example attribut
 
 &lt;h3 id=&quot;metrics-mbeans&quot;&gt;Metrics MBeans&lt;/h3&gt;
 &lt;p&gt;The ability to access metrics related to application performance health and key activities has become an essential tool for maintaining web-scale applications. Fortunately cassandra collects a wide range of metrics on its own activities to help us understand the behaviour.
-Some of these are :
-* &lt;code&gt;Cache Metrices&lt;/code&gt; - Key cache/ Counter cache / Row cache - hitrate , capacity , utilization
-* &lt;code&gt;Client Metrices&lt;/code&gt; such as number of connected clients and information about client requests such as latency, failures and timeouts
-* &lt;code&gt;Commitlog Metrices&lt;/code&gt; such as size, stats on pending and completed tasks
-* &lt;code&gt;Compaction Metrices&lt;/code&gt; such as total bytes compacted, and stats on pending and completed compactions
-* &lt;code&gt;Connection Metrices&lt;/code&gt; to each node in the cluster including gossip
-* &lt;code&gt;Dropped message&lt;/code&gt; metrices which are a part of nodetool tpstats
-* &lt;code&gt;Read repair&lt;/code&gt; metrices describing the number of background vs blocking read repairs performed
-* &lt;code&gt;Storage&lt;/code&gt; metrices including count of hints in progress and total hints
-* &lt;code&gt;Thread pool&lt;/code&gt;metrices including active, completed and blocked tasks for each threadpool
-* &lt;code&gt;Table&lt;/code&gt; metrices including memtables, SSTables and bloom filter usage and the latency of various read and write operations reported at one, five, and fifteen min intervals
-* &lt;code&gt;Keyspace&lt;/code&gt; metrices - provide aggregate of table metrices&lt;/p&gt;
+Some of these are :&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;Cache Metrices&lt;/code&gt; - Key cache/ Counter cache / Row cache - hitrate , capacity , utilization&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;Client Metrices&lt;/code&gt; such as number of connected clients and information about client requests such as latency, failures and timeouts&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;Commitlog Metrices&lt;/code&gt; such as size, stats on pending and completed tasks&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;Compaction Metrices&lt;/code&gt; such as total bytes compacted, and stats on pending and completed compactions&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;Connection Metrices&lt;/code&gt; to each node in the cluster including gossip&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;Dropped message&lt;/code&gt; metrices which are a part of nodetool tpstats&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;Read repair&lt;/code&gt; metrices describing the number of background vs blocking read repairs performed&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;Storage&lt;/code&gt; metrices including count of hints in progress and total hints&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;Thread pool&lt;/code&gt;metrices including active, completed and blocked tasks for each threadpool&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;Table&lt;/code&gt; metrices including memtables, SSTables and bloom filter usage and the latency of various read and write operations reported at one, five, and fifteen min intervals&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;Keyspace&lt;/code&gt; metrices - provide aggregate of table metrices&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h3 id=&quot;threading-mbeans&quot;&gt;Threading MBeans&lt;/h3&gt;
 &lt;p&gt;The &lt;code&gt;org.apache.cassandra.internal&lt;/code&gt; domain houses MBeans that allow user to configure the thread pools associated with each stage in cassandra’s staged event driven architecture. The stages include AntiEntropyStage, GossipStage, InternalResponseStage, MigrationStage and others&lt;/p&gt;

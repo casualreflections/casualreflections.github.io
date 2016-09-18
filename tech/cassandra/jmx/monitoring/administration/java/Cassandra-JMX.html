@@ -175,7 +175,7 @@ Description: Awesome dude, awesome life
                         <div class="cursive" style="color: #000; font-style:italic;">Monitor and Administer cassandra using jmx</div>
                         <div class="post-info text-center small">
                             <span class="entry-date date published updated"><time datetime="2016-09-19T02:52:58+05:30" class="post-time" itemprop="datePublished">19 Sep 2016</time><span>
-                            in <span class="post-tags"><a href="/categories/index.html#TechCassandraJMXMonitoringAdministrationJava" data-toggle="tooltip" title="Other posts from the Tech category" rel="tag">Tech</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraJMXMonitoringAdministrationJava" data-toggle="tooltip" title="Other posts from the Cassandra category" rel="tag">Cassandra</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraJMXMonitoringAdministrationJava" data-toggle="tooltip" title="Other posts from the Jmx category" rel="tag">Jmx</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraJMXMonitoringAdministrationJava" data-toggle="tooltip" title="Other posts from the Monitoring category" rel="tag">Monitoring</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraJMXMonitoringAdministrationJava" data-toggle="tooltip" title="Other posts from the Administration category" rel="tag">Administration</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraJMXMonitoringAdministrationJava" data-toggle="tooltip" title="Other posts from the Java category" rel="tag">Java</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;<span class="time">10.91</span> minutes read</span>
+                            in <span class="post-tags"><a href="/categories/index.html#TechCassandraJMXMonitoringAdministrationJava" data-toggle="tooltip" title="Other posts from the Tech category" rel="tag">Tech</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraJMXMonitoringAdministrationJava" data-toggle="tooltip" title="Other posts from the Cassandra category" rel="tag">Cassandra</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraJMXMonitoringAdministrationJava" data-toggle="tooltip" title="Other posts from the Jmx category" rel="tag">Jmx</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraJMXMonitoringAdministrationJava" data-toggle="tooltip" title="Other posts from the Monitoring category" rel="tag">Monitoring</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraJMXMonitoringAdministrationJava" data-toggle="tooltip" title="Other posts from the Administration category" rel="tag">Administration</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraJMXMonitoringAdministrationJava" data-toggle="tooltip" title="Other posts from the Java category" rel="tag">Java</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;<span class="time">10.855</span> minutes read</span>
                         </div>
                     </header>
                     <div class="post-body bordered-bottom" itemprop="description">
@@ -422,18 +422,21 @@ Some simple values in application are exposed as attributes for example attribut
 
 <h3 id="metrics-mbeans">Metrics MBeans</h3>
 <p>The ability to access metrics related to application performance health and key activities has become an essential tool for maintaining web-scale applications. Fortunately cassandra collects a wide range of metrics on its own activities to help us understand the behaviour.
-Some of these are :
-* <code>Cache Metrices</code> - Key cache/ Counter cache / Row cache - hitrate , capacity , utilization
-* <code>Client Metrices</code> such as number of connected clients and information about client requests such as latency, failures and timeouts
-* <code>Commitlog Metrices</code> such as size, stats on pending and completed tasks
-* <code>Compaction Metrices</code> such as total bytes compacted, and stats on pending and completed compactions
-* <code>Connection Metrices</code> to each node in the cluster including gossip
-* <code>Dropped message</code> metrices which are a part of nodetool tpstats
-* <code>Read repair</code> metrices describing the number of background vs blocking read repairs performed
-* <code>Storage</code> metrices including count of hints in progress and total hints
-* <code>Thread pool</code>metrices including active, completed and blocked tasks for each threadpool
-* <code>Table</code> metrices including memtables, SSTables and bloom filter usage and the latency of various read and write operations reported at one, five, and fifteen min intervals
-* <code>Keyspace</code> metrices - provide aggregate of table metrices</p>
+Some of these are :</p>
+
+<ul>
+  <li><code>Cache Metrices</code> - Key cache/ Counter cache / Row cache - hitrate , capacity , utilization</li>
+  <li><code>Client Metrices</code> such as number of connected clients and information about client requests such as latency, failures and timeouts</li>
+  <li><code>Commitlog Metrices</code> such as size, stats on pending and completed tasks</li>
+  <li><code>Compaction Metrices</code> such as total bytes compacted, and stats on pending and completed compactions</li>
+  <li><code>Connection Metrices</code> to each node in the cluster including gossip</li>
+  <li><code>Dropped message</code> metrices which are a part of nodetool tpstats</li>
+  <li><code>Read repair</code> metrices describing the number of background vs blocking read repairs performed</li>
+  <li><code>Storage</code> metrices including count of hints in progress and total hints</li>
+  <li><code>Thread pool</code>metrices including active, completed and blocked tasks for each threadpool</li>
+  <li><code>Table</code> metrices including memtables, SSTables and bloom filter usage and the latency of various read and write operations reported at one, five, and fifteen min intervals</li>
+  <li><code>Keyspace</code> metrices - provide aggregate of table metrices</li>
+</ul>
 
 <h3 id="threading-mbeans">Threading MBeans</h3>
 <p>The <code>org.apache.cassandra.internal</code> domain houses MBeans that allow user to configure the thread pools associated with each stage in cassandra’s staged event driven architecture. The stages include AntiEntropyStage, GossipStage, InternalResponseStage, MigrationStage and others</p>
