@@ -175,7 +175,7 @@ Description: Awesome dude, awesome life
                         <div class="cursive" style="color: #000; font-style:italic;">Slice scan task across multiple processes for achieving quick scans</div>
                         <div class="post-info text-center small">
                             <span class="entry-date date published updated"><time datetime="2016-09-19T02:52:58+05:30" class="post-time" itemprop="datePublished">19 Sep 2016</time><span>
-                            in <span class="post-tags"><a href="/categories/index.html#TechCassandraPython" data-toggle="tooltip" title="Other posts from the Tech category" rel="tag">Tech</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraPython" data-toggle="tooltip" title="Other posts from the Cassandra category" rel="tag">Cassandra</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraPython" data-toggle="tooltip" title="Other posts from the Python category" rel="tag">Python</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;<span class="time">6.42</span> minutes read</span>
+                            in <span class="post-tags"><a href="/categories/index.html#TechCassandraPython" data-toggle="tooltip" title="Other posts from the Tech category" rel="tag">Tech</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraPython" data-toggle="tooltip" title="Other posts from the Cassandra category" rel="tag">Cassandra</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraPython" data-toggle="tooltip" title="Other posts from the Python category" rel="tag">Python</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;<span class="time">6.525</span> minutes read</span>
                         </div>
                     </header>
                     <div class="post-body bordered-bottom" itemprop="description">
@@ -185,12 +185,12 @@ Description: Awesome dude, awesome life
 </blockquote>
 
 <blockquote>
-  <p>Things can be really fast if the range can be split and divided across multiple processes (Python - GIL limitation).</p>
+  <p>Things can be really fast if the range can be split and divided across multiple processes. (Threads can be used in case of Java. Python - <a href="https://wiki.python.org/moin/GlobalInterpreterLock">GIL limitation</a>). In case of Java single cluster reference can also be used.</p>
 </blockquote>
 
 <p>A simple use case is aggregation for count(*) while it is certainly possible through cqlsh, it times out moust of the times for large tables. Reason being there is a full scan happening and data complete data is being transferred to the coordinator.</p>
 
-<p>While a simple hack can help doing count with cqlsh by connecting with <code>cqlsh --connect-timeout=1000 --request-timeout=1000</code> it still puts a lot of pressure on coordinator to pull lot of data on its heap from other nodes.</p>
+<p>While a simple hack can help doing count with cqlsh by connecting with something like <code>cqlsh --connect-timeout=1000 --request-timeout=1000</code> it still puts a lot of pressure on coordinator to pull lot of data on its heap from other nodes.</p>
 
 <p>Solution : Why not count on client itself? Slice the rows give it to producers, share a atomic counter across to processes. The processes will distribute the load across the cluster evenly assuming TokenAwarePolicy is used. And almost always it is guaranteed to be faster.</p>
 
@@ -207,7 +207,7 @@ Description: Awesome dude, awesome life
   <li>logger_name - in case if this method is used in multiple places a loggername can be used for clarity</li>
 </ul>
 
-<h2 id="note--for-counting-the-method-can-be-further-simplified-and-queue-can-completely-avoided-only-counter-needs-to-be-updated-in-that-case-this-avoids-queue-serialization--deserialization-overhead">Note : For counting the method can be further simplified and queue can completely avoided, only counter needs to be updated in that case. This avoids Queue Serialization &amp; Deserialization overhead.</h2>
+<h2 id="note--for-counting-the-method-can-be-further-simplified-and-queue-can-completely-avoided-only-counter-needs-to-be-updated-in-that-case-this-avoids-message-serialization--deserialization-overhead">Note : For counting the method can be further simplified and queue can completely avoided, only counter needs to be updated in that case. This avoids message Serialization &amp; Deserialization overhead.</h2>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">multiprocess_producer_paginated</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">queue</span><span class="p">,</span> <span class="n">keyspace</span><span class="p">,</span> <span class="n">num_producers</span><span class="p">,</span> <span class="n">is_completed_producer</span><span class="p">,</span> <span class="n">email_dictionary</span><span class="p">,</span> <span class="n">logger_name</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>

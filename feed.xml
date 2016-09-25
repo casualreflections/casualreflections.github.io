@@ -4,7 +4,7 @@
   <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
   <link rel="self" type="application/atom+xml" href="/feed.xml" />
   <link rel="alternate" type="text/html" href="" />
-  <updated>2016-09-25T21:53:17+05:30</updated>
+  <updated>2016-09-25T22:36:14+05:30</updated>
   <id>/</id>
   <author>
     <name>Bhuvan Rawal</name>
@@ -29,12 +29,12 @@
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Things can be really fast if the range can be split and divided across multiple processes (Python - GIL limitation).&lt;/p&gt;
+  &lt;p&gt;Things can be really fast if the range can be split and divided across multiple processes. (Threads can be used in case of Java. Python - &lt;a href=&quot;https://wiki.python.org/moin/GlobalInterpreterLock&quot;&gt;GIL limitation&lt;/a&gt;). In case of Java single cluster reference can also be used.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;A simple use case is aggregation for count(*) while it is certainly possible through cqlsh, it times out moust of the times for large tables. Reason being there is a full scan happening and data complete data is being transferred to the coordinator.&lt;/p&gt;
 
-&lt;p&gt;While a simple hack can help doing count with cqlsh by connecting with &lt;code&gt;cqlsh --connect-timeout=1000 --request-timeout=1000&lt;/code&gt; it still puts a lot of pressure on coordinator to pull lot of data on its heap from other nodes.&lt;/p&gt;
+&lt;p&gt;While a simple hack can help doing count with cqlsh by connecting with something like &lt;code&gt;cqlsh --connect-timeout=1000 --request-timeout=1000&lt;/code&gt; it still puts a lot of pressure on coordinator to pull lot of data on its heap from other nodes.&lt;/p&gt;
 
 &lt;p&gt;Solution : Why not count on client itself? Slice the rows give it to producers, share a atomic counter across to processes. The processes will distribute the load across the cluster evenly assuming TokenAwarePolicy is used. And almost always it is guaranteed to be faster.&lt;/p&gt;
 
@@ -51,7 +51,7 @@
   &lt;li&gt;logger_name - in case if this method is used in multiple places a loggername can be used for clarity&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;note--for-counting-the-method-can-be-further-simplified-and-queue-can-completely-avoided-only-counter-needs-to-be-updated-in-that-case-this-avoids-queue-serialization--deserialization-overhead&quot;&gt;Note : For counting the method can be further simplified and queue can completely avoided, only counter needs to be updated in that case. This avoids Queue Serialization &amp;amp; Deserialization overhead.&lt;/h2&gt;
+&lt;h2 id=&quot;note--for-counting-the-method-can-be-further-simplified-and-queue-can-completely-avoided-only-counter-needs-to-be-updated-in-that-case-this-avoids-message-serialization--deserialization-overhead&quot;&gt;Note : For counting the method can be further simplified and queue can completely avoided, only counter needs to be updated in that case. This avoids message Serialization &amp;amp; Deserialization overhead.&lt;/h2&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;multiprocess_producer_paginated&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;statement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;keyspace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_producers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is_completed_producer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;email_dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logger_name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;sd&quot;&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
