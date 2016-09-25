@@ -17,21 +17,21 @@ Description: Awesome dude, awesome life
 -->
 <head>
 <meta charset="utf-8">
-<title>Multiprocess producer in python &#8211; Bhuvan Rawal</title>
+<title>Multiprocess producer for cassandra table in python &#8211; Bhuvan Rawal</title>
 <meta name="description" content="Slice scan task across multiple processes for achieving quick scans">
 <meta name="keywords" content="Tech, Cassandra, Python">
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="/images/omikron.png">
-<meta name="twitter:title" content="Multiprocess producer in python">
+<meta name="twitter:title" content="Multiprocess producer for cassandra table in python">
 <meta name="twitter:description" content="Slice scan task across multiple processes for achieving quick scans">
 <meta name="twitter:creator" content="@beingbhuvan">
 
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Multiprocess producer in python">
+<meta property="og:title" content="Multiprocess producer for cassandra table in python">
 <meta property="og:description" content="Slice scan task across multiple processes for achieving quick scans">
 <meta property="og:url" content="/tech/cassandra/python/Multiprocess-Producer-Cassandra-Python">
 <meta property="og:site_name" content="Bhuvan Rawal">
@@ -170,29 +170,29 @@ Description: Awesome dude, awesome life
                     <header class="post-header entry-header">
                     <div class="cursive">this post is featured</div>
                         
-                        <h1 class="post-title text-center hyper lighter bordered-bottom entry-title" itemprop="headline">Multiprocess producer in python</h1>
+                        <h1 class="post-title text-center hyper lighter bordered-bottom entry-title" itemprop="headline">Multiprocess producer for cassandra table in python</h1>
                         
                         <div class="cursive" style="color: #000; font-style:italic;">Slice scan task across multiple processes for achieving quick scans</div>
                         <div class="post-info text-center small">
                             <span class="entry-date date published updated"><time datetime="2016-09-19T02:52:58+05:30" class="post-time" itemprop="datePublished">19 Sep 2016</time><span>
-                            in <span class="post-tags"><a href="/categories/index.html#TechCassandraPython" data-toggle="tooltip" title="Other posts from the Tech category" rel="tag">Tech</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraPython" data-toggle="tooltip" title="Other posts from the Cassandra category" rel="tag">Cassandra</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraPython" data-toggle="tooltip" title="Other posts from the Python category" rel="tag">Python</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;<span class="time">6.525</span> minutes read</span>
+                            in <span class="post-tags"><a href="/categories/index.html#TechCassandraPython" data-toggle="tooltip" title="Other posts from the Tech category" rel="tag">Tech</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraPython" data-toggle="tooltip" title="Other posts from the Cassandra category" rel="tag">Cassandra</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraPython" data-toggle="tooltip" title="Other posts from the Python category" rel="tag">Python</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;<span class="time">6.535</span> minutes read</span>
                         </div>
                     </header>
                     <div class="post-body bordered-bottom" itemprop="description">
                         
                         <blockquote>
-  <p>Consider having to scan A large table with say 10 Million rows plus. A single threaded producer will take its own time cycling through token ranges from <code>-2**63 -1 till +2**63</code> 5000 rows a time or your specified fetch_size.</p>
+  <p>Consider having to scan A large table with say 10 Million rows plus in cassandra. A single threaded producer will take its own time cycling through token ranges from <code>-2**63 -1 till +2**63</code> 5000 rows a time or your specified fetch_size.</p>
 </blockquote>
 
 <blockquote>
   <p>Things can be really fast if the range can be split and divided across multiple processes. (Threads can be used in case of Java. Python - <a href="https://wiki.python.org/moin/GlobalInterpreterLock">GIL limitation</a>). In case of Java single cluster reference can also be used.</p>
 </blockquote>
 
-<p>A simple use case is aggregation for count(*) while it is certainly possible through cqlsh, it times out moust of the times for large tables. Reason being there is a full scan happening and data complete data is being transferred to the coordinator.</p>
+<p>A simple use case is aggregation for count(*) while it is certainly possible through cqlsh, it times out most of the times for large tables. Reason being there is a full scan happening and complete data is being transferred to the coordinator.</p>
 
-<p>While a simple hack can help doing count with cqlsh by connecting with something like <code>cqlsh --connect-timeout=1000 --request-timeout=1000</code> it still puts a lot of pressure on coordinator to pull lot of data on its heap from other nodes.</p>
+<p>While a simple hack can help doing count with cqlsh by connecting it with something like <code>cqlsh --connect-timeout=1000 --request-timeout=1000</code> it still puts a lot of pressure on coordinator to pull lot of data on its heap from other nodes and is incredibly slow.</p>
 
-<p>Solution : Why not count on client itself? Slice the rows give it to producers, share a atomic counter across to processes. The processes will distribute the load across the cluster evenly assuming TokenAwarePolicy is used. And almost always it is guaranteed to be faster.</p>
+<p>Solution : Why not count on client itself? Slice the rows give it to producers, share an atomic counter across to processes. The processes will distribute the load across the cluster evenly assuming TokenAwarePolicy is used. And almost always it is guaranteed to be faster.</p>
 
 <p>Usage - Call the method <code>multiprocess_producer_paginated</code> with below parameters</p>
 
@@ -200,14 +200,21 @@ Description: Awesome dude, awesome life
   <li>statement of the form - “SELECT col1,col2… from my_table where Token(x,y) &gt;= ‘%d’ AND token(x,y) &lt; ‘%d’;” here x,y are the partition key members.</li>
   <li>A multiprocessor queue - multiprocessor.Queue() or multiprocessor.Manager().Queue() . It was found that latter behaved a bit faster, more on that later.</li>
   <li>keyspace - keyspace of the table</li>
-  <li>num_producers set appropriate number of processes to launch for fetching rows. Depends on size of cluster and speed with which fetches are to be performed</li>
-  <li>is_completed_producer - A signal to processes reading queue that producers have been completed. In this case <code>multiprocessing.Value('i', 0)</code> has been used otherwise <code>multiprocessing.Event()</code> can be also used to signal
-&gt;    * Please note that Joinable Queue can also be used for this purpose (task_done() method) but its much slower in comparison. <a href="http://stackoverflow.com/questions/8463008/python-multiprocessing-pipe-vs-queue">Reference</a></li>
+  <li>
+    <p>num_producers set appropriate number of processes to launch for fetching rows. Depends on size of cluster and speed with which fetches are to be performed</p>
+  </li>
   <li>email_dictionary - a multiprocessor dict which can be used to track progress. In this case i have used it to sent status via a mail by reading this dict</li>
   <li>logger_name - in case if this method is used in multiple places a loggername can be used for clarity</li>
+  <li>
+    <p>is_completed_producer - A signal to processes reading queue that producers have been completed. In this case <code>multiprocessing.Value()</code> has been used <code>multiprocessing.Event()</code> can be also used to signal</p>
+
+    <ul>
+      <li>Please note that Joinable Queue can also be used for this purpose (task_done() method) but its much slower in comparison. <a href="http://stackoverflow.com/questions/8463008/python-multiprocessing-pipe-vs-queue">Reference</a></li>
+    </ul>
+  </li>
 </ul>
 
-<h2 id="note--for-counting-the-method-can-be-further-simplified-and-queue-can-completely-avoided-only-counter-needs-to-be-updated-in-that-case-this-avoids-message-serialization--deserialization-overhead">Note : For counting the method can be further simplified and queue can completely avoided, only counter needs to be updated in that case. This avoids message Serialization &amp; Deserialization overhead.</h2>
+<h2 id="note--for-counting-this-method-can-be-further-simplified-and-queue-can-completely-avoided-only-counter-needs-to-be-updated-in-that-case-this-avoids-message-serialization--deserialization-overhead">Note : For counting this method can be further simplified and queue can completely avoided, only counter needs to be updated in that case. This avoids message Serialization &amp; Deserialization overhead.</h2>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">multiprocess_producer_paginated</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">queue</span><span class="p">,</span> <span class="n">keyspace</span><span class="p">,</span> <span class="n">num_producers</span><span class="p">,</span> <span class="n">is_completed_producer</span><span class="p">,</span> <span class="n">email_dictionary</span><span class="p">,</span> <span class="n">logger_name</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -436,7 +443,7 @@ Description: Awesome dude, awesome life
     </p>
     <ul class="social-mini">
         <li>
-            <a href="https://twitter.com/intent/tweet?text=&quot;Multiprocess producer in python&quot;%20/tech/cassandra/python/Multiprocess-Producer-Cassandra-Python%20via%20&#64;beingbhuvan"
+            <a href="https://twitter.com/intent/tweet?text=&quot;Multiprocess producer for cassandra table in python&quot;%20/tech/cassandra/python/Multiprocess-Producer-Cassandra-Python%20via%20&#64;beingbhuvan"
             onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" data-toggle="tooltip" title="Share on Twitter" itemprop="Twitter">
                 <i class="icon-twitter"></i>
             </a>

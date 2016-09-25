@@ -4,7 +4,7 @@
   <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
   <link rel="self" type="application/atom+xml" href="/feed.xml" />
   <link rel="alternate" type="text/html" href="" />
-  <updated>2016-09-25T22:36:14+05:30</updated>
+  <updated>2016-09-25T22:44:10+05:30</updated>
   <id>/</id>
   <author>
     <name>Bhuvan Rawal</name>
@@ -14,7 +14,7 @@
   
 
   <entry>
-    <title type="html"><![CDATA[Multiprocess producer in python]]></title>
+    <title type="html"><![CDATA[Multiprocess producer for cassandra table in python]]></title>
     <link>/tech/cassandra/python/Multiprocess-Producer-Cassandra-Python</link>
     <id>/tech/cassandra/python/Multiprocess-Producer-Cassandra-Python</id>
     <published>2016-09-19T02:52:58+05:30</published>
@@ -25,18 +25,18 @@
       <email>bhuvan@bhuvanrawal.me</email>
     </author>
     <content type="html">&lt;blockquote&gt;
-  &lt;p&gt;Consider having to scan A large table with say 10 Million rows plus. A single threaded producer will take its own time cycling through token ranges from &lt;code&gt;-2**63 -1 till +2**63&lt;/code&gt; 5000 rows a time or your specified fetch_size.&lt;/p&gt;
+  &lt;p&gt;Consider having to scan A large table with say 10 Million rows plus in cassandra. A single threaded producer will take its own time cycling through token ranges from &lt;code&gt;-2**63 -1 till +2**63&lt;/code&gt; 5000 rows a time or your specified fetch_size.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Things can be really fast if the range can be split and divided across multiple processes. (Threads can be used in case of Java. Python - &lt;a href=&quot;https://wiki.python.org/moin/GlobalInterpreterLock&quot;&gt;GIL limitation&lt;/a&gt;). In case of Java single cluster reference can also be used.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;A simple use case is aggregation for count(*) while it is certainly possible through cqlsh, it times out moust of the times for large tables. Reason being there is a full scan happening and data complete data is being transferred to the coordinator.&lt;/p&gt;
+&lt;p&gt;A simple use case is aggregation for count(*) while it is certainly possible through cqlsh, it times out most of the times for large tables. Reason being there is a full scan happening and complete data is being transferred to the coordinator.&lt;/p&gt;
 
-&lt;p&gt;While a simple hack can help doing count with cqlsh by connecting with something like &lt;code&gt;cqlsh --connect-timeout=1000 --request-timeout=1000&lt;/code&gt; it still puts a lot of pressure on coordinator to pull lot of data on its heap from other nodes.&lt;/p&gt;
+&lt;p&gt;While a simple hack can help doing count with cqlsh by connecting it with something like &lt;code&gt;cqlsh --connect-timeout=1000 --request-timeout=1000&lt;/code&gt; it still puts a lot of pressure on coordinator to pull lot of data on its heap from other nodes and is incredibly slow.&lt;/p&gt;
 
-&lt;p&gt;Solution : Why not count on client itself? Slice the rows give it to producers, share a atomic counter across to processes. The processes will distribute the load across the cluster evenly assuming TokenAwarePolicy is used. And almost always it is guaranteed to be faster.&lt;/p&gt;
+&lt;p&gt;Solution : Why not count on client itself? Slice the rows give it to producers, share an atomic counter across to processes. The processes will distribute the load across the cluster evenly assuming TokenAwarePolicy is used. And almost always it is guaranteed to be faster.&lt;/p&gt;
 
 &lt;p&gt;Usage - Call the method &lt;code&gt;multiprocess_producer_paginated&lt;/code&gt; with below parameters&lt;/p&gt;
 
@@ -44,14 +44,21 @@
   &lt;li&gt;statement of the form - “SELECT col1,col2… from my_table where Token(x,y) &amp;gt;= ‘%d’ AND token(x,y) &amp;lt; ‘%d’;” here x,y are the partition key members.&lt;/li&gt;
   &lt;li&gt;A multiprocessor queue - multiprocessor.Queue() or multiprocessor.Manager().Queue() . It was found that latter behaved a bit faster, more on that later.&lt;/li&gt;
   &lt;li&gt;keyspace - keyspace of the table&lt;/li&gt;
-  &lt;li&gt;num_producers set appropriate number of processes to launch for fetching rows. Depends on size of cluster and speed with which fetches are to be performed&lt;/li&gt;
-  &lt;li&gt;is_completed_producer - A signal to processes reading queue that producers have been completed. In this case &lt;code&gt;multiprocessing.Value(&#39;i&#39;, 0)&lt;/code&gt; has been used otherwise &lt;code&gt;multiprocessing.Event()&lt;/code&gt; can be also used to signal
-&amp;gt;    * Please note that Joinable Queue can also be used for this purpose (task_done() method) but its much slower in comparison. &lt;a href=&quot;http://stackoverflow.com/questions/8463008/python-multiprocessing-pipe-vs-queue&quot;&gt;Reference&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;num_producers set appropriate number of processes to launch for fetching rows. Depends on size of cluster and speed with which fetches are to be performed&lt;/p&gt;
+  &lt;/li&gt;
   &lt;li&gt;email_dictionary - a multiprocessor dict which can be used to track progress. In this case i have used it to sent status via a mail by reading this dict&lt;/li&gt;
   &lt;li&gt;logger_name - in case if this method is used in multiple places a loggername can be used for clarity&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;is_completed_producer - A signal to processes reading queue that producers have been completed. In this case &lt;code&gt;multiprocessing.Value()&lt;/code&gt; has been used &lt;code&gt;multiprocessing.Event()&lt;/code&gt; can be also used to signal&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;Please note that Joinable Queue can also be used for this purpose (task_done() method) but its much slower in comparison. &lt;a href=&quot;http://stackoverflow.com/questions/8463008/python-multiprocessing-pipe-vs-queue&quot;&gt;Reference&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;note--for-counting-the-method-can-be-further-simplified-and-queue-can-completely-avoided-only-counter-needs-to-be-updated-in-that-case-this-avoids-message-serialization--deserialization-overhead&quot;&gt;Note : For counting the method can be further simplified and queue can completely avoided, only counter needs to be updated in that case. This avoids message Serialization &amp;amp; Deserialization overhead.&lt;/h2&gt;
+&lt;h2 id=&quot;note--for-counting-this-method-can-be-further-simplified-and-queue-can-completely-avoided-only-counter-needs-to-be-updated-in-that-case-this-avoids-message-serialization--deserialization-overhead&quot;&gt;Note : For counting this method can be further simplified and queue can completely avoided, only counter needs to be updated in that case. This avoids message Serialization &amp;amp; Deserialization overhead.&lt;/h2&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;multiprocess_producer_paginated&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;statement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;keyspace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_producers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is_completed_producer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;email_dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logger_name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;sd&quot;&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
@@ -262,7 +269,7 @@
 
 &lt;p&gt;Complete code can be found at &lt;a href=&quot;https://gist.github.com/bhuvanrawal/93c5ae6cdd020de47e0981d36d2c0785&quot;&gt;Github&lt;/a&gt;&lt;/p&gt;
 
-      &lt;p&gt;&lt;a href=&quot;/tech/cassandra/python/Multiprocess-Producer-Cassandra-Python&quot;&gt;Multiprocess producer in python&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on September 19, 2016.&lt;/p&gt;</content>
+      &lt;p&gt;&lt;a href=&quot;/tech/cassandra/python/Multiprocess-Producer-Cassandra-Python&quot;&gt;Multiprocess producer for cassandra table in python&lt;/a&gt; was originally published by Bhuvan Rawal at &lt;a href=&quot;&quot;&gt;Bhuvan Rawal&lt;/a&gt; on September 19, 2016.&lt;/p&gt;</content>
   </entry>
   
 
