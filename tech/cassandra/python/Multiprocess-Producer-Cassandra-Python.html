@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html>
+<!--
+====================================================
+ ____  _   _ _   ___     ___    _   _
+| __ )| | | | | | \ \   / / \  | \ | |
+|  _ \| |_| | | | |\ \ / / _ \ |  \| |
+| |_) |  _  | |_| | \ V / ___ \| |\  |
+|____/|_| |_|\___/   \_/_/   \_\_| \_|
+
+====================================================
+Owner Name: Bhuvan Rawal
+Profile: https://www.facebook.com/bhu1rawal
+Version: 1.1
+Description: Awesome dude, awesome life
+====================================================
+-->
+<head>
+<meta charset="utf-8">
+<title>Multiprocess producer in python &#8211; Bhuvan Rawal</title>
+<meta name="description" content="Slice scan task across multiple processes for achieving quick scans">
+<meta name="keywords" content="Tech, Cassandra, Python">
+
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/images/omikron.png">
+<meta name="twitter:title" content="Multiprocess producer in python">
+<meta name="twitter:description" content="Slice scan task across multiple processes for achieving quick scans">
+<meta name="twitter:creator" content="@beingbhuvan">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Multiprocess producer in python">
+<meta property="og:description" content="Slice scan task across multiple processes for achieving quick scans">
+<meta property="og:url" content="/tech/cassandra/python/Multiprocess-Producer-Cassandra-Python">
+<meta property="og:site_name" content="Bhuvan Rawal">
+<meta property="og:image" content="/images/default_bg1.jpg">
+
+
+
+
+
+<link rel="canonical" href="/tech/cassandra/python/Multiprocess-Producer-Cassandra-Python">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Bhuvan Rawal Feed">
+<link rel="author" href="https://plus.google.com/u/0/115368800868963120427?rel=author">
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
+
+<div class="search-wrapper">
+    <div class="search-form">
+        <input type="text" class="search-field" placeholder="Search...">
+        <i class="icon-remove-sign"></i>
+        <ul class="search-results post-list"></ul><!-- /.search-results -->
+    </div><!-- /.search-form -->
+</div><!-- ./search-wrapper -->
+
+
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+<body class="post-template" itemscope itemtype="http://schema.org/WebPage">  
+<div id="fade"></div>
+<a id="slide" class="animated fade"></a>
+<aside id="sidebar">
+    <nav id="navigation">
+    <h2>MENU</h2>
+    <hr>
+
+            <li>
+                    <a href="/">Home</a>
+                 </li>
+
+            <li>
+                    <a href="/categories">Categories</a>
+                 </li>
+
+            <li>
+                    <a href="/tags">Tags</a>
+                 </li>
+
+            <li>
+                    <a href="/about">Bhuvan who?</a>
+                 </li>
+
+            <li>
+                    <a href="/contact">Contact me</a>
+                 </li>
+
+            <li>
+                    <a href="/resume">Resume</a>
+                 </li>
+            
+           <li><a href="/feed.xml" title="Atom/RSS feed"><i class="icon-rss"></i> Feed</a></li>
+    </nav>
+    
+    
+</aside>
+
+<header id="masthead" class="blog-background overlay align-center align-middle animated from-bottom"  style="background-image: url(/images/default_bg1.jpg)" itemscope itemtype="http://schema.org/Organization">
+
+
+    <button class="menu-button animated fade dosearch">
+        <i class="icon-search"></i>
+    </button>
+
+
+    <div class="inner">
+        <div class="container">
+            <a class="brand" href="/" role="banner" itemprop="url">
+
+                <img itemprop="logo" src="/images/omikron.png" alt="Bhuvan Rawal Logo" />
+
+            <h1 class="blog-title light" itemprop="name">
+                Bhuvan Rawal
+            </h1>
+                
+            </a>
+        </div>
+    </div>
+    
+    
+    <div class="decor-wrapper">
+        <svg id="header-decor" class="decor bottom" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path class="large left" d="M0 0 L50 50 L0 100" fill="rgba(255,255,255, .1)"></path>
+            <path class="large right" d="M100 0 L50 50 L100 100" fill="rgba(255,255,255, .1)"></path>
+
+            <path class="medium left" d="M0 100 L50 50 L0 33.3" fill="rgba(255,255,255, .3)"></path>
+            <path class="medium right" d="M100 100 L50 50 L100 33.3" fill="rgba(255,255,255, .3)"></path>
+
+            <path class="small left" d="M0 100 L50 50 L0 66.6" fill="rgba(255,255,255, .5)"></path>
+            <path class="small right" d="M100 100 L50 50 L100 66.6" fill="rgba(255,255,255, .5)"></path>
+
+            <path d="M0 99.9 L50 49.9 L100 99.9 L0 99.9" fill="rgba(255,255,255, 1)"></path>
+
+            <path d="M48 52 L50 49 L52 52 L48 52" fill="rgba(255,255,255, 1)"></path>
+
+        </svg>
+    </div>
+    
+</header>
+<div id="main" class="content" role="main" itemprop="mainContentOfPage" itemscope itemtype="http://schema.org/Blog">
+    <div class="container">
+        <div class="row">
+            <article class="post col-md-8 col-md-offset-2 hentry" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+
+            
+            
+            
+                    <header class="post-header entry-header">
+                    <div class="cursive">this post is featured</div>
+                        
+                        <h1 class="post-title text-center hyper lighter bordered-bottom entry-title" itemprop="headline">Multiprocess producer in python</h1>
+                        
+                        <div class="cursive" style="color: #000; font-style:italic;">Slice scan task across multiple processes for achieving quick scans</div>
+                        <div class="post-info text-center small">
+                            <span class="entry-date date published updated"><time datetime="2016-09-19T02:52:58+05:30" class="post-time" itemprop="datePublished">19 Sep 2016</time><span>
+                            in <span class="post-tags"><a href="/categories/index.html#TechCassandraPython" data-toggle="tooltip" title="Other posts from the Tech category" rel="tag">Tech</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraPython" data-toggle="tooltip" title="Other posts from the Cassandra category" rel="tag">Cassandra</a>&nbsp;&bull;&nbsp;<a href="/categories/index.html#TechCassandraPython" data-toggle="tooltip" title="Other posts from the Python category" rel="tag">Python</a></span>&nbsp;<span class="post-tags"><i class="icon-time"></i>&nbsp;<span class="time">6.42</span> minutes read</span>
+                        </div>
+                    </header>
+                    <div class="post-body bordered-bottom" itemprop="description">
+                        
+                        <blockquote>
+  <p>Consider having to scan A large table with say 10 Million rows plus. A single threaded producer will take its own time cycling through token ranges from <code>-2**63 -1 till +2**63</code> 5000 rows a time or your specified fetch_size.</p>
+</blockquote>
+
+<blockquote>
+  <p>Things can be really fast if the range can be split and divided across multiple processes (Python - GIL limitation).</p>
+</blockquote>
+
+<p>A simple use case is aggregation for count(*) while it is certainly possible through cqlsh, it times out moust of the times for large tables. Reason being there is a full scan happening and data complete data is being transferred to the coordinator.</p>
+
+<p>While a simple hack can help doing count with cqlsh by connecting with <code>cqlsh --connect-timeout=1000 --request-timeout=1000</code> it still puts a lot of pressure on coordinator to pull lot of data on its heap from other nodes.</p>
+
+<p>Solution : Why not count on client itself? Slice the rows give it to producers, share a atomic counter across to processes. The processes will distribute the load across the cluster evenly assuming TokenAwarePolicy is used. And almost always it is guaranteed to be faster.</p>
+
+<p>Usage - Call the method <code>multiprocess_producer_paginated</code> with below parameters</p>
+
+<ul>
+  <li>statement of the form - “SELECT col1,col2… from my_table where Token(x,y) &gt;= ‘%d’ AND token(x,y) &lt; ‘%d’;” here x,y are the partition key members.</li>
+  <li>A multiprocessor queue - multiprocessor.Queue() or multiprocessor.Manager().Queue() . It was found that latter behaved a bit faster, more on that later.</li>
+  <li>keyspace - keyspace of the table</li>
+  <li>num_producers set appropriate number of processes to launch for fetching rows. Depends on size of cluster and speed with which fetches are to be performed</li>
+  <li>is_completed_producer - A signal to processes reading queue that producers have been completed. In this case <code>multiprocessing.Value('i', 0)</code> has been used otherwise <code>multiprocessing.Event()</code> can be also used to signal
+&gt;    * Please note that Joinable Queue can also be used for this purpose (task_done() method) but its much slower in comparison. <a href="http://stackoverflow.com/questions/8463008/python-multiprocessing-pipe-vs-queue">Reference</a></li>
+  <li>email_dictionary - a multiprocessor dict which can be used to track progress. In this case i have used it to sent status via a mail by reading this dict</li>
+  <li>logger_name - in case if this method is used in multiple places a loggername can be used for clarity</li>
+</ul>
+
+<h2 id="note--for-counting-the-method-can-be-further-simplified-and-queue-can-completely-avoided-only-counter-needs-to-be-updated-in-that-case-this-avoids-queue-serialization--deserialization-overhead">Note : For counting the method can be further simplified and queue can completely avoided, only counter needs to be updated in that case. This avoids Queue Serialization &amp; Deserialization overhead.</h2>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">multiprocess_producer_paginated</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">queue</span><span class="p">,</span> <span class="n">keyspace</span><span class="p">,</span> <span class="n">num_producers</span><span class="p">,</span> <span class="n">is_completed_producer</span><span class="p">,</span> <span class="n">email_dictionary</span><span class="p">,</span> <span class="n">logger_name</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Statement should be in the format Select x,y,z from sometable where token(x) &gt;= &#39;%d&#39; AND token(k) &lt; &#39;%d&#39;;&quot;</span>
+<span class="sd">    Token range will be split into num producers and concurrent read will happen</span>
+<span class="sd">    :param statement:</span>
+<span class="sd">    :param queue:</span>
+<span class="sd">    :param keyspace:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Initiated Cassandra Producer&quot;</span><span class="p">)</span>
+
+    <span class="n">producer_proc_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&quot;Start Time is - &quot;</span><span class="p">,</span><span class="n">_start</span>
+
+    <span class="k">if</span> <span class="n">num_producers</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">num_producers</span> <span class="ow">is</span> <span class="bp">None</span> <span class="p">:</span>
+        <span class="n">num_producers</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c"># consumer count as per requirement</span>
+    <span class="n">workers</span> <span class="o">=</span> <span class="n">num_producers</span>
+    <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">workers</span><span class="p">))</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">range_slice</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">64</span> <span class="o">/</span> <span class="n">workers</span>
+    <span class="n">start_range</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">**</span><span class="mi">63</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">workers</span><span class="p">):</span>
+        <span class="c"># Hack for ending token range</span>
+        <span class="k">if</span> <span class="n">start_range</span> <span class="o">+</span> <span class="n">range_slice</span> <span class="o">==</span> <span class="mi">2</span><span class="o">**</span><span class="mi">63</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Worker </span><span class="si">%d</span><span class="s">, Start Range : </span><span class="si">%d</span><span class="s"> , End Range : </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">start_range</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">63</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">consumer_proc</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">multiprocess_row_producer</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">keyspace</span><span class="p">,</span><span class="n">statement</span><span class="p">,</span> <span class="n">queue</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">start_range</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">63</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">email_dictionary</span><span class="p">,</span> <span class="n">logger_name</span><span class="p">,</span> <span class="bp">True</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Worker </span><span class="si">%d</span><span class="s">, Start Range : </span><span class="si">%d</span><span class="s"> , End Range : </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">start_range</span><span class="p">,</span><span class="n">start_range</span> <span class="o">+</span> <span class="n">range_slice</span> <span class="p">)</span>
+            <span class="n">consumer_proc</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">multiprocess_row_producer</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">keyspace</span><span class="p">,</span><span class="n">statement</span><span class="p">,</span><span class="n">queue</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">start_range</span><span class="p">,</span> <span class="n">start_range</span><span class="o">+</span><span class="n">range_slice</span><span class="p">,</span> <span class="n">email_dictionary</span><span class="p">,</span> <span class="n">logger_name</span><span class="p">,</span> <span class="bp">True</span><span class="p">))</span>
+        <span class="c"># Sleep for couple of seconds before starting next consumer, dont overwhelm the cluster</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">start_range</span> <span class="o">=</span> <span class="n">start_range</span> <span class="o">+</span> <span class="n">range_slice</span>
+        <span class="n">consumer_proc</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">consumer_proc</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;cassandra_consumer-&#39;</span> <span class="o">+</span> <span class="n">logger_name</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">consumer_proc</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>        <span class="c"># Launch consumer_proc() as a separate python process</span>
+        <span class="n">producer_proc_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">consumer_proc</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;PID of Consumer </span><span class="si">%d</span><span class="s"> is </span><span class="si">%d</span><span class="s"> &quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">consumer_proc</span><span class="o">.</span><span class="n">pid</span><span class="p">)</span>
+
+    <span class="c"># Join the processes into parent process</span>
+    <span class="p">[</span><span class="n">consumer_proc</span><span class="o">.</span><span class="n">join</span><span class="p">()</span> <span class="k">for</span> <span class="n">consumer_proc</span> <span class="ow">in</span> <span class="n">producer_proc_list</span><span class="p">]</span>
+    <span class="n">is_completed_producer</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Count of bucket_content_attributes_mappings table is </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span><span class="n">count</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Time Taken For Counting : </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">_start</span><span class="p">)</span></code></pre></figure>
+
+<h3 id="each-subprocess-works-on-the-method-multiprocessrowproducer">Each subprocess works on the method multiprocess_row_producer</h3>
+
+<p>In case if a Timeout or some other exception is encountered, exponential retry mechanism is used and previous result’s paging state is reinjected back.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">multiprocess_row_producer</span><span class="p">(</span><span class="n">keyspace</span><span class="p">,</span><span class="n">query</span><span class="p">,</span> <span class="n">queue</span><span class="p">,</span> <span class="n">counter</span><span class="p">,</span> <span class="n">start_range</span><span class="p">,</span> <span class="n">end_range</span><span class="p">,</span> <span class="n">email_dictionary</span><span class="p">,</span> <span class="n">logger_name</span><span class="p">,</span> <span class="n">check_spillover</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+
+    <span class="k">global</span> <span class="n">cassandra_session</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;multiprocess&#39;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Initiated Cassandra Producer&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">cassandra_session</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">cassandra_session</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">:</span>
+        <span class="n">cassandra_session</span> <span class="o">=</span> <span class="n">connection_manager</span><span class="o">.</span><span class="n">get_cassandra_session</span><span class="p">()</span>
+        <span class="n">cassandra_session</span><span class="o">.</span><span class="n">set_keyspace</span><span class="p">(</span><span class="n">keyspace</span><span class="p">)</span>
+
+    <span class="n">row_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">cql_command</span> <span class="o">=</span> <span class="n">query</span> <span class="o">%</span> <span class="p">(</span><span class="n">start_range</span><span class="p">,</span> <span class="n">end_range</span><span class="p">)</span>
+    <span class="n">exception_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">slice_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">previous_paging_state</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">exception_occurred</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">simple_statement</span> <span class="o">=</span> <span class="n">SimpleStatement</span><span class="p">(</span><span class="n">cql_command</span><span class="p">,</span> <span class="n">fetch_size</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+    <span class="n">cassandra_session</span><span class="o">.</span><span class="n">row_factory</span> <span class="o">=</span> <span class="n">tuple_factory</span>
+
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">previous_paging_state</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">rs</span> <span class="o">=</span> <span class="n">cassandra_session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">simple_statement</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">exception_occurred</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Retrying query </span><span class="si">%s</span><span class="s"> with Paging State </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">query</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">previous_paging_state</span><span class="p">))</span>
+                <span class="n">rs</span> <span class="o">=</span> <span class="n">cassandra_session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">cql_command</span><span class="p">,</span> <span class="n">paging_state</span><span class="o">=</span><span class="n">previous_paging_state</span><span class="p">)</span>
+
+            <span class="n">rows</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="n">current_rows</span>
+            <span class="n">previous_paging_state</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="n">response_future</span><span class="o">.</span><span class="n">_paging_state</span>
+            <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Sleeping for 10 Seconds as Queue Size Large&quot;</span><span class="p">)</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+            <span class="n">counter</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">))</span>
+            <span class="n">email_dictionary</span><span class="p">[</span><span class="s">&#39;Count Processed &#39;</span> <span class="o">+</span> <span class="n">logger_name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Process : </span><span class="si">%s</span><span class="s"> Fetched </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">))</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Process : </span><span class="si">%s</span><span class="s"> Total Rows Fetched by all processes </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">counter</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
+
+            <span class="n">sw</span> <span class="o">=</span> <span class="n">stopwatch</span><span class="o">.</span><span class="n">StopWatch</span><span class="p">()</span>
+            <span class="n">sw</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="s">&#39;fetch-loop-initiated&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">rs</span><span class="o">.</span><span class="n">has_more_pages</span><span class="p">:</span>
+                <span class="c"># No More Pages to fetch</span>
+                <span class="k">break</span>
+            <span class="n">rs</span><span class="o">.</span><span class="n">fetch_next_page</span><span class="p">()</span>
+            <span class="n">sw</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="s">&#39;fetch-loop-initiated&#39;</span><span class="p">)</span>
+
+            <span class="c"># After every Fetch Sleep for 100 ms to avoid pushing limits</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Time taken to fetch </span><span class="si">%d</span><span class="s"> rows is </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">rs</span><span class="o">.</span><span class="n">_current_rows</span><span class="p">)</span> <span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">sw</span><span class="o">.</span><span class="n">accum</span><span class="p">))</span>
+            <span class="n">exception_occurred</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">exception_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="n">exception_occurred</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="n">exception_count</span> <span class="o">+=</span><span class="mi">1</span>
+            <span class="k">if</span> <span class="n">exception_count</span> <span class="o">&gt;</span> <span class="mi">64</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s">&quot;Breaking out of producer due to exception&quot;</span><span class="p">)</span>
+                <span class="k">break</span>
+            <span class="c"># In case of Time out exception or if some mis happening occurs</span>
+            <span class="c"># Exponential retry till 64**2 in the worst case thats more than 1 Hour</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">exception_count</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s">&quot;Exception occurred while fetching page, retrying again with same page&quot;</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+    <span class="c"># Close cassandra session as work is completed by producer</span>
+    <span class="n">cassandra_session</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span></code></pre></figure>
+
+<h3 id="the-atomic-counter-used-is-of-the-below-type">The atomic counter used is of the below type:</h3>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Counter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Counter implementation for counting across multiple processes</span>
+<span class="sd">    Multiprocess Lock is taken on count variable before any operation</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initval</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="n">initval</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">increment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">val</span><span class="o">.</span><span class="n">value</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">val</span><span class="o">.</span><span class="n">value</span> <span class="o">+=</span> <span class="n">delta</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span><span class="o">.</span><span class="n">value</span></code></pre></figure>
+
+<h3 id="parent-process-can-be-something-like-this">Parent process can be something like this</h3>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">manager</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Manager</span><span class="p">()</span>
+<span class="n">content_queue</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+<span class="n">is_completed_producer</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Value</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">producer_process</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">multiprocess_producer_paginated</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s">&quot;SELECT col1,col2 from my_table where token(x) &gt;= &#39;</span><span class="si">%d</span><span class="s">&#39; AND token(k) &lt; &#39;</span><span class="si">%d</span><span class="s">&#39; &quot;</span><span class="p">,</span> <span class="n">content_queue</span><span class="p">,</span> <span class="s">&quot;my_keyspace&quot;</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">is_completed_producer</span><span class="p">,</span> <span class="n">email_dictionary</span><span class="p">,</span> <span class="s">&#39;my_table_producer&#39;</span> <span class="p">))</span>
+<span class="n">producer_process</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">producer_process</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;cassandra_standard_mapping_producer&#39;</span>
+<span class="n">producer_process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;PID of standard count creation producer is </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">producer_process</span><span class="o">.</span><span class="n">pid</span><span class="p">)</span>
+
+<span class="n">num_consumers</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="c"># Boot up consumers to pick up messages pushed by cassandra consumers</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_consumers</span><span class="p">):</span>
+    <span class="n">consumer_proc</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">queue_processor</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">content_queue</span><span class="p">,</span> <span class="n">is_completed_producer</span><span class="p">,</span>  <span class="n">email_dictionary</span><span class="p">))</span>
+    <span class="n">consumer_proc</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">consumer_proc</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;cassandra_standard_count_middleware&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">consumer_proc</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>        <span class="c"># Launch reader() as a separate python process</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Sleeping for 10 Seconds before booting up a consumer&quot;</span><span class="p">)</span>
+    <span class="n">consumer_proc_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">consumer_proc</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;PID of Cassandra standard Count Consumer </span><span class="si">%d</span><span class="s"> is </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">consumer_proc</span><span class="o">.</span><span class="n">pid</span><span class="p">)</span>
+
+<span class="c"># Join the processes back into parent process</span>
+<span class="p">[</span><span class="n">consumer_proc</span><span class="o">.</span><span class="n">join</span><span class="p">()</span> <span class="k">for</span> <span class="n">consumer_proc</span> <span class="ow">in</span> <span class="n">consumer_proc_list</span><span class="p">]</span>
+<span class="n">producer_process</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></code></pre></figure>
+
+<h3 id="each-consumer-process-calls-queueprocessor-method-which-listens-to-queue-and-does-work-on-input-queue">Each consumer process calls queue_processor method which listens to queue and does work on input queue</h3>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">queue_processor</span><span class="p">(</span><span class="n">content_queue</span><span class="p">,</span> <span class="n">is_completed_producer</span><span class="p">,</span>  <span class="n">email_dictionary</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :param content_queue: Input queue with containing messages to be processed. Each message is a set of rows from cassandra producer</span>
+<span class="sd">    :param is_completed_producer: Signal from cassandra process that it has finished producing rows</span>
+<span class="sd">    :param email_dictionary: Push tracking information into this dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Cassandra Queue Processor&quot;</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">is_completed_producer</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">content_queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c"># Get a message containing set of rows</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="n">content_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=.</span><span class="mi">5</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Give Me work Ive gone jobless&quot;</span><span class="p">)</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s">&quot;Exception while fetching from queue, retrying&quot;</span><span class="p">)</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Queue Status </span><span class="si">%d</span><span class="s"> &quot;</span><span class="p">,</span> <span class="n">content_queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">())</span>
+            <span class="c"># Message fetched is a set of rows producer by cassandra producer process</span>
+
+            <span class="c"># Do some work on the message, say print each row</span>
+
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">message</span><span class="p">:</span>
+                <span class="k">print</span> <span class="n">row</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s">&quot;Exception Occurred during processing cassandra message&quot;</span><span class="p">)</span>
+            <span class="k">continue</span></code></pre></figure>
+
+<p>Complete code can be found at <a href="https://gist.github.com/bhuvanrawal/93c5ae6cdd020de47e0981d36d2c0785">Github</a></p>
+
+                        <br>
+                    
+                    
+                    <div class="entry-tags text-center">
+                    
+                        <i class="icon-tags"></i>&nbsp;Tagged with <a href="/tags/index.html#Tech" data-toggle="tooltip" title="Posts tagged with Tech" rel="tag">Tech</a>&nbsp;&bull;&nbsp;<a href="/tags/index.html#Cassandra" data-toggle="tooltip" title="Posts tagged with Cassandra" rel="tag">Cassandra</a>&nbsp;&bull;&nbsp;<a href="/tags/index.html#Python" data-toggle="tooltip" title="Posts tagged with Python" rel="tag">Python</a>
+                    
+                    </div>
+                    
+                    </div>
+        </div>
+                    <footer class="post-footer entry-meta">
+                        <div class="post-share text-center">
+    <p class="light small">
+        Share this post
+    </p>
+    <ul class="social-mini">
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=&quot;Multiprocess producer in python&quot;%20/tech/cassandra/python/Multiprocess-Producer-Cassandra-Python%20via%20&#64;beingbhuvan"
+            onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" data-toggle="tooltip" title="Share on Twitter" itemprop="Twitter">
+                <i class="icon-twitter"></i>
+            </a>
+        </li>
+        <li>
+            <a  href="https://www.facebook.com/sharer/sharer.php?u=/tech/cassandra/python/Multiprocess-Producer-Cassandra-Python"
+            onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" data-toggle="tooltip" title="Share on Facebook" itemprop="Facebook">
+                <i class="icon-facebook"></i>
+            </a>
+        </li>
+        <li>
+            <a href="https://plus.google.com/share?url=/tech/cassandra/python/Multiprocess-Producer-Cassandra-Python"
+           onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" data-toggle="tooltip" title="Share on Google plus" itemprop="GooglePlus">
+                <i class="icon-google-plus"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+                        <div class="post-author text-center">                       
+	        <img src="/images/bhuvanrawal.jpg" alt="Bhuvan Rawal's photo" itemprop="image" class="post-avatar img-circle img-responsive"/>    
+	    <h4 class="bordered-bottom vcard author" itemprop="author" itemscope itemtype="http://schema.org/Person">By <span itemprop="name" class="fn"><a href="/about" title="About Bhuvan Rawal" itemprop="url">Bhuvan Rawal</a></span></h4>
+	    <p>Bhuvan Rawal is a Computer Science engineer based in New Delhi, India. His interests are anything that&#8217;s related to Technology and Science, from math to programming languages to music to physics to engineering to philosophy.</p>
+</div> 
+                        <div id="disqus_thread"></div><!-- /#disqus_thread -->
+                    </footer>
+            </article>
+    </div>
+</div>
+
+<footer id="footer"  class="blog-background overlay text-center align-middle animated from-top" style="background-image: url(/images/default_bg1.jpg)" >
+
+
+    <div class="inner">
+        <div class="container">
+
+            <ul class="social-icons">
+            <li>
+                <a href="http://twitter.com/beingbhuvan" data-toggle="tooltip" title="Bhuvan Rawal on Twitter" target="_blank">
+                    <i class="icon-twitter"></i>
+                </a>
+            </li>
+            <li>
+                <a href="http://facebook.com/bhu1rawal" data-toggle="tooltip" title="Bhuvan Rawal on Facebook" target="_blank">
+                    <i class="icon-facebook"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://plus.google.com/u/0/115368800868963120427" data-toggle="tooltip" title="Bhuvan Rawal on Google+" target="_blank">
+                    <i class="icon-google-plus"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://stackexchange.com/users/4482379/bhuvan-rawal" data-toggle="tooltip" title="Bhuvan Rawal on StackExchange" target="_blank">
+                    <i class="icon-stackexchange"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://in.linkedin.com/in/bhuvanrawal" data-toggle="tooltip" title="Bhuvan Rawal on LinkedIn" target="_blank">
+                    <i class="icon-linkedin"></i>
+                </a>
+            </li>
+            
+            
+            <li>
+                <a href="http://github.com/bhuvanrawal" data-toggle="tooltip" title="Bhuvan Rawal on Github" target="_blank">
+                    <i class="icon-github"></i>
+                </a>
+            </li>
+        </ul>
+            <div>
+                <a href="/about/">Bhuvan Rawal</a> &copy; 2016 &bull; All rights reserved.
+            </div>
+            <ul class="menu-items">
+            
+            <li>
+                
+                    <a href="/"><i class="icon-home"></i></a>&nbsp;&bull;
+                 
+            </li>
+            
+            <li>
+                
+                    <a href="/categories">Categories</a>&nbsp;&bull;
+                 
+            </li>
+            
+            <li>
+                
+                    <a href="/tags">Tags</a>&nbsp;&bull;
+                 
+            </li>
+            
+            <li>
+                
+                    <a href="/about">Bhuvan who?</a>&nbsp;&bull;
+                 
+            </li>
+            
+            <li>
+                
+                    <a href="/contact">Contact me</a>&nbsp;&bull;
+                 
+            </li>
+            
+            <li>
+                
+                    <a href="/resume">Resume</a>&nbsp;&bull;
+                 
+            </li>
+            
+            <li><a href="/feed.xml" title="Atom/RSS feed"><i class="icon-rss"></i> Feed</a></li>
+        </ul>
+        </div>
+    </div>
+    
+        <div class="decor-wrapper">
+            <svg id="footer-decor" class="decor top" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" preserveAspectRatio="none">
+
+                <path class="large left" d="M0 0 L50 50 L0 100" fill="rgba(255,255,255, .1)"></path>
+                <path class="large right" d="M100 0 L50 50 L100 100" fill="rgba(255,255,255, .1)"></path>
+
+                <path class="medium left" d="M0 0 L50 50 L0 66.6" fill="rgba(255,255,255, .3)"></path>
+                <path class="medium right" d="M100 0 L50 50 L100 66.6" fill="rgba(255,255,255, .3)"></path>
+
+                <path class="small left" d="M0 0 L50 50 L0 33.3" fill="rgba(255,255,255, .5)"></path>
+                <path class="small right" d="M100 0 L50 50 L100 33.3" fill="rgba(255,255,255, .5)"></path>
+
+                <path d="M0 0 L50 50 L100 0 L0 0" fill="rgba(255,255,255, 1)"></path>
+
+                <path d="M48 48 L50 51 L52 48 L48 48" fill="rgba(255,255,255, 1)"></path>
+
+            </svg>
+        </div>
+    
+
+</footer>
+
+    
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+<script type="text/javascript" src="/assets/js/waypoints.min.js"></script>
+<script type="text/javascript" src="/assets/js/script.js"></script>
+<script type='text/javascript'>$(document).ready(function(){$(".time").text(function(a,b){return Math.round(parseFloat(b))})});</script>
+
+<script type="text/javascript" src="/assets/js/custom.js"></script>
+
+<script type="text/javascript">
+
+/*      Slides       */
+
+$("a#slide").click(function(){
+    $("#sidebar,body,a#slide,#fade").addClass("slide")
+});
+
+$("#fade,#header,#posts-container").click(function(){
+    $("#sidebar,body,a#slide,#fade").removeClass("slide")
+});
+
+$("a#click-filter").click(function(){
+    $("#slide-filter").slideToggle("medium");
+    $("#slide-pages").slideOut("medium");
+});
+
+$("a#click-pages").click(function(){
+    $("#slide-pages").slideToggle("medium");
+    $("#slide-filter").slideOut("medium");
+});
+
+/*      End-Slides      */
+
+</script>
+
+
+<!-- Jekyll Simple Search option -->
+<script>
+  $(document).ready(function() {
+      $('.search-field').simpleJekyllSearch({
+          jsonFile : '/search.json',
+          searchResults : '.search-results',
+          template : '<li><article><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></article></li>',
+          noResults: '<p>Nothing found.</p>'
+        });
+  });
+
+  (function( $, window, undefined ) {
+    
+     var bs = {
+          close: $(".icon-remove-sign"),
+          searchform: $(".search-form"),
+          canvas: $("body"),
+          dothis: $('.dosearch')
+      };
+    
+    bs.dothis.on('click', function() {
+      $('.search-wrapper').css({ display: "block" });
+      bs.searchform.toggleClass('active');
+      bs.searchform.find('input').focus();
+      bs.canvas.toggleClass('search-overlay');
+    });
+    
+      bs.close.on('click', function() {
+        $('.search-wrapper').removeAttr( 'style' );
+        bs.searchform.toggleClass('active');
+        bs.canvas.removeClass('search-overlay');
+    });
+  })( jQuery, window );
+</script>
+
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  var _gaq = _gaq || [];
+  var pluginUrl = 
+ '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-58286706-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'bhuvanrawal'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+ 
+</body>
+</html>

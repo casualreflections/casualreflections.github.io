@@ -153,6 +153,11 @@ callback([
   {
     "text": "JMX & Cassandra - Maintaining & Monitoring at Scale",
     "href": "/tech/cassandra/jmx/monitoring/administration/java/Cassandra-JMX"
+  } ,
+
+  {
+    "text": "Multiprocess producer in python",
+    "href": "/tech/cassandra/python/Multiprocess-Producer-Cassandra-Python"
   } 
 
 ])
