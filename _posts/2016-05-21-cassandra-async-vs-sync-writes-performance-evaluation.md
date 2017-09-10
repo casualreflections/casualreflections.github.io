@@ -7,7 +7,7 @@ tags: [Cassandra, Optimisation, Performance]
 summary: Performance improvement comparison between sync and async driver writes
 description: Achieve best performance out of cassandra driver - async writes with error callbacks
 comments:   true
-featured: true
+featured: false
 post_format: [ ]
 ---
 

@@ -7,7 +7,7 @@ tags: [Tech, Synology]
 summary: Diskstation Review - DSM, Hardware and a special review on Plex
 description: To Plex or not to Plex
 comments:   true
-featured: true
+featured: false
 post_format: [ ]
 ---
 
