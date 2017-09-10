@@ -158,6 +158,11 @@ callback([
   {
     "text": "Multiprocess producer for cassandra table in python",
     "href": "/tech/cassandra/python/Multiprocess-Producer-Cassandra-Python"
+  } ,
+
+  {
+    "text": "My Tyrst with Life",
+    "href": "/fitness/trek/my-tyrst-with-life"
   } 
 
 ])

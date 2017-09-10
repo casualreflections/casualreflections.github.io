@@ -1,6 +1,14 @@
 [
 	
 		{
+		  "title"      : "My Tyrst with Life",
+		  "category"   : "",
+		  "url"        : "/fitness/trek/my-tyrst-with-life",
+		  "date"       : "2017-09-09 19:52:58 +0530",
+		  "shortdate"  : "September 09, 2017"
+		} ,
+	
+		{
 		  "title"      : "Multiprocess producer for cassandra table in python",
 		  "category"   : "",
 		  "url"        : "/tech/cassandra/python/Multiprocess-Producer-Cassandra-Python",
