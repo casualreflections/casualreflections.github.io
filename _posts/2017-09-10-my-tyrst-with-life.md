@@ -72,3 +72,7 @@ A week later, I was joined by the next group - 24 Thai trekkers lead by an exper
 
 <p align="center"><b>At the top after 15 days, finally!</b></p>
 ![](https://docs.google.com/uc?id=0ByRdgrKLgEgIZG5YSnZQbWk5NjA)
+
+<p align="center"><b>Feeling elated after reaching base camp!</b></p>
+![](https://docs.google.com/uc?id=0ByRdgrKLgEgIcUlEbEQ4OWh0Nms)
+
