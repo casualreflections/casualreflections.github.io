@@ -1,6 +1,14 @@
 [
 	
 		{
+		  "title"      : "Performance tuning for java applications",
+		  "category"   : "",
+		  "url"        : "/tech/java/performance/jvm-performance-tuning",
+		  "date"       : "2017-09-17 19:52:58 +0530",
+		  "shortdate"  : "September 17, 2017"
+		} ,
+	
+		{
 		  "title"      : "My Tryst with Life",
 		  "category"   : "",
 		  "url"        : "/fitness/trek/my-tyrst-with-life",
