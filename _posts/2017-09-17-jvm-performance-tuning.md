@@ -11,47 +11,49 @@ featured: true
 post_format: [ ]
 ---
 
-> Special thanks to my colleague and friend **Anshul**, he has been indispensable in preparing this writeup.
+> Special thanks to my colleague and friend Anshul, he has been indispensable in preparing this writeup.
 
-In this blog, we will try and understand basic of jvm memory allocation, some jvm flags which should be put to use on production environments and sample programs to evaluate jvm strategy.
+In this blog, we will try and understand the basics of jvm memory allocation and some jvm flags which should be put to use on production environments and sample programs to evaluate jvm strategy.
 
-> Heck? Why is understanding jvm important? My app seems to work fine.
+> Heck !Why is understanding jvm important? My app seems to work fine.
 
-> Did you know that 20% java applications suffer from pauses of more than 5 seconds, not understanding jvm pauses may be inadvertently causing poor user experience.
+> Did you know that 20% java applications suffer from pauses of more than 5 seconds, not understanding jvm pauses may inadvertently cause poor user experience. - [Plumbr.eu](https://plumbr.eu/blog/garbage-collection/revealing-the-length-of-garbage-collection-pauses)
 
-It has been debated numerous times, what made java so special that it stood out of the park despite being invented in mid 90's as compared to its high level heavy weights - C/C++.
+There is an ongoing debate about what made java special that it rose to popularity really quickly despite being invented approximately 20 years compared to its high level heavy weights competitors - C/C++. 
 
-One of the prominent reason for distinct popularity and rise to fame is portability of application i.e. compile once run everywhere. Agreed that was a critical aspect which lead to creation of the language, however one may ask this question - is it really as important in today's paradigm with prominent use cases of language belonging to server side on the cloud with homogeneous platforms? Probably portability isnt the most important feature particularly for server side apps.
+One prominent reason for the distinct popularity and rise to fame of Java is the portability of application, i.e. compile once run everywhere. However one may ask this question - is portability really  important in today’s paradigm with prominent use cases of language belonging to server side on the cloud with homogeneous platforms? Probably not.
 
-The other important aspect is java gives the developer nearly complete independence from managing memory, while memory leaks are certainly possible but possibility is reduced to minimum and thereby the time to develop and test an application is comparatively far lesser. No long running tests to check for that catastrophic missed free() call! And no explicit pointers means avoidance of the dreaded segmentation fault!
+The other important advantage   java gives the developer is the near  complete independence from managing memory, while memory leaks are certainly possible but the possibility is reduced to a minimum, thereby reducing the time take in the development cycle.. No long running tests needed to check for that catastrophic missed free() call! And no explicit pointers mean avoidance of the dreaded segmentation fault!
 
-The programmer declares memory on the heap and jvm assumes responsibility to free memory in a background process called garbage collection. While it is certainly a gift and makes programming extremely less issue prone, it can lead to performance troubles if not understood and tuned appropriately(afterall gc is not controlled by the programmer), in this post we will try to understand how to tune a java application, understand the common jargons, avoid pitfalls and debug yourself out of one if you fall into it.
+The programmer declares memory on the heap and jvm assumes responsibility of liberate free memory in a background process called garbage collection. While it is certainly a gift and makes programming extremely less prone to issues, it can lead to performance troubles if not understood and tuned appropriately(after all gc is not controlled by the programmer), in this post we will try to understand how to tune a java application, understand the common jargons, avoid pitfalls and debug yourself out of one if you fall into it.
 
 ## Basics of JVM Heap:
-Unlike C/C++/Python jvm maintains a max heap size beyond which it will not allow application to grow itself into this is called jvm parameter Xmx or MaxHeapSize. If not specified it is taken from default which can be found for your machine using `java -XX:+PrintFlagsFinal -version`. The jvm param Xms specifies the starting size of the heap which the jvm requests from OS to itself right at the beginning. As and when more memory is desired, jvm requests memory if possible from OS and allocates to itself till Xmx is reached.
 
-When the garbage collector runs it causes the application threads to pause depending on the type of collector employed the pause can be short or quite long (the dreaded full GC).
+Unlike C/C++/Python jvm maintains a max heap size using a jvm parameter Xmx or MaxHeapSize,beyond which the application dies. If not specified it takes thedefault value which can be found for your machine using `java -XX:+PrintFlagsFinal -version`. The jvm param Xms specifies the starting size of the heap which the jvm requests from OS at the beginning.. As and when more memory is required, jvm requests memory if from OS till the Xmx limit is reached.
 
-There are several implementations of garbage collector algorithm like **Serial Collector, Parallel GC, Parallel old gc, CMS, G1GC**, etc. We will discuss default java8 implementation - Parallel collector for YoungGen & CMS for OldGen.
+When the garbage collector runs it causes the application threads to pause. Although it cannot be avoided, the pause depends on the type of the collector employed (wheter it is serial/parallel, number of threads, compacting collector vs non compacting one or whether gc is operating on either young/old or complete memory is utilised and the dreaded `Full GC` is running).
 
-Java heap is broadly divided into 3 parts, namely **young gen, old gen & perm gen**. Young gen comprises of **Eden space** where new objects are allocated and 2 survivor spaces one of which is always empty. GC runs on young gen (eden + 1 used survivor) which is also referred to as minor GC, the references which are old and are not in use are removed, the ones which are in use are transferred to remaining survivor space if it can fit in that space or promoted to old gen if either the age of objects has crossed the specified age limit or the size of used objects is more than the amount which can be fit in the empty survivor.
+There are several implementations of garbage collector algorithms - **Serial Collector, Parallel GC, Parallel old gc, CMS, G1GC**, etc. We will discuss the most common collection algorithm - Parallel compacting collector for YoungGen & CMS for OldGen. G1GC is default garbage collector in java9 jigsaw with demonstrated performance improvement especially in larger heaps. Although it operates in a significantly different fashion than parallel collector / cms it shares same core DNA, heap is split into same segments although regions are further split into multiple regions. I will cover it in detail a seperate post.
+
+The Java heap is broadly divided into 3 parts, namely **young gen, old gen & perm gen**. Young gen comprises of **Eden space** where new objects are allocated and 2 survivor spaces one of which is always empty. GC runs on young gen (eden + 1 used survivor) which is also referred to as minor GC, the references which are old and are not in use are removed, the ones which are in use are transferred to remaining survivor space if it can fit in that space or promoted to old gen if either the age of objects has crossed the specified age limit or the size of used objects is more than the amount which can be fit in the empty survivor.
 
 Its critical to understand why the algorithm is designed this way - in essence its to reduce the amount of space on which the GC algorithm operates on frequently. If we allow GC to run on full heap always and did not have a concept of old/yong gen we would have had long pauses leading to more unpredictable latencies and also there was a high probability of heap fragmentation - which is avoided by compacting collector. Majority of the times GC runs only on young gen allowing the application threads to run without large pauses.
 
 ## To tune your baby better - first understand it
+
 One of the most common doubts people have while deploying server side java application is how much heap to allocate, what sould be the newGen/oldGen/survivorRatio, max pause times, etc.
 
 While it is almost certain that there is no rule of thumb which can lead you to successful heap tuning(in kung fu panda terminology `There is no secret ingredient`), it is extremely critical to understand the kind of objects being allocated in order to determine the parameters. It is also important to have expectation of performance tuning activity either in terms of latency or throughput of application rarely ever can both be increased together.
 
-For example - if improved latency is required, young gen size can be reduced. GC will run more frequently on young gen but application pauses will be short since the working set it will have to operate on will be less.
+For example - if improved latency is required, young gen size can be reduced. GC will run more frequently on young gen but application pauses will be short since the working set it will have to operate on will be less. This will invariably lead to shorter gc pauses on the young gen but since less time is given for objects to age before GC runs, there is higher chance of more objects getting transferred to tenured space.
 
 The larger heap you allocate, better the throughput will be in general but it will result in longer GC pauses as the algorithm will invariably run over larger memory space.
 
-There are broadly 3 kinds of GC events - One  operating on Young Gen - Minor GC as we have seen, CMS or major GC which operates on old gen and 3rd kind **Full GC** which operates on entire heap both young and tenured spaces. Minor gc & Major GC are forgiving as far as thread pauses are concerned with minor pauses lasting few milliseconds to no greater than 1 sec if things are working fine and parallelism is exploited well. The third GC event - dreaded **Full GC** runs when jvm has absolutely run out of heap in order to allocate more memory and it is not possible to go further without pausing complete application. Full GC runs on the entire heap and can pause a 10GB+ heap application for 15-30 seconds, even more.
+There are broadly 3 kinds of GC events - One operating on Young Gen - Minor GC as we have seen, CMS or major GC which operates on old gen and 3rd kind **Full GC** which operates on entire heap both young and tenured spaces. Minor gc & Major GC are forgiving as far as thread pauses are concerned with minor pauses lasting few milliseconds to no greater than 1 sec if things are working fine and parallelism is exploited well. The third GC event - dreaded **Full GC** runs when jvm has absolutely run out of heap in order to allocate more memory and it is not possible to go further without pausing complete application. Full GC runs on the entire heap and can pause a 10GB+ heap application for 15-30 seconds, even more.
 
 So how much heap should be allocated and in what proportion? 
 
-A- As a rule of thumb, larger heap means improved throughput at the cost of increased higher percentile latencies. Smaller heap can allow low latency collections but since gc runs frequently and there is a high possibility of objects not being allowed to age on the young gen thereby increasing promotions. Therefore a judicious solution can be achieved via performance tests with throughput and latency numbers at close watch. It should be also taken into consideration that during performance testing the 3 different type of gc events are encountered so as to not encounter a new scenario on production.
+A- Heuristically speaking, larger heap means improved throughput at the cost of increased higher percentile latencies. Smaller heap can allow low latency collections but since gc runs frequently and there is a high possibility of objects not being allowed to age on the young gen thereby increasing promotions. Therefore a judicious solution can be achieved via performance tests with throughput and latency numbers at close watch. It should be also taken into consideration that during performance testing the 3 different type of gc events are encountered so as to not encounter a new scenario on production. A large heap may not necessarily mean improved performance, infact it can lead to slow collections leading to jvm threads getting paused for longer spans.
 
 ## Flags to use on production environment
 
@@ -111,7 +113,7 @@ From an ignorant perspective once an OOM strikes, the easiest way out would be t
 
 It is critical to enable heap dump on OOM error param of jvm in order to for the jvm to dump memory onto disk before killing itself and for you to have the ability to investigate what went wrong. For this two params need to be added `-XX:+HeapDumpOnOutOfMemoryError` and path of dump file generated `-XX:HeapDumpPath=[output heapdump path]`
 
-It is also important to have approprate gc logging enabled which can give insight into the potential issues that could be present in application.
+It is also important to have appropriate gc logging enabled which can give insight into the potential issues that could be present in application.
 
 Websites such as [gceasy](http://gceasy.io/) analyze log files and display in a graphical format and recommend potential issues with jvm heap.
 
@@ -314,13 +316,21 @@ This sample displays an example of a thread taking lock on an object and other t
 ## References
 
 [1. Oracle JVM Tuning guide](https://docs.oracle.com/cd/E21764_01/web.1111/e13814/jvm_tuning.htm#PERFM150)
+
 [2. Oracle garbage collection tuning](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/)
+
 [3. Understanding memory management](https://docs.oracle.com/cd/E13150_01/jrockit_jvm/jrockit/geninfo/diagnos/garbage_collect.html)
+
 [4. Disable perf shared mem](http://www.evanjones.ca/jvm-mmap-pause.html)
+
 [5. Turn on DisableExplicitGC now](http://java-n-stuff.blogspot.in/2009/08/turn-on-disableexplicitgc-now.html)
+
 [6. Best kept secret in jdk - jvisualvm](https://dzone.com/articles/best-kept-secret-jdk-visualvm)
+
 [7. Jvm statistics with jstat](https://www.javacodegeeks.com/2017/05/jvm-statistics-jstat.html)
+
 [8. Deadlock detection with java](https://meteatamel.wordpress.com/2012/03/21/deadlock-detection-in-java/)
 
 Here is a talk Anshul and me had given on JVM Tuning.
 <script async class="speakerdeck-embed" data-id="9a9c6f11dea445d38498934a8183bd8e" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
