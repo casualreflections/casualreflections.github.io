@@ -168,6 +168,11 @@ callback([
   {
     "text": "Performance tuning for java applications",
     "href": "/tech/java/performance/jvm-performance-tuning"
+  } ,
+
+  {
+    "text": "People & Relationships",
+    "href": "/personal/people/communication/lessons"
   } 
 
 ])

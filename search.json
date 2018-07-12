@@ -1,6 +1,14 @@
 [
 	
 		{
+		  "title"      : "People &amp; Relationships",
+		  "category"   : "",
+		  "url"        : "/personal/people/communication/lessons",
+		  "date"       : "2018-07-12 19:52:58 +0530",
+		  "shortdate"  : "July 12, 2018"
+		} ,
+	
+		{
 		  "title"      : "Performance tuning for java applications",
 		  "category"   : "",
 		  "url"        : "/tech/java/performance/jvm-performance-tuning",
